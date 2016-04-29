@@ -2,7 +2,7 @@
   "name": "rocketchat",
   "version": "0.1.0",
   "description": "Rocket chat node api",
-  "main": "index.js",
+  "main": "rocket-chat.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/qeesung/rocketchat-node/issues"
   },
-  "homepage": "https://github.com/qeesung/rocketchat-node#readme"
+  "homepage": "https://github.com/qeesung/rocketchat-node#readme",
+  "dependencies": {
+    "request": "^2.72.0",
+    "url": "^0.11.0"
+  }
 }
