@@ -242,6 +242,46 @@ var RocketChatApi = function(protocol , host , port , username , password){
         
     };
 
+    /**
+     * join in a room with roomID
+     * @param roomId target room ID
+     * @param callback invoke the function after join the room
+     */
+    this.joinRoom = function(roomId , callback){
+        var self = this;
+        var options = {
+            uri: self.makeUri('rooms/'+roomId+"/join"),
+            method: 'POST',
+            qs:{},
+            json:true
+        };
+        
+        this.doRequest(options, function(error, response, body) {
+
+            if (error) {
+                callback(error, null);
+                return;
+            }
+
+            if (response.statusCode === 404) {
+                callback('join room failed');
+                return;
+            }
+
+            if (response.statusCode !== 200) {
+                callback(response.statusCode + ': Unable to connect to rocket chat during joining the room.');
+                return;
+            }
+
+            if (body === undefined) {
+                callback('Response body was undefined.');
+                return;
+            }
+
+            callback(null, body);
+        });
+    };
+
 
 }).call(RocketChatApi.prototype);
 
