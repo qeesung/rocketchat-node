@@ -323,6 +323,44 @@ var RocketChatApi = function(protocol , host , port , username , password){
         });
     };
 
+    /**
+     * get all unread messages from a room that with roomId
+     * @param roomId target room id
+     * @param callback will invoke after get the all unread messages
+     */
+    this.getUnreadMsg = function(roomId , callback){
+        var self = this; 
+        var options = {
+            uri: self.makeUri('rooms/'+roomId+"/messages"),
+            method: 'GET'
+        };
+        
+        this.doRequest(options, function(error, response, body) {
+
+            if (error) {
+                callback(error, null);
+                return;
+            }
+
+            if (response.statusCode === 404) {
+                callback('get unread messages failed');
+                return;
+            }
+
+            if (response.statusCode !== 200) {
+                callback(response.statusCode + ': Unable to connect to rocket chat during getting unread messages.');
+                return;
+            }
+
+            if (body === undefined) {
+                callback('Response body was undefined.');
+                return;
+            }
+
+            callback(null, JSON.parse(body));
+        });
+        
+    }
 
 }).call(RocketChatApi.prototype);
 
