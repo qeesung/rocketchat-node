@@ -2,7 +2,7 @@
   "name": "rocketchat",
   "version": "0.1.2",
   "description": "Rocket chat node api",
-  "main": "rocket-chat.js",
+  "main": "./lib/rocket-chat.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
