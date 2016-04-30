@@ -5,6 +5,16 @@ A node.js module, which provides an object oriented wrapper for the RocketChat R
 RocketChat official website address can be found [here](https://rocket.chat/)  .
 RocketChat REST API document can be found [here](https://rocket.chat/docs/master/developer-guides/rest-api/).
 
+This Lib library package the following functions:
+ - [create client](#create-client)
+ -  [login](#login)
+ - [logout](#logout)
+ - [get list of public rooms](#public-rooms)
+ - [join a room](#join)
+ - [leave a room](#leave)
+ - [get all unread messages in a room](#unread-messages)
+ - [sending a message](#send-messages)
+
 ## Installation
 
 Install with the node package manager [npm](http://npmjs.org/):
@@ -24,7 +34,7 @@ $ npm install
 
 ## Examples
 
-### Create the rocket-chat client
+### <a id="create-client"></a>Create the rocket-chat client
 
 ```
 var RocketChatApi = require('rocketchat').RocketChatApi;
@@ -42,10 +52,10 @@ rocketChatApi.version(function(err,body){
 })
 ```
 
-### Login rocket-chat
+### <a id="login"></a>Login rocket-chat
 
 ```
-rocketChatApi.chat(function(err,body){
+rocketChatApi.login(function(err,body){
 	if(err)
 		console.log(err);
 	else
@@ -55,7 +65,18 @@ rocketChatApi.chat(function(err,body){
 
 You don't have to log in every time, and automatically log on when you call the other interface.
 
-### Get list of public rooms
+### <a id="logout"></a>Logoff rocket-chat
+
+```
+rocketChatApi.logout(function(err,body){
+	if(err)
+		console.log(err);
+	else
+		console.log(body);
+})
+```
+
+### <a id="public-rooms"></a>Get list of public rooms
 
 ```
 rocketChatApi.getPublicRooms(function(err,body){
@@ -66,7 +87,7 @@ rocketChatApi.getPublicRooms(function(err,body){
 })
 ```
 
-### Join a room
+### <a id="join"></a>Join a room
 
 ```
 rocketChatApi.joinRoom(roomID ,function(err,body){
@@ -77,7 +98,7 @@ rocketChatApi.joinRoom(roomID ,function(err,body){
 })
 ```
 
-### Leave a room
+### <a id="leave"></a>Leave a room
 
 ```
 rocketChatApi.getUnreadMsg(roomID ,function(err,body){
@@ -89,7 +110,7 @@ rocketChatApi.getUnreadMsg(roomID ,function(err,body){
 ```
 
 
-### Get all unread messages in a room
+### <a id="unread-messages"></a>Get all unread messages in a room
 
 ```
 rocketChatApi.leaveRoom(roomID ,function(err,body){
@@ -101,7 +122,7 @@ rocketChatApi.leaveRoom(roomID ,function(err,body){
 ```
 
 
-### Sending a message
+### <a id="send-messages"></a>Sending a message
 
 ```
 rocketChatApi.sendMsg(roomID ,function(err,body){
@@ -114,4 +135,33 @@ rocketChatApi.sendMsg(roomID ,function(err,body){
 
 More information can be found by checking [RocektChat REST API](https://rocket.chat/docs/master/developer-guides/rest-api/)
 
+
+## Options
+
+RocketChatApi Options:
+
+- protocol`<string>`: Typically 'http:' or 'https:'
+- host`<string>`: The hostname for your jira server
+- port`<int>`: The port your jira server is listening on (probably 80 or 443)
+- username`<string>`: The username to log in with
+- password`<string>`: Keep it secret, keep it safe
+
+## Implemented APIs
+
+- Authentication
+ - HTTP
+ - OAuth(comming soon)
+- Room
+ - get public rooms
+ - join a room
+ - leave a room
+- Messages
+ - get unread messages from a room
+ - send messages to a room
+
+
+## TODO
+
+-  achieved  OAuth authentication mode
+-  Add SSL security mode
 
