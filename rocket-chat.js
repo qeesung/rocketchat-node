@@ -89,7 +89,7 @@ var RocketChatApi = function(protocol , host , port , username , password){
 
     /**
      * login the rocket chat
-     * @param callback after login the rocket chat , will invoke the callback funciton
+     * @param callback after login the rocket chat , will invoke the callback function 
      */
     this.login = function(callback){
         var self = this;
@@ -130,6 +130,47 @@ var RocketChatApi = function(protocol , host , port , username , password){
 };
 
 (function(){
+
+    /**
+     * get the rocket chat rest api version
+     * @param callback invoke after get rest api version
+     */
+    this.version = function(callback){
+        var options = {
+            uri: this.makeUri('version'),
+            method: 'GET'
+        };  
+        
+        this.doRequest(options, function(error, response, body) {
+
+            if (error) {
+                callback(error, null);
+                return;
+            }
+
+            if (response.statusCode === 404) {
+                callback('get api version failed');
+                return;
+            }
+
+            if (response.statusCode !== 200) {
+                callback(response.statusCode + ': Unable to connect to rocket chat during get api version.');
+                return;
+            }
+
+            if (body === undefined) {
+                callback('Response body was undefined.');
+                return;
+            }
+
+            callback(null, JSON.parse(body));
+        });
+    };
+
+    /**
+     * logout rocket chat
+     * @param callback invoke the function after logged out
+     */
     this.logout = function(callback) {
 
         var options = {
@@ -163,6 +204,10 @@ var RocketChatApi = function(protocol , host , port , username , password){
         });
     };
 
+    /**
+     * get all public rooms from rocket chat
+     * @param callback invoke after get all the public rooms data
+     */
     this.getPublicRooms = function (callback) {
         var self = this;
         var options = {
@@ -195,7 +240,9 @@ var RocketChatApi = function(protocol , host , port , username , password){
             callback(null, JSON.parse(body));
         });
         
-    }
+    };
+
+
 }).call(RocketChatApi.prototype);
 
 exports.RocketChatApi = RocketChatApi;
