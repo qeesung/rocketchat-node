@@ -283,6 +283,47 @@ var RocketChatApi = function(protocol , host , port , username , password){
     };
 
 
+    /**
+     * leave a room with roomID
+     * @param roomId target roomID
+     * @param callback invoke after left the room
+     */
+    this.leaveRoom = function(roomId , callback){
+        var self = this;
+        var options = {
+            uri: self.makeUri('rooms/'+roomId+"/leave"),
+            method: 'POST',
+            qs:{},
+            json:true
+        };
+        
+        this.doRequest(options, function(error, response, body) {
+
+            if (error) {
+                callback(error, null);
+                return;
+            }
+
+            if (response.statusCode === 404) {
+                callback('leave room failed');
+                return;
+            }
+
+            if (response.statusCode !== 200) {
+                callback(response.statusCode + ': Unable to connect to rocket chat during leaving the room.');
+                return;
+            }
+
+            if (body === undefined) {
+                callback('Response body was undefined.');
+                return;
+            }
+
+            callback(null, body);
+        });
+    };
+
+
 }).call(RocketChatApi.prototype);
 
 exports.RocketChatApi = RocketChatApi;
