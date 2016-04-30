@@ -360,7 +360,51 @@ var RocketChatApi = function(protocol , host , port , username , password){
             callback(null, JSON.parse(body));
         });
         
-    }
+    };
+
+    /**
+     * send msg to a room 
+     * @param roomId target room ID
+     * @param message message to be sent
+     * @param callback invoke after sent msg successfully
+     */
+    this.sendMsg = function(roomId , message , callback){
+        var self = this; 
+        var options = {
+            uri: self.makeUri('rooms/'+roomId+"/send"),
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            form:{msg:message}
+        };  
+        
+        this.doRequest(options, function(error, response, body) {
+
+            if (error) {
+                callback(error, null);
+                return;
+            }
+
+            if (response.statusCode === 404) {
+                callback('send message failed');
+                return;
+            }
+
+            if (response.statusCode !== 200) {
+                callback(response.statusCode + ': Unable to connect to rocket chat during sending message.');
+                return;
+            }
+
+            if (body === undefined) {
+                callback('Response body was undefined.');
+                return;
+            }
+
+            callback(null, body);
+        });
+        
+    };
 
 }).call(RocketChatApi.prototype);
 
