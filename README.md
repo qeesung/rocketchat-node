@@ -125,7 +125,7 @@ rocketChatApi.leaveRoom(roomID ,function(err,body){
 ### <a id="send-messages"></a>Sending a message
 
 ```
-rocketChatApi.sendMsg(roomID ,function(err,body){
+rocketChatApi.sendMsg(roomID, message, function(err,body){
 	if(err)
 		console.log(err);
 	else
