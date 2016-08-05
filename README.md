@@ -110,6 +110,17 @@ rocketChatApi.getUnreadMsg(roomID ,function(err,body){
 ```
 
 
+### <a id="createRoom"></a>Create a room
+
+```
+rocketChatApi.createRoom(roomName ,function(err,body){
+	if(err)
+		console.log(err);
+	else
+		console.log(body);
+})
+```
+
 ### <a id="unread-messages"></a>Get all unread messages in a room
 
 ```
