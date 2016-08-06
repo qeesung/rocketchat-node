@@ -12,6 +12,7 @@ This Lib library package the following functions:
  - [get list of public rooms](#public-rooms)
  - [join a room](#join)
  - [leave a room](#leave)
+ - [creating a room](#createRoom)
  - [get all unread messages in a room](#unread-messages)
  - [sending a message](#send-messages)
 
@@ -109,6 +110,17 @@ rocketChatApi.getUnreadMsg(roomID ,function(err,body){
 })
 ```
 
+
+### <a id="createRoom"></a>Create a room
+
+```
+rocketChatApi.createRoom(roomName ,function(err,body){
+	if(err)
+		console.log(err);
+	else
+		console.log(body);
+})
+```
 
 ### <a id="unread-messages"></a>Get all unread messages in a room
 
