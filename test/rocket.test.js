@@ -31,7 +31,7 @@ describe("Test the rest api and rocketchat version version",function () {
 
 
 describe("test login the logout",function () {
-    var rocketChatApi ;
+    var rocketChatApi = null;
     beforeEach(function () {
         rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
     });
@@ -133,7 +133,6 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
                 });
 
             });
-            done();
         });
     });
 
@@ -154,6 +153,50 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
             });
         });
     });
+    afterEach(function () {
+        rocketChatApi = null;
+    });
+});
+
+
+describe("test sending a message and get all messages in a room", function () {
+    var rocketChatApi= null;
+    beforeEach(function () {
+        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
+    });
+
+    it("sending a meesage", function (done) {
+        var roomName = "createdRoom_"+Date.now();// create a room has unique name
+        var message = "Hello World";
+        rocketChatApi.createRoom(roomName, function (err, body) {
+            (!err).should.be.ok();
+            var roomId = body.channel._id;
+            rocketChatApi.sendMsg(roomId, message, function (err, body) {
+                (!err).should.be.ok();
+                body.status.should.equal("success");
+                done();
+            });
+        });
+    });
+
+    it("sending a meesage, and get lastest messages", function (done) {
+        var roomName = "createdRoom_"+Date.now();// create a room has unique name
+        var message = "Hello World";
+        rocketChatApi.createRoom(roomName, function (err, body) {
+            (!err).should.be.ok();
+            var roomId = body.channel._id;
+            rocketChatApi.sendMsg(roomId, message, function (err, body) {
+                (!err).should.be.ok();
+                rocketChatApi.getUnreadMsg(roomId, function (err, body) {
+                    (!err).should.be.ok();
+                    body.status.should.equal("success");
+                    body.messages[0].msg.should.equal(message);
+                    done();
+                });
+            });
+        });
+    });
+
     afterEach(function () {
         rocketChatApi = null;
     });
