@@ -76,3 +76,25 @@ describe("test login the logout",function () {
         rocketChatApi = null;
     });
 });
+
+
+describe("test create, join, leave rooms, and get list of public rooms", function () {
+    var rocketChatApi = null;
+    beforeEach(function () {
+        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
+    });
+
+    it("create room status should be success", function (done) {
+        var roomName = "testRoom_"+Date.now();// create a room has unique name
+        rocketChatApi.createRoom(roomName, function (err, body) {
+            (!err).should.be.ok();
+            body.success.should.be.ok();
+            body.channel.name.should.equal(roomName);
+            done();
+        });
+    });
+
+    afterEach(function () {
+        rocketChatApi = null;
+    });
+});
