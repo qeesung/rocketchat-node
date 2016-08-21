@@ -44,11 +44,31 @@ describe("test login the logout",function () {
         });
     });
 
-    it("login token should not be null", function (done) {
+    it("after login,the token should not be null", function (done) {
         rocketChatApi.login(function (err, body) {
             (!err).should.be.ok();
             (!!rocketChatApi.token).should.be.ok();
             done();
+        });
+    });
+
+    it("logout status should be sucess", function (done) {
+        rocketChatApi.login(function (err, body) {
+            rocketChatApi.logout(function (err, body) {
+                (!err).should.be.ok();
+                body.status.should.equal("success");
+                done();
+            });
+        });
+    });
+
+    it("after logout, the token should be null", function (done) {
+        rocketChatApi.login(function (err, body) {
+            rocketChatApi.logout(function (err, body) {
+                (!err).should.be.ok();
+                (!rocketChatApi.token).should.be.ok();
+                done();
+            });
         });
     });
 
