@@ -9,14 +9,15 @@
 var RocketChatApi = require('../lib/rocket-chat').RocketChatApi;
 var should = require("should");
 
+var config = {
+    host:"192.168.1.102", // this is my personal rocketchat server hosted in my laptop
+    port:"3000",
+    user:"qeesung",
+    password:"123456"
+};
+
 describe("Test the rest api and rocketchat version version",function () {
-    it("rest api version should greater than 0.1 and rocketchat should greater than 0.5", function (done) {
-        var config = {
-            host:"192.168.1.102", // this is my personal rocketchat server hosted in my laptop
-            port:"3000",
-            user:"qeesung",
-            password:"123456"
-        };
+    it("rest api version should not be below 0.1 and rocketchat should not be beblow 0.5", function (done) {
         var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
         rocketChatApi.version(function (err, body) {
             (!err).should.be.ok();
@@ -32,19 +33,26 @@ describe("Test the rest api and rocketchat version version",function () {
 describe("test login the logout",function () {
     var rocketChatApi ;
     beforeEach(function () {
-        var config = {
-            host:"192.168.1.102",
-            port:"3000",
-            user:"qeesung",
-            password:"123456"
-        };
         rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
     });
+
     it("login status should be success", function (done) {
         rocketChatApi.login(function (err, body) {
             (!err).should.be.ok();
             body.status.should.equal("success");
             done();
         });
+    });
+
+    it("login token should not be null", function (done) {
+        rocketChatApi.login(function (err, body) {
+            (!err).should.be.ok();
+            (!!rocketChatApi.token).should.be.ok();
+            done();
+        });
+    });
+
+    afterEach(function () {
+        rocketChatApi = null;
     });
 });
