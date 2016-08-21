@@ -136,6 +136,24 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
             done();
         });
     });
+
+    it("create a new room with a uniqe name, then get the all public rooms to check", function (done) {
+
+        var createdRoomId = 0;
+        var roomName = "createdRoom_"+Date.now();// create a room has unique name
+        rocketChatApi.createRoom(roomName, function (err, body) {
+            (!err).should.be.ok();
+            var roomId = body.channel._id;
+            rocketChatApi.getPublicRooms(function (err, body) {
+                (!err).should.be.ok();
+                body.status.should.equal("success");
+                body.rooms.should.matchAny(function (room) {
+                    room._id.should.equal(roomId);
+                });
+                done();
+            });
+        });
+    });
     afterEach(function () {
         rocketChatApi = null;
     });
