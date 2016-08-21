@@ -171,10 +171,13 @@ describe("test sending a message and get all messages in a room", function () {
         rocketChatApi.createRoom(roomName, function (err, body) {
             (!err).should.be.ok();
             var roomId = body.channel._id;
-            rocketChatApi.sendMsg(roomId, message, function (err, body) {
+            rocketChatApi.joinRoom(roomId, function (err, body) {
                 (!err).should.be.ok();
-                body.status.should.equal("success");
-                done();
+                rocketChatApi.sendMsg(roomId, message, function (err, body) {
+                    (!err).should.be.ok();
+                    body.status.should.equal("success");
+                    done();
+                });
             });
         });
     });
@@ -185,15 +188,19 @@ describe("test sending a message and get all messages in a room", function () {
         rocketChatApi.createRoom(roomName, function (err, body) {
             (!err).should.be.ok();
             var roomId = body.channel._id;
-            rocketChatApi.sendMsg(roomId, message, function (err, body) {
+            rocketChatApi.joinRoom(roomId, function (err, body) {
                 (!err).should.be.ok();
-                rocketChatApi.getUnreadMsg(roomId, function (err, body) {
+                rocketChatApi.sendMsg(roomId, message, function (err, body) {
                     (!err).should.be.ok();
-                    body.status.should.equal("success");
-                    body.messages[0].msg.should.equal(message);
-                    done();
+                    rocketChatApi.getUnreadMsg(roomId, function (err, body) {
+                        (!err).should.be.ok();
+                        body.status.should.equal("success");
+                        body.messages[0].msg.should.equal(message);
+                        done();
+                    });
                 });
             });
+
         });
     });
 
