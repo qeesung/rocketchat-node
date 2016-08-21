@@ -80,6 +80,12 @@ describe("test login the logout",function () {
 
 describe("test create, join, leave rooms, and get list of public rooms", function () {
     var rocketChatApi = null;
+    var testConfig = {
+        host:"192.168.1.102", // this is my personal rocketchat server hosted in my laptop
+        port:"3000",
+        user:"testuser",
+        password:"123456"
+    };
     beforeEach(function () {
         rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
     });
@@ -94,6 +100,42 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
         });
     });
 
+    it("create a new room with a test user, and join it", function (done) {
+        var testUserClient = new RocketChatApi('http', testConfig.host, testConfig.port, testConfig.user, testConfig.password);
+        var roomName = "testuser_testRoom_"+Date.now();// create a room has unique name
+        testUserClient.createRoom(roomName, function (err, body) {
+            (!err).should.be.ok();
+            var roomId = body.channel._id;
+            // join the room
+            rocketChatApi.joinRoom(roomId, function (err, body) {
+                (!err).should.be.ok();
+                body.status.should.equal("success");
+                done();
+            });
+        });
+    });
+
+    it("create a new room with a test user, and join it, then leave it", function (done) {
+
+
+        var testUserClient = new RocketChatApi('http', testConfig.host, testConfig.port, testConfig.user, testConfig.password);
+        var roomName = "testuser_testRoom_"+Date.now();// create a room has unique name
+        testUserClient.createRoom(roomName, function (err, body) {
+            (!err).should.be.ok();
+            var roomId = body.channel._id;
+            // join the room
+            rocketChatApi.joinRoom(roomId, function (err, body) {
+                (!err).should.be.ok();
+                rocketChatApi.leaveRoom(roomId, function (err, body) {
+                    (!err).should.be.ok();
+                    body.status.should.equal("success");
+                    done();
+                });
+
+            });
+            done();
+        });
+    });
     afterEach(function () {
         rocketChatApi = null;
     });
