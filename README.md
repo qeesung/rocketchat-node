@@ -3,7 +3,7 @@
 A node.js module, which provides an object oriented wrapper for the RocketChat REST API.
 
 RocketChat official website address can be found [here](https://rocket.chat/)  .
-RocketChat REST API document can be found [here](https://rocket.chat/docs/master/developer-guides/rest-api/).
+RocketChat REST API document can be found [here](https://rocket.chat/docs/developer-guides/rest-api/).
 
 This Lib library package the following functions:
  - [create client](#create-client)
