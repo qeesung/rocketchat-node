@@ -102,7 +102,7 @@ rocketChatApi.joinRoom(roomID ,function(err,body){
 ### <a id="leave"></a>Leave a room
 
 ```
-rocketChatApi.getUnreadMsg(roomID ,function(err,body){
+rocketChatApi.leaveRoom(roomID ,function(err,body){
 	if(err)
 		console.log(err);
 	else
@@ -125,7 +125,7 @@ rocketChatApi.createRoom(roomName ,function(err,body){
 ### <a id="unread-messages"></a>Get all unread messages in a room
 
 ```
-rocketChatApi.leaveRoom(roomID ,function(err,body){
+rocketChatApi.getUnreadMsg(roomID ,function(err,body){
 	if(err)
 		console.log(err);
 	else
