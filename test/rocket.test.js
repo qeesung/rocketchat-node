@@ -29,6 +29,19 @@ describe("Test the rest api and rocketchat version version",function () {
     });
 });
 
+describe("[multiple-api-versions] test multiple api versions", function() {
+     it("should not add a version for alpha versions of gitlab", function(done) {
+         var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
+         rocketChatApi.makeUri("url").should.be.equal("http://192.168.1.102:3000/api/url");
+         done();
+     });
+
+     it("should add a version to the base uri for alpha versions of gitlab", function(done) {
+         var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
+         rocketChatApi.makeUri("url").should.be.equal("http://192.168.1.102:3000/api/v1/url");
+         done();
+     });
+});
 
 describe("test login the logout",function () {
     var rocketChatApi = null;
