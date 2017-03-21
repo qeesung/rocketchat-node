@@ -43,6 +43,80 @@ describe("[multiple-api-versions] test multiple api versions", function() {
      });
 });
 
+describe("[versionRequestData] test single versions", function() {
+    describe("nonexisting version", function() {
+        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "please-never-exist-as-version");
+
+        it("should fail", function(done) {
+            var fail;
+            try {
+                rocketChatApi.getRequestData("sendMsg");
+            } catch (err) {
+                err = fail;
+            }
+
+            should(fail).not.be.null;
+            done();
+        });
+    })
+
+    describe("nonexisting function", function() {
+        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
+
+        it("should fail", function(done) {
+            var fail;
+            try {
+                rocketChatApi.getRequestData("please-never-exist-as-function");
+            } catch (err) {
+                err = fail;
+            }
+
+            should(fail).not.be.null;
+            done();
+        });
+    })
+
+    describe("sendMsg", function () {
+        describe("alpha version", function() {
+            var requestData;
+
+            before(function () {
+                var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
+                requestData = rocketChatApi.getRequestData("sendMsg");
+            });
+
+            it("should return the correct path for this version ", function(done) {
+                var roomId = "roomId";
+                should(requestData).not.be.null;
+                requestData.path({ roomId : roomId }).should.be.equal('rooms/'+roomId+"/send");
+                done();
+            });
+        });
+
+        describe("version1", function() {
+            var requestData;
+
+            before(function () {
+                var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
+                requestData = rocketChatApi.getRequestData("sendMsg");
+            });
+
+            it("should return the correct path for this version ", function(done) {
+                var roomId = "roomId";
+                var message = "string";
+                var data = { roomId : roomId, message : message };
+                should(requestData).not.be.null;
+                requestData.path(data).should.be.equal('chat.postMessage');
+                requestData.body(data).should.be.eql({
+                    "roomId" : roomId,
+                    "text" : message 
+                });
+                done();
+            });
+        })
+    })
+})
+
 describe("test login the logout",function () {
     var rocketChatApi = null;
     beforeEach(function () {
