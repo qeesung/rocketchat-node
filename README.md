@@ -41,7 +41,10 @@ $ npm install
 
 ```
 var RocketChatApi = require('rocketchat').RocketChatApi;
+// alpha-api versions
 var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
+// v1-api versions
+var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
 ```
 
 ### Obtaining the running rocket-chat version
