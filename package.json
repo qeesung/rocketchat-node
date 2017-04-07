@@ -1,24 +1,24 @@
 {
-  "name": "rocketchat",
-  "version": "0.1.0",
+  "name": "rocketchat-node",
+  "version": "0.1.1",
   "description": "Rocket chat node api",
   "main": "./lib/rocket-chat.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --grep versionRequestData"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qeesung/rocketchat-node.git"
+    "url": "git+https://github.com/MatthiasKainer/rocketchat-node.git"
   },
   "keywords": [
     "rocket-chat"
   ],
-  "author": "qeesung",
+  "author": "qeesung, matthiaskainer",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/qeesung/rocketchat-node/issues"
+    "url": "https://github.com/MatthiasKainer/rocketchat-node/issues"
   },
-  "homepage": "https://github.com/qeesung/rocketchat-node#readme",
+  "homepage": "https://github.com/MatthiasKainer/rocketchat-node#readme",
   "dependencies": {
     "request": "^2.72.0",
     "url": "^0.11.0"
