@@ -1,5 +1,7 @@
 # JavaScript RocketChat API for node.js
 
+[![Join the chat at https://gitter.im/rocketchat-node/Lobby](https://badges.gitter.im/rocketchat-node/Lobby.svg)](https://gitter.im/rocketchat-node/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A node.js module, which provides an object oriented wrapper for the RocketChat REST API.
 
 RocketChat official website address can be found [here](https://rocket.chat/)  .
