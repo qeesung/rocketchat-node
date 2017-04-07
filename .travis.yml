@@ -1,10 +1,18 @@
+sudo: required
 
+services:
+  - docker
+  
 language: node_js
 node_js:
   - "7"
   - "6"
   - "5"
   
+before_install:
+  - docker run --name db -d mongo:3.0 --smallfiles
+  - docker run -p 3000:3000 --env ROOT_URL=http://localhost --name rocketchat --link db -d rocket.chat
+
 install:
-    - npm install -g mocha
-    - npm install
+  - npm install -g mocha
+  - npm install
