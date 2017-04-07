@@ -125,6 +125,17 @@ rocketChatApi.createRoom(roomName ,function(err,body){
 })
 ```
 
+### <a id="setTopic"></a>Set a rooms topic
+
+```js
+rocketChatApi.setTopic(roomID, topicName, function(err, body){
+    if(err)
+         console.log(err);
+    else
+        console.log(body);
+})
+```
+
 ### <a id="unread-messages"></a>Get all unread messages in a room
 
 ```
@@ -164,15 +175,16 @@ RocketChatApi Options:
 ## Implemented APIs
 
 - Authentication
- - HTTP
- - OAuth(comming soon)
+- HTTP
+- OAuth(comming soon)
 - Room
- - get public rooms
- - join a room
- - leave a room
+- get public rooms
+- join a room
+- leave a room
 - Messages
- - get unread messages from a room
- - send messages to a room
+- get unread messages from a room
+- send messages to a room
+- Set Topic for Room
 
 
 ## TODO
