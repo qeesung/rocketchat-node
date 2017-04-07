@@ -1,7 +1,5 @@
 # JavaScript RocketChat API for node.js
 
-**Node this is a fork of [qeesung/rocketchat-node](https://github.com/qeesung/rocketchat-node) and supposed to be rejoined as soon as https://github.com/qeesung/rocketchat-node/pull/9 is closed. Please do not rely on this npm package.**
-
 A node.js module, which provides an object oriented wrapper for the RocketChat REST API.
 
 RocketChat official website address can be found [here](https://rocket.chat/)  .
@@ -23,14 +21,14 @@ This Lib library package the following functions:
 Install with the node package manager [npm](http://npmjs.org/):
 
 ```
-$ npm install rocketchat-node
+$ npm install rocketchat
 ```
 
 or
 
 Install via git clone:
 ```
-$ git clone https://github.com/MatthiasKainer/rocketchat-node.git
+$ git clone https://github.com/qeesung/rocketchat-node.git
 $ cd rocketchat-node
 $ npm install
 ```
