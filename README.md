@@ -1,5 +1,7 @@
 # JavaScript RocketChat API for node.js
 
+[![Join the chat at https://gitter.im/rocketchat-node/Lobby](https://badges.gitter.im/rocketchat-node/Lobby.svg)](https://gitter.im/rocketchat-node/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A node.js module, which provides an object oriented wrapper for the RocketChat REST API.
 
 RocketChat official website address can be found [here](https://rocket.chat/)  .
@@ -125,6 +127,17 @@ rocketChatApi.createRoom(roomName ,function(err,body){
 })
 ```
 
+### <a id="setTopic"></a>Set a rooms topic
+
+```js
+rocketChatApi.setTopic(roomID, topicName, function(err, body){
+    if(err)
+         console.log(err);
+    else
+        console.log(body);
+})
+```
+
 ### <a id="unread-messages"></a>Get all unread messages in a room
 
 ```
@@ -164,15 +177,16 @@ RocketChatApi Options:
 ## Implemented APIs
 
 - Authentication
- - HTTP
- - OAuth(comming soon)
+- HTTP
+- OAuth(comming soon)
 - Room
- - get public rooms
- - join a room
- - leave a room
+- get public rooms
+- join a room
+- leave a room
 - Messages
- - get unread messages from a room
- - send messages to a room
+- get unread messages from a room
+- send messages to a room
+- Set Topic for Room
 
 
 ## TODO
