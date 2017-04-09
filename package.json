@@ -4,7 +4,8 @@
   "description": "Rocket chat node api",
   "main": "./lib/rocket-chat.js",
   "scripts": {
-    "test": "mocha --grep versionRequestData"
+    "test": "mocha --grep versionRequestData",
+    "integration-test": "mocha"
   },
   "repository": {
     "type": "git",

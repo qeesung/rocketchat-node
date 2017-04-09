@@ -10,7 +10,7 @@ var RocketChatApi = require('../lib/rocket-chat').RocketChatApi;
 var should = require("should");
 
 var config = {
-    host: "192.168.1.102", // this is my personal rocketchat server hosted in my laptop
+    host: "localhost", // this is my personal rocketchat server hosted in my laptop
     port: "3000",
     user: "qeesung",
     password: "123456"

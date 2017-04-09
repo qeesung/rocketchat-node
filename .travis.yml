@@ -11,8 +11,12 @@ node_js:
   
 before_install:
   - docker run --name db -d mongo:3.0 --smallfiles
-  - docker run -p 3000:3000 --env ROOT_URL=http://localhost --name rocketchat --link db -d rocket.chat
+  - docker run -p 3000:3000 --env ROOT_URL=http://localhost --env ADMIN_PASS=123456 --env ADMIN_USERNAME=qeesung --name rocketchat --link db -d rocket.chat
 
 install:
   - npm install -g mocha
   - npm install
+
+script:
+  - npm run test
+  - npm run integration-test
