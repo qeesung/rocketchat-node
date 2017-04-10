@@ -18,7 +18,7 @@ describe("WsClient", function () {
         password: config.password
     };
 
-    var wsClient = new net.WsClient(config.protocol.ws, config.host, config.port, "websocket");
+    var wsClient = new net.WsClient(config.protocol.ws, config.host, config.port, "/websocket");
 
     describe("Integration", function () {
         it("should be able to connect and call a method", function (done) {
@@ -34,6 +34,25 @@ describe("WsClient", function () {
 describe("RestClient", function () {
 
     var restClient = new net.RestClient(config.protocol.rest, config.host, config.port, "/api/v1/");
+    describe("Unit", function () {
+        describe("Headers", function () {
+            var headerKey = "test";
+            var headerValue = "header";
+
+            it("should be able to add headers", function (done) {
+                restClient.setHeader(headerKey, headerValue);
+                restClient.getHeader(headerKey).should.be.equal(headerValue);
+                done();
+            });
+
+            it("should be able to remove headers", function (done) {
+                restClient.setHeader(headerKey, headerValue);
+                restClient.removeHeader(headerKey);
+                (restClient.getHeader(headerKey) === undefined).should.be.true();
+                done();
+            });
+        })
+    });
 
     describe("Integration", function () {
         it("should be able to connect and call a method", function (done) {
