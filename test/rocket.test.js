@@ -17,10 +17,12 @@ var config = {
 };
 
 describe("Test the rest api and rocketchat version version", function () {
-    xit("rest api version should not be below 0.1 and rocketchat should not be beblow 0.5", function (done) {
+    it("rest api version should not be below 0.1 and rocketchat should not be beblow 0.5", function (done) {
         var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
         rocketChatApi.version(function (err, body) {
-            (!err).should.be.ok();
+            should(err).be.null();
+            should(body).not.be.undefined;
+            should(body).not.be.null;
             body.status.should.equal("success");
             body.versions.api.should.not.be.below(0.1);
             body.versions.rocketchat.should.not.be.below(0.5);
@@ -29,223 +31,37 @@ describe("Test the rest api and rocketchat version version", function () {
     });
 });
 
-describe("[multiple-api-versions] test multiple api versions", function () {
-    it("should not add a version for alpha versions of gitlab", function (done) {
-        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
-        rocketChatApi.makeUri("url").should.be.equal("http://127.0.0.1:3000/api/url");
-        done();
-    });
-
-    it("should add a version to the base uri for alpha versions of gitlab", function (done) {
-        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
-        rocketChatApi.makeUri("url").should.be.equal("http://127.0.0.1:3000/api/v1/url");
-        done();
-    });
-});
-
-describe("[versionRequestData] test single versions", function () {
-    describe("nonexisting version", function () {
-        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "please-never-exist-as-version");
-
-        it("should fail", function (done) {
-            var fail;
-            try {
-                rocketChatApi.getRequestData("sendMsg");
-            } catch (err) {
-                err = fail;
-            }
-
-            should(fail).not.be.null;
-            done();
-        });
-    })
-
-    describe("nonexisting function", function () {
-        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
-
-        it("should fail", function (done) {
-            var fail;
-            try {
-                rocketChatApi.getRequestData("please-never-exist-as-function");
-            } catch (err) {
-                err = fail;
-            }
-
-            should(fail).not.be.null;
-            done();
-        });
-    })
-
-    describe("sendMsg", function () {
-        describe("alpha version", function () {
-            var requestData;
-
-            before(function () {
-                var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
-                requestData = rocketChatApi.getRequestData("sendMsg");
-            });
-
-            it("should return the correct path for this version ", function (done) {
-                var roomId = "roomId";
-                should(requestData).not.be.null;
-                requestData.path({ roomId: roomId }).should.be.equal('rooms/' + roomId + "/send");
-                done();
-            });
-        });
-
-        describe("version1", function () {
-            var requestData;
-
-            before(function () {
-                var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
-                requestData = rocketChatApi.getRequestData("sendMsg");
-            });
-
-            it("should return the correct path for this version ", function (done) {
-                var roomId = "roomId";
-                var message = "string";
-                var data = { roomId: roomId, message: message };
-                should(requestData).not.be.null;
-                requestData.path(data).should.be.equal('chat.postMessage');
-                requestData.body(data).should.be.eql({
-                    "roomId": roomId,
-                    "text": message
-                });
-                done();
-            });
-        })
-    });
-
-    describe("setTopic", function () {
-        var requestData, rocketChatApi;
-
-        describe("alpha version", function () {
-
-            before(function () {
-                rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
-            });
-
-            it("should throw an exception", function (done) {
-                var error = null;
-                try {
-                    requestData = rocketChatApi.getRequestData("setTopic");
-                } catch (err) {
-                    error = err;
-                }
-
-                should(error).not.be.null;
-                error.message.should.be.equal("Method not supported in this version");
-                done();
-            });
-        });
-
-        describe("version1", function () {
-            var requestData;
-
-            before(function () {
-                var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
-                requestData = rocketChatApi.getRequestData("setTopic");
-            });
-
-            it("should fail on missing data ", function (done) {
-                var error = null;
-                try {
-                    requestData.body(null);
-                } catch (err) {
-                    error = err;
-                }
-                should(error).not.null;
-                error.message.should.be.equal("data cannot be missing");
-                done();
-            });
-
-            it("should fail on missing roomId ", function (done) {
-                var data = { roomId: "roomId" };
-                var error = null;
-                try {
-                    requestData.body(data);
-                } catch (err) {
-                    error = err;
-                }
-                should(error).not.null;
-                error.message.should.be.equal("topic cannot be missing");
-                done();
-            });
-
-            it("should fail on missing topic ", function (done) {
-                var data = { topic: "topic" };
-                var error = null;
-                try {
-                    requestData.body(data);
-                } catch (err) {
-                    error = err;
-                }
-
-                should(error).not.be.null;
-                error.message.should.be.equal("roomId cannot be missing");
-                done();
-            });
-
-            it("should return the correct path for this version ", function (done) {
-                var roomId = "roomId";
-                var topic = "topic";
-                var data = { roomId: roomId, topic: topic };
-                should(requestData).not.be.null;
-                requestData.path(data).should.be.equal('channels.setTopic');
-                requestData.body(data).should.be.eql({
-                    "roomId": roomId,
-                    "topic": topic
-                });
-                done();
-            });
-        })
-    })
-})
-
-describe("test login the logout", function () {
+describe("test login and logout", function () {
     var rocketChatApi = null;
-    beforeEach(function () {
+    var login;
+    before(function (done) {
         rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
+        rocketChatApi.login(function (err, body) {
+            login = {
+                err: err,
+                body: body
+            };
+
+            done();
+        });
     });
 
-    it("login status should be success", function (done) {
-        rocketChatApi.login(function (err, body) {
-            (!err).should.be.ok();
+    it("login status should be success and the token should not be null", function (done) {
+        should(login.err).be.null;
+        should(login.body).not.be.null;
+        should(rocketChatApi.token).not.be.null();
+        login.body.status.should.equal("success");
+        done();
+    });
+
+    it("logout status should be success and the token should be null", function (done) {
+        rocketChatApi.logout(function (err, body) {
+            should(err).be.null;
+            should(body).not.be.null;
+            should(rocketChatApi.token).be.null;
             body.status.should.equal("success");
             done();
         });
-    });
-
-    it("after login,the token should not be null", function (done) {
-        rocketChatApi.login(function (err, body) {
-            (!err).should.be.ok();
-            (!!rocketChatApi.token).should.be.ok();
-            done();
-        });
-    });
-
-    it("logout status should be sucess", function (done) {
-        rocketChatApi.login(function (err, body) {
-            rocketChatApi.logout(function (err, body) {
-                (!err).should.be.ok();
-                body.status.should.equal("success");
-                done();
-            });
-        });
-    });
-
-    it("after logout, the token should be null", function (done) {
-        rocketChatApi.login(function (err, body) {
-            rocketChatApi.logout(function (err, body) {
-                (!err).should.be.ok();
-                (!rocketChatApi.token).should.be.ok();
-                done();
-            });
-        });
-    });
-
-    afterEach(function () {
-        rocketChatApi = null;
     });
 });
 
@@ -319,7 +135,7 @@ describe("test sending a message and get all messages in a room", function () {
         rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
     });
 
-    xit("sending a message", function (done) {
+    it("sending a message", function (done) {
         var roomName = "createdRoom_" + Date.now();// create a room has unique name
         var message = "Hello World";
         rocketChatApi.createRoom(roomName, function (err, body) {
@@ -327,7 +143,7 @@ describe("test sending a message and get all messages in a room", function () {
             var roomId = body.channel._id;
             rocketChatApi.sendMsg(roomId, message, function (err, body) {
                 (!err).should.be.ok();
-                body.status.should.equal("success");
+                body.success.should.be.true;
                 done();
             });
         });
