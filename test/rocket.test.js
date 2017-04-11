@@ -151,3 +151,4 @@ describe("test sending a message and get all messages in a room", function () {
         rocketChatApi = null;
     });
 });
+
