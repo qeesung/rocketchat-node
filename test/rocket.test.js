@@ -18,49 +18,37 @@ var config = {
 
 describe("Test the rest api and rocketchat version version", function () {
     it("rest api version should not be below 0.1 and rocketchat should not be beblow 0.5", function (done) {
-        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
-        rocketChatApi.version(function (err, body) {
-            should(err).be.null();
-            should(body).not.be.undefined;
-            should(body).not.be.null;
-            body.status.should.equal("success");
-            body.versions.api.should.not.be.below(0.1);
-            body.versions.rocketchat.should.not.be.below(0.5);
-            done();
+        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, function () {
+            rocketChatApi.version(function (err, body) {
+                should(err).be.null();
+                should(body).not.be.undefined;
+                should(body).not.be.null;
+                body.versions.api.should.not.be.below(0.1);
+                body.versions.rocketchat.should.not.be.below(0.5);
+                done();
+            });
         });
     });
 });
 
 describe("test login and logout", function () {
     var rocketChatApi = null;
-    var login;
     before(function (done) {
-        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
-        rocketChatApi.login(function (err, body) {
-            login = {
-                err: err,
-                body: body
-            };
-
-            done();
-        });
-    });
-
-    it("login status should be success and the token should not be null", function (done) {
-        should(login.err).be.null;
-        should(login.body).not.be.null;
-        should(rocketChatApi.token).not.be.null();
-        login.body.status.should.equal("success");
-        done();
+        rocketChatApi = new RocketChatApi('http', config.host, config.port, null, null, done)
     });
 
     it("logout status should be success and the token should be null", function (done) {
-        rocketChatApi.logout(function (err, body) {
-            should(err).be.null;
-            should(body).not.be.null;
-            should(rocketChatApi.token).be.null;
-            body.status.should.equal("success");
-            done();
+        this.timeout(15000);
+        rocketChatApi.login(config.user, config.password, function (err, body) {
+            should(err).be.null();
+            should(body).not.be.null();
+            should(rocketChatApi.token).not.be.null();
+            rocketChatApi.logout(function (err, body) {
+                should(err).be.null();
+                should(body).not.be.null();
+                should(rocketChatApi.token).be.null();
+                done();
+            });
         });
     });
 });
@@ -74,55 +62,41 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
         user: config.user,
         password: config.password
     };
-    beforeEach(function () {
-        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
+
+    beforeEach(function (done) {
+        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, done);
     });
 
-    xit("create room status should be success", function (done) {
-        var roomName = "testRoom_" + Date.now();// create a room has unique name
-        rocketChatApi.createRoom(roomName, function (err, body) {
-            (!err).should.be.ok();
-            body.success.should.be.ok();
-            body.channel.name.should.equal(roomName);
-            done();
-        });
-    });
-
-    xit("create a new room with a test user, and join it, then leave it", function (done) {
+    it("create a new room with a test user, find the room, join it, then leave it", function (done) {
+        this.timeout(15000);
         var roomName = "testuser_testRoom_" + Date.now();// create a room has unique name
         rocketChatApi.createRoom(roomName, function (err, body) {
-            (!err).should.be.ok();
+            should(err).be.null();
+            should(body).not.be.null();
+            should(body).not.be.undefined();
+            body.channel.name.should.equal(roomName);
             var roomId = body.channel._id;
-            // join the room
-            rocketChatApi.joinRoom(roomId, function (err, body) {
-                (!err).should.be.ok();
-                rocketChatApi.leaveRoom(roomId, function (err, body) {
-                    (!err).should.be.ok();
-                    body.status.should.equal("success");
-                    done();
-                });
-
-            });
-        });
-    });
-
-    xit("create a new room with a uniqe name, then get the all public rooms to check", function (done) {
-
-        var createdRoomId = 0;
-        var roomName = "createdRoom_" + Date.now();// create a room has unique name
-        rocketChatApi.createRoom(roomName, function (err, body) {
-            (!err).should.be.ok();
-            var roomId = body.channel._id;
+            // find the room
             rocketChatApi.getPublicRooms(function (err, body) {
-                (!err).should.be.ok();
-                body.status.should.equal("success");
-                body.rooms.should.matchAny(function (room) {
+                should(err).be.null();
+                should(body).not.be.null();
+                should(body).not.be.undefined();
+                body.channels.should.matchAny(function (room) {
                     room._id.should.equal(roomId);
                 });
-                done();
+
+                // join the room
+                rocketChatApi.joinRoom(roomId, function (err, body) {
+                    should(err).be.null();
+                    rocketChatApi.leaveRoom(roomId, function (err, body) {
+                        should(err).be.null();
+                        done();
+                    });
+                });
             });
         });
     });
+
     afterEach(function () {
         rocketChatApi = null;
     });
@@ -131,19 +105,19 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
 
 describe("test sending a message and get all messages in a room", function () {
     var rocketChatApi = null;
-    beforeEach(function () {
-        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
+    beforeEach(function (done) {
+        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, done);
     });
 
     it("sending a message", function (done) {
         var roomName = "createdRoom_" + Date.now();// create a room has unique name
         var message = "Hello World";
         rocketChatApi.createRoom(roomName, function (err, body) {
-            (!err).should.be.ok();
+            should(err).be.null();
             var roomId = body.channel._id;
             rocketChatApi.sendMsg(roomId, message, function (err, body) {
-                (!err).should.be.ok();
-                body.success.should.be.true;
+                should(err).be.null();
+                should(body).not.be.null();
                 done();
             });
         });
@@ -162,7 +136,6 @@ describe("test sending a message and get all messages in a room", function () {
                     (!err).should.be.ok();
                     rocketChatApi.getUnreadMsg(roomId, function (err, body) {
                         (!err).should.be.ok();
-                        body.status.should.equal("success");
                         body.messages[0].msg.should.equal(message);
                         done();
                     });
