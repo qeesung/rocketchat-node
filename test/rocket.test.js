@@ -18,7 +18,8 @@ var config = {
 
 describe("Test the rest api and rocketchat version version", function () {
     it("rest api version should not be below 0.1 and rocketchat should not be beblow 0.5", function (done) {
-        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, function () {
+        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, function (err, body) {
+            if (err) throw err;
             rocketChatApi.version(function (err, body) {
                 should(err).be.null();
                 should(body).not.be.undefined;
@@ -33,8 +34,8 @@ describe("Test the rest api and rocketchat version version", function () {
 
 describe("test login and logout", function () {
     var rocketChatApi = null;
-    before(function (done) {
-        rocketChatApi = new RocketChatApi('http', config.host, config.port, null, null, done)
+    before(function () {
+        rocketChatApi = new RocketChatApi('http', config.host, config.port)
     });
 
     it("logout status should be success and the token should be null", function (done) {
