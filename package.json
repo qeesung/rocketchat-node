@@ -28,6 +28,7 @@
     "ws": "^2.2.3"
   },
   "devDependencies": {
+    "async": "^1.5.2",
     "mocha": "^3.0.2",
     "should": "^10.0.0"
   }
