@@ -47,7 +47,7 @@ describe("test 'me' interface to get user detail information", function () {
     it("user name should equal to "+config.user, function (done) {
         rocketChatClient.authentication.me(function (err, body) {
             should(err).be.null();
-            should.equal(body.name, config.user)
+            should.equal(body.username, config.user)
             done()
         })
     })
