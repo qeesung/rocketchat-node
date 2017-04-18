@@ -68,7 +68,7 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
         rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, done);
     });
 
-    it("create a new room with a test user, find the room, join it, then leave it", function (done) {
+    it("create a new room with a test user, find the room, join it, and set the topic", function (done) {
         this.timeout(15000);
         var roomName = "testuser_testRoom_" + Date.now();// create a room has unique name
         rocketChatApi.createRoom(roomName, function (err, body) {
@@ -89,12 +89,16 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
                 // join the room
                 rocketChatApi.joinRoom(roomId, function (err, body) {
                     should(err).be.null();
-                    done();
-                    /* cannot leave, only one user
-                    rocketChatApi.leaveRoom(roomId, function (err, body) {
+
+                    // set the topic
+                    rocketChatApi.setTopic(roomId, "mytopic", function (err, body) {
                         should(err).be.null();
                         done();
-                    });*/
+                        /* cannot leave, only one user
+                        rocketChatApi.leaveRoom(roomId, function (err, body) {
+                            should(err).be.null();
+                            done();;*/
+                    })
                 });
             });
         });
