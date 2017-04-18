@@ -43,10 +43,10 @@ describe("channels", function () {
 
         describe("querying channels", function () {
             it("should be listable", function (done) {
-                rocketChatClient.channels.list(0, 5, function (err, result) {
+                rocketChatClient.channels.list(function (err, result) {
                     should(err).be.null;
                     should(result.success).be.true;
-                    should(result.channels.length).be.equal(5);
+                    should(result.channels.length).be.greaterThan(5);
                     done();
                 })
             })
