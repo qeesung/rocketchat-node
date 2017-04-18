@@ -30,7 +30,7 @@ This Lib library package the following functions:
 - [Authentication](#Authentication)
   - [login](#Authentication.login)
   - [logout](#Authentication.logout)
-  - me
+  - [me](#Authentication.me)
 - Users
   - create
   - delete
@@ -376,6 +376,36 @@ this.rocketChatClient.authentication.logout(function (err, body) {});
       "authToken": "9HqLlyZOugoStsXCUfD_0YdwnNnunAJF8V47U3QHXSq",
       "userId": "aobEdbYhXfu5hkeqG"
    }
+}
+```
+
+
+#### <a id="Authentication.me"></a>me
+
+Quick information about the authenticated user.
+
+```js
+this.rocketChatClient.authentication.me(function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/authentication/me)](https://rocket.chat/docs/developer-guides/rest-api/authentication/me)
+
+```json
+{
+  "_id": "aobEdbYhXfu5hkeqG",
+  "name": "Example User",
+  "emails": [
+    {
+      "address": "example@example.com",
+      "verified": true
+    }
+  ],
+  "status": "offline",
+  "statusConnection": "offline",
+  "username": "example",
+  "utcOffset": 0,
+  "active": true,
+  "success": true
 }
 ```
 
