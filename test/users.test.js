@@ -28,13 +28,36 @@ describe("user", function () {
 
         var userId;
 
-        it("should add the new user successfully");
+        it("should add the new user successfully", function (done) {
+            rocketChatClient.users.create(userToAdd, function (err, result) {
+                should(err).be.null();
+                should(result).not.be.null();
+                should(result.success).be.true();
+                should(result.user._id).not.be.null();
+                userId = result._id;
+            });
+        });
 
         describe("get user information", function () {
-            it("should retrieve user information for a userId");
+            it("should retrieve user information for a userId", function (done) {
+                rocketChatClient.users.info(userId, function (err, result) {
+                    should(err).be.null();
+                    should(result).not.be.null();
+                    should(result.success).be.true();
+                    should(result.user.username).be.equal(userToAdd.username);
+                    should(result.user.name).be.equal(userToAdd.name);
+                    should(result.user.active).be.true();
+                });
+            });
 
             describe("deleting user", function () {
-                it("should delete the user successfully");
+                it("should delete the user successfully", function (done) {
+                    rocketChatClient.users.delete(userId, function (err, result) {
+                        should(err).be.null();
+                        should(result).not.be.null();
+                        should(result.success).be.true();
+                    });
+                });
             });
         });
     });
