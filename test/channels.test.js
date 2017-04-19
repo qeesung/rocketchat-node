@@ -30,8 +30,8 @@ describe("channels", function () {
             for(var i=0;i<10;i++) {
                 creates.push(function (callback) {
                     rocketChatClient.channels.create("channel-name-" + Date.now(), function (err, body) {
-                        should(err).be.null;
-                        should(body.success).be.true;
+                        should(err).be.null();
+                        should(body.success).be.true();
                         callback();
                     })
                 });
@@ -44,16 +44,16 @@ describe("channels", function () {
         describe("querying channels", function () {
             it("should be listable", function (done) {
                 rocketChatClient.channels.list(function (err, result) {
-                    should(err).be.null;
-                    should(result.success).be.true;
+                    should(err).be.null();
+                    should(result.success).be.true();
                     should(result.channels.length).be.greaterThan(5);
                     done();
                 })
             })
             it("should be pageable", function (done) {
                 rocketChatClient.channels.list(1, 5, function (err, result) {
-                    should(err).be.null;
-                    should(result.success).be.true;
+                    should(err).be.null();
+                    should(result.success).be.true();
                     should(result.channels.length).be.equal(5);
                     done();
                 })
