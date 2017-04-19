@@ -9,7 +9,7 @@ var config = {
     password: "123456"
 };
 
-describe("user", function () {
+describe("users", function () {
 
     var rocketChatClient = null;
     before(function (done) {
@@ -35,6 +35,7 @@ describe("user", function () {
                 should(result.success).be.true();
                 should(result.user._id).not.be.null();
                 userId = result._id;
+                done();
             });
         });
 
@@ -47,6 +48,7 @@ describe("user", function () {
                     should(result.user.username).be.equal(userToAdd.username);
                     should(result.user.name).be.equal(userToAdd.name);
                     should(result.user.active).be.true();
+                    done();
                 });
             });
 
@@ -56,6 +58,7 @@ describe("user", function () {
                         should(err).be.null();
                         should(result).not.be.null();
                         should(result.success).be.true();
+                        done();
                     });
                 });
             });
