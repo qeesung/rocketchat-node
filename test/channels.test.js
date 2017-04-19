@@ -43,17 +43,17 @@ describe("channels", function () {
 
         describe("querying channels", function () {
             it("should be listable", function (done) {
-                rocketChatClient.channels.list(function (err, result) {
-                    should(err).be.null;
-                    should(result.success).be.true;
+                rocketChatClient.channels.list({}, function (err, result) {
+                    should(err).be.null();
+                    should(result.success).be.true();
                     should(result.channels.length).be.greaterThan(5);
                     done();
                 })
             })
             it("should be pageable", function (done) {
-                rocketChatClient.channels.list(1, 5, function (err, result) {
-                    should(err).be.null;
-                    should(result.success).be.true;
+                rocketChatClient.channels.list({ offset : 1, count : 5 }, function (err, result) {
+                    should(err).be.null();
+                    should(result.success).be.true();
                     should(result.channels.length).be.equal(5);
                     done();
                 })
