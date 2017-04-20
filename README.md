@@ -32,12 +32,12 @@ This Lib library package the following functions:
   - [login](#Authentication.login)
   - [logout](#Authentication.logout)
   - [me](#Authentication.me)
-- Users
-  - create
-  - delete
+- [Users](#Users)
+  - [create](#Users.create)
+  - [delete](#Users.delete)
   - getPresence
-  - info
-  - list
+  - [info](#Users.info)
+  - [list](#Users.list)
   - setAvatar
   - update
 - [Channels](#Channels)
@@ -406,6 +406,123 @@ this.rocketChatClient.authentication.me(function (err, body) {});
   "username": "example",
   "utcOffset": 0,
   "active": true,
+  "success": true
+}
+```
+
+### <a id="Users"></a>Users
+
+#### <a id="Users.create"></a>create
+
+**NOTE** Due to a funny behavior of rocket.chat not responding to this call, the result is evaluated with a workaround and will always take minimum 500ms!
+
+```js
+var userToAdd = {
+    "name": "name",
+    "email": "email@example.com",
+    "password": "anypassyouwant",
+    "username": "uniqueusername",
+    "sendWelcomeEmail": false,
+    "joinDefaultChannels": false,
+    "verified":false,
+    "requirePasswordChange":false,
+    "roles":["user"]
+};
+this.rocketChatClient.users.create(userToAdd, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/users/create)](https://rocket.chat/docs/developer-guides/rest-api/users/create)
+
+```json
+{
+   "user": {
+      "_id": "BsNr28znDkG8aeo7W",
+      "createdAt": "2016-09-13T14:57:56.037Z",
+      "services": {
+         "password": {
+            "bcrypt": "$2a$10$5I5nUzqNEs8jKhi7BFS55uFYRf5TE4ErSUH8HymMNAbpMAvsOcl2C"
+         }
+      },
+      "username": "uniqueusername",
+      "emails": [
+         {
+            "address": "email@user.tld",
+            "verified": false
+         }
+      ],
+      "type": "user",
+      "status": "offline",
+      "active": true,
+      "roles": [
+         "user"
+      ],
+      "_updatedAt": "2016-09-13T14:57:56.175Z",
+      "name": "name",
+      "customFields": {
+         "twitter": "@userstwitter"
+      }
+   },
+   "success": true
+}
+```
+
+#### <a id="Users.delete"></a>delete
+
+```js
+this.rocketChatClient.users.delete(userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/users/delete)](https://rocket.chat/docs/developer-guides/rest-api/users/delete)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Users.info"></a>info
+
+```js
+this.rocketChatClient.users.info(userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/users/info)](https://rocket.chat/docs/developer-guides/rest-api/users/info)
+
+```json
+{
+  "user": {
+    "_id": "nSYqWzZ4GsKTX4dyK",
+    "type": "user",
+    "status": "offline",
+    "active": true,
+    "name": "Example User",
+    "utcOffset": 0,
+    "username": "example"
+  },
+  "success": true
+}
+```
+
+#### <a id="Users.list"></a>list
+
+```js
+this.rocketChatClient.users.list(offset, count, function (err, body) {});
+this.rocketChatClient.users.list(function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/users/list)](https://rocket.chat/docs/developer-guides/rest-api/users/list)
+
+```json
+{
+  "user": [{
+    "_id": "nSYqWzZ4GsKTX4dyK",
+    "type": "user",
+    "status": "offline",
+    "active": true,
+    "name": "Example User",
+    "utcOffset": 0,
+    "username": "example"
+  }],
   "success": true
 }
 ```
