@@ -145,7 +145,7 @@ This Lib library package the following functions:
     - Save Room Settings
   - [Subscriptions](#Subscriptions)
     - [stream-notify-user](#Subscriptions.stream-notify-user)
-      - [messages](#Subscriptions.stream-notify-user.messages)
+      - [notification](#Subscriptions.stream-notify-user.notification)
 
 
 ## Installation
@@ -802,15 +802,15 @@ Methods allow you to invoke methods (i.e. send message) while subscriptions allo
 
 ##### <a id="Subscriptions.stream-notify-user"></a>stream-notify-user
 
-###### <a id="Subscriptions.stream-notify-user.messages"></a>messages
+###### <a id="Subscriptions.stream-notify-user.notification"></a>notification
 
-Subscribe to messages
+Subscribe to notification. A notification seems to be a mention in a channel. The result is only a part of the full message, to get attachments one will have to query for the message afterwards.
 
 ```js
-this.rocketChatClient.notify.user.onMessage({ roomId : roomId, text : message }, callback);
+this.rocketChatClient.notify.user.onNotification(userId, callback);
 ```
 
-Result: 
+Result:
 
 ```json
 {

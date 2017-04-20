@@ -10,13 +10,27 @@ var config = {
 };
 
 describe("notifyUser", function () {
+    let userToAdd = {
+        "name": "sender" + Date.now(),
+        "email": `email${Date.now()}@example.com`,
+        "password": "anypassyouwant",
+        "username": "uniqueusername" + Date.now()
+    };
     let userId;
-    let client;
+    let client, secondClient;
 
     before(function (done) {
-        client = new RocketChatClient("http", config.host, config.port, config.user, config.password, function(err, body) {
+        this.timeout(5000);
+        client = new RocketChatClient("http", config.host, config.port, config.user, config.password, (err, body) => {
             should(err).be.null();
+            should(body).not.be.null();
             userId = body.userId;
+            client.users.create(userToAdd, function() {});
+            setTimeout(() => {
+                secondClient = new RocketChatClient("http", config.host, config.port, userToAdd.username, userToAdd.password, (err, body) => {
+                    done();
+                });
+            }, 500);
         });
     });
 
@@ -24,23 +38,30 @@ describe("notifyUser", function () {
         let roomId;
 
         before(function (done) {
-            client.channel.create("notify-user-" + Date.now(), function (err, body) {
+            client.channels.create("notify-user-" + Date.now(), function (err, body) {
                 should(err).be.null();
                 should(body.success).be.true();
+                roomId = body.channel._id;
                 done();
             });
         });
 
         it("should notify the user when a message for him was sent", function (done) {
             let message = `@${config.user} hello world!`;
-            client.notify.user.onMessage(userId, function(err, body) {
+            this.timeout(5000);
+            client.notify.user.onNotification(userId, function (err, body) {
                 should(err).be.null();
                 should(body).not.be.null();
                 should(body.fields.args[0].text).be.equal(message);
                 done();
-            }); 
+            });
 
-            client.chat.postMessage({ roomId, text: message });
+            secondClient.chat.postMessage({ roomId, text: message }, function (err, body) {
+
+                console.log(`message sent`);
+                should(err).be.null();
+                should(body).not.be.null();
+            });
         });
     });
 });
