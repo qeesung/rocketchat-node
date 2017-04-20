@@ -17,4 +17,5 @@ install:
   - npm install
 
 script:
-  - npm run test-and-coverage && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage
+  - npm run test-and-coverage
+  - cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage

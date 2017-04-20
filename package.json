@@ -5,7 +5,7 @@
   "main": "./lib/rocket-chat.js",
   "scripts": {
     "test": "mocha",
-    "test-and-coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --colors test/"
+    "test-and-coverage": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --colors test/"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "codacy-coverage": "^2.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
+    "mocha-lcov-reporter": "^1.3.0",
     "should": "^10.0.0"
   }
 }
