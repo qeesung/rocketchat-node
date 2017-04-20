@@ -144,6 +144,8 @@ This Lib library package the following functions:
     - Favoriting Rooms
     - Save Room Settings
   - [Subscriptions](#Subscriptions)
+    - [stream-notify-user](#Subscriptions.stream-notify-user)
+      - [messages](#Subscriptions.stream-notify-user.messages)
 
 
 ## Installation
@@ -797,6 +799,45 @@ Methods allow you to invoke methods (i.e. send message) while subscriptions allo
 
 
 #### <a id="Subscriptions"></a>Subscriptions
+
+##### <a id="Subscriptions.stream-notify-user"></a>stream-notify-user
+
+###### <a id="Subscriptions.stream-notify-user.messages"></a>messages
+
+Subscribe to messages
+
+```js
+this.rocketChatClient.notify.user.onMessage({ roomId : roomId, text : message }, callback);
+```
+
+Result: 
+
+```json
+{
+    "msg":"changed",
+    "collection":"stream-notify-user",
+    "id":"id",
+    "fields":{
+        "eventName":"${userId}/message",
+        "args":[
+            {
+                "title":"@username-sender",
+                "text":"message text",
+                "payload":{
+                    "_id":"id of the payload. might be use to ensure delivered only once?",
+                    "rid":"some id, probably userId + smth unique?",
+                    "sender":{
+                        "_id":"userid of the sender",
+                        "username":"username of sender"
+                    },
+                    "type":"d"
+                }
+            }
+        ]
+    }
+}
+```
+
 
 ## Options
 
