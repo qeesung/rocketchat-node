@@ -58,6 +58,39 @@ describe("channels", function () {
                     done();
                 })
             })
+            it("should be queryable", function (done) {
+                rocketChatClient.channels.list({ query : { "name": { "$regex": "thisreallydoesnotexist" } } }, function (err, result) {
+                    should(err).be.null();
+                    should(result.success).be.true();
+                    should(result.channels.length).be.equal(0);
+                    done();
+                })
+            })
+            it("should be fieldable", function (done) {
+                rocketChatClient.channels.list({ fields : { "name": 1 } }, function (err, result) {
+                    should(err).be.null();
+                    should(result.success).be.true();
+                    should(result.channels.length).be.greaterThan(0);
+                    should(result.channels[0].name).be.ok();
+                    should(result.channels[0].msgs === undefined).be.true();
+                    done();
+                })
+            })
+            it("should be sortable", function (done) {
+                rocketChatClient.channels.list({ sort : { "_updatedAt": 1 } }, function (err, result) {
+                    should(err).be.null();
+                    should(result.success).be.true();
+                    should(result.channels.length).be.greaterThan(0);
+                    let firstResult = result.channels[0];
+                    rocketChatClient.channels.list({ sort : { "_updatedAt": -1 } }, function (err, result) {
+                        should(err).be.null();
+                        should(result.success).be.true();
+                        should(result.channels.length).be.greaterThan(0);
+                        should(result.channels[0]).be.not.equal(firstResult);
+                        done();
+                    });
+                })
+            })
         })
     });
 
