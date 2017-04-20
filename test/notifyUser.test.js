@@ -57,8 +57,6 @@ describe("notifyUser", function () {
             });
 
             secondClient.chat.postMessage({ roomId, text: message }, function (err, body) {
-
-                console.log(`message sent`);
                 should(err).be.null();
                 should(body).not.be.null();
             });
