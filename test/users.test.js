@@ -83,7 +83,7 @@ describe("users", function () {
                 done();
             });
         });
-    })
+    });
 
     describe("get user presence", function () {
         it("should get the user presence successfully", function (done) {
