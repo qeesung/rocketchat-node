@@ -30,8 +30,8 @@ describe("channels", function () {
             for(var i=0;i<10;i++) {
                 creates.push(function (callback) {
                     rocketChatClient.channels.create("channel-name-" + Date.now(), function (err, body) {
-                        should(err).be.null;
-                        should(body.success).be.true;
+                        should(err).be.null();
+                        should(body.success).be.true();
                         callback();
                     })
                 });
