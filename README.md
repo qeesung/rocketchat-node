@@ -598,12 +598,19 @@ Lists all of the channels on the server, this method supports the Offset and Cou
 
 ```js
 // get the first items
-this.rocketChatClient.channels.list(function (err, body) {});
+this.rocketChatClient.channels.list({}, function (err, body) {});
 // get by offset and count
 // first 5 items
-this.rocketChatClient.channels.list(0, 5, function (err, body) {});
+this.rocketChatClient.channels.list({0, 5}, function (err, body) {});
 // third page
-this.rocketChatClient.channels.list(10, 5, function (err, body) {});
+this.rocketChatClient.channels.list({10, 5}, function (err, body) {});
+// find an item using mongo query syntax
+this.rocketChatClient.channels.list({ query : { "name": { "$regex": "thisreallydoesnotexist" } } }, function (err, body) {});
+// sort using mongo sort syntax
+this.rocketChatClient.channels.list({ sort : { "_updatedAt": 1 } }, function (err, body) {});
+// fielding using mongo field syntax
+this.rocketChatClient.channels.list({ fields : { "name": 1 } }, function (err, body) {});
+
 ```
 
 [Result (https://rocket.chat/docs/developer-guides/rest-api/channels/list)](https://rocket.chat/docs/developer-guides/rest-api/channels/list)
