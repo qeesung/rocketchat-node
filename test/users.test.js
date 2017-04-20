@@ -95,6 +95,17 @@ describe("users", function () {
         })
     });
 
+    describe("set user avatar", function () {
+        var avatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y";
+        it("should set the user avatar successfully", function (done) {
+            rocketChatClient.users.setAvatar(userId, avatarUrl, function (err, result) {
+                should(err).be.null();
+                should(result.success).be.true();
+                done();
+            });
+        })
+    });
+
     describe("deleting user", function () {
         it("should delete the user successfully", function (done) {
             rocketChatClient.users.delete(userId, function (err, result) {
