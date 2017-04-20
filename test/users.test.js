@@ -85,7 +85,15 @@ describe("users", function () {
         });
     })
 
-
+    describe("get user presence", function () {
+        it("should get the user presence successfully", function (done) {
+            rocketChatClient.users.getPresence(userId, function (err, result) {
+                should(err).be.null();
+                should(result.success).be.true();
+                done();
+            });
+        })
+    });
 
     describe("deleting user", function () {
         it("should delete the user successfully", function (done) {
