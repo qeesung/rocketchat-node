@@ -71,6 +71,40 @@ describe("users", function () {
 
     });
 
+    describe("update user", function () {
+        var newUsername = "new name";
+        it("updated username should equal to "+newUsername, function (done) {
+            rocketChatClient.users.update(userId, {
+                "name": newUsername
+            }, function (err, updatedUser) {
+                should(err).be.null();
+                should(updatedUser.success).be.true();
+                should.equal(updatedUser.user.name, newUsername);
+                done();
+            });
+        });
+    });
+
+    describe("get user presence", function () {
+        it("should get the user presence successfully", function (done) {
+            rocketChatClient.users.getPresence(userId, function (err, result) {
+                should(err).be.null();
+                should(result.success).be.true();
+                done();
+            });
+        })
+    });
+
+    describe("set user avatar", function () {
+        var avatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y";
+        it("should set the user avatar successfully", function (done) {
+            rocketChatClient.users.setAvatar(userId, avatarUrl, function (err, result) {
+                should(err).be.null();
+                should(result.success).be.true();
+                done();
+            });
+        })
+    });
 
     describe("deleting user", function () {
         it("should delete the user successfully", function (done) {
