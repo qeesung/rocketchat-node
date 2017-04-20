@@ -35,11 +35,11 @@ This Lib library package the following functions:
 - [Users](#Users)
   - [create](#Users.create)
   - [delete](#Users.delete)
-  - getPresence
+  - [getPresence](#Users.getPresence)
   - [info](#Users.info)
   - [list](#Users.list)
-  - setAvatar
-  - update
+  - [setAvatar](#Users.setAvatar)
+  - [update](#Users.update)
 - [Channels](#Channels)
   - addAll
   - addModerator
@@ -480,6 +480,21 @@ this.rocketChatClient.users.delete(userId, function (err, body) {});
 }
 ```
 
+#### <a id="Users.getPresence"></a>getPresence
+
+```js
+this.rocketChatClient.users.getPresence(userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/users/getpresence)](https://rocket.chat/docs/developer-guides/rest-api/users/getpresence)
+
+```json
+{
+  "presence": "offline",
+  "success": true
+}
+```
+
 #### <a id="Users.info"></a>info
 
 ```js
@@ -524,6 +539,61 @@ this.rocketChatClient.users.list(function (err, body) {});
     "username": "example"
   }],
   "success": true
+}
+```
+#### <a id="Users.setAvatar"></a>setAvatar
+
+```js
+this.rocketChatClient.users.setAvatar(userId, avatarUrl, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/users/setavatar)](https://rocket.chat/docs/developer-guides/rest-api/users/setavatar)
+
+```json
+{
+    "success": true
+}
+```
+
+#### <a id="Users.update"></a>update
+
+```js
+this.rocketChatClient.users.update(userId, updateData, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/users/update)](https://rocket.chat/docs/developer-guides/rest-api/users/update)
+
+
+```json
+{
+   "user":{
+      "_id": "BsNr28znDkG8aeo7W",
+      "createdAt": "2016-09-13T14:57:56.037Z",
+      "services": {
+         "password": {
+            "bcrypt": "$2a$10$5I5nUzqNEs8jKhi7BFS55uFYRf5TE4ErSUH8HymMNAbpMAvsOcl2C"
+         }
+      },
+      "username": "uniqueusername",
+      "emails": [
+         {
+            "address": "newemail@user.tld",
+            "verified": false
+         }
+      ],
+      "type": "user",
+      "status": "offline",
+      "active": true,
+      "roles": [
+         "user"
+      ],
+      "_updatedAt": "2016-09-13T14:57:56.175Z",
+      "name": "new name",
+      "customFields": {
+         "twitter": "userstwitter"
+      }
+   },
+   "success": true
 }
 ```
 
