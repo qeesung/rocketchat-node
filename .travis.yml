@@ -17,5 +17,4 @@ install:
   - npm install
 
 script:
-  - npm run test
-  - npm run integration-test
+  - npm run test-and-coverage
