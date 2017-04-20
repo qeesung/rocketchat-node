@@ -1,4 +1,4 @@
-var RocketChatClient = require('../lib/rocketChat').RocketChatClient
+var RocketChatClient = require("../lib/rocketChat").RocketChatClient;
 var should = require("should");
 var async = require("async");
 
@@ -11,9 +11,10 @@ var config = {
 
 describe("notifyUser", function () {
     let userId;
+    let client;
 
     before(function (done) {
-        let client = new RocketChatClient("http", config.host, config.port, config.user, config.password, function(err, body) {
+        client = new RocketChatClient("http", config.host, config.port, config.user, config.password, function(err, body) {
             should(err).be.null();
             userId = body.userId;
         });
@@ -32,7 +33,7 @@ describe("notifyUser", function () {
 
         it("should notify the user when a message for him was sent", function (done) {
             let message = `@${config.user} hello world!`;
-            client.subscriptions.forUser.onMessage(userId, function(err, body) {
+            client.notify.user.onMessage(userId, function(err, body) {
                 should(err).be.null();
                 should(body).not.be.null();
                 should(body.fields.args[0].text).be.equal(message);
