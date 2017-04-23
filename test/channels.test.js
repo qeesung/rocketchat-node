@@ -1,9 +1,9 @@
-var RocketChatClient = require('../lib/rocketChat').RocketChatClient
-var should = require("should");
-var async = require("async");
+const RocketChatClient = require("../lib/rocketChat").RocketChatClient;
+const should = require("should");
+const async = require("async");
 const co = require("co");
 
-var config = {
+const config = {
     host: "127.0.0.1",
     port: "3000",
     user: "qeesung",
@@ -12,17 +12,17 @@ var config = {
 
 describe("channels", function () {
 
-    var rocketChatClient = null;
+    let rocketChatClient = null;
     before(function (done) {
         rocketChatClient = new RocketChatClient("http",
             config.host,
             config.port,
             config.user,
             config.password,
-            done)
+            done);
     });
 
-    var userToAdd = {
+    let userToAdd = {
         "name": "test-channel-user",
         "email": "email@example.com",
         "password": "anypassyouwant",
@@ -35,18 +35,16 @@ describe("channels", function () {
     };
 
     describe("creating channels", function () {
-        var creationResult = null;
-
         it("should be successful", function (done) {
             this.timeout(10000);
-            var creates = [];
-            for (var i = 0; i < 10; i++) {
+            let creates = [];
+            for (let i = 0; i < 10; i++) {
                 creates.push(function (callback) {
                     rocketChatClient.channels.create("channel-name-" + Date.now(), function (err, body) {
                         should(err).be.null();
                         should(body.success).be.true();
                         callback();
-                    })
+                    });
                 });
             }
             async.series(creates, function () {
@@ -61,24 +59,24 @@ describe("channels", function () {
                     should(result.success).be.true();
                     should(result.channels.length).be.greaterThan(5);
                     done();
-                })
-            })
+                });
+            });
             it("should be pageable", function (done) {
                 rocketChatClient.channels.list({offset: 1, count: 5}, function (err, result) {
                     should(err).be.null();
                     should(result.success).be.true();
                     should(result.channels.length).be.equal(5);
                     done();
-                })
-            })
+                });
+            });
             it("should be queryable", function (done) {
                 rocketChatClient.channels.list({query: {"name": {"$regex": "thisreallydoesnotexist"}}}, function (err, result) {
                     should(err).be.null();
                     should(result.success).be.true();
                     should(result.channels.length).be.equal(0);
                     done();
-                })
-            })
+                });
+            });
             it("should be fieldable", function (done) {
                 rocketChatClient.channels.list({fields: {"name": 1}}, function (err, result) {
                     should(err).be.null();
@@ -87,8 +85,8 @@ describe("channels", function () {
                     should(result.channels[0].name).be.ok();
                     should(result.channels[0].msgs === undefined).be.true();
                     done();
-                })
-            })
+                });
+            });
             it("should be sortable", function (done) {
                 rocketChatClient.channels.list({sort: {"_updatedAt": 1}}, function (err, result) {
                     should(err).be.null();
@@ -102,9 +100,9 @@ describe("channels", function () {
                         should(result.channels[0]).be.not.equal(firstResult);
                         done();
                     });
-                })
-            })
-        })
+                });
+            });
+        });
     });
 
     describe("add user to the channel", () => {
@@ -128,8 +126,8 @@ describe("channels", function () {
                 addedRoomId = addedChannel.channel._id;
                 should(addedRoomId).be.ok();
             }).catch((err) => {
-                console.log(err.stack);
-            })
+                should(err).be.null();
+            });
         });
 
         afterEach(function () {
@@ -143,20 +141,20 @@ describe("channels", function () {
                 removeChannelResult.success.should.be.ok();
 
                 addedUserId = null;
-                addedUserId = null;
+                addedRoomId = null;
             }).catch((err) => {
-                console.log(err.stack);
-            })
+                should(err).be.null();
+            });
         });
 
-        it(`Adds all of the users of the Rocket.Chat server to the channel. test username should in the "username" list`, () => {
+        it("Adds all of the users of the Rocket.Chat server to the channel. test username should in the \"username\" list", () => {
             return co(function *() {
                 // add all user into the added channel
                 let addedResult = yield rocketChatClient.channels.addAll(addedRoomId);
                 addedResult.channel.usernames.should.containEql(userToAdd.username);
             }).catch((err) => {
                 should(err).be.null();
-            })
+            });
         });
 
         it("Gives the role of moderator for a user in the currrent channel. result should be successful", () => {

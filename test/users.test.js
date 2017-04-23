@@ -1,8 +1,7 @@
-var RocketChatClient = require('../lib/rocketChat').RocketChatClient
-var should = require("should");
-var async = require("async");
+const RocketChatClient = require("../lib/rocketChat").RocketChatClient;
+const should = require("should");
 
-var config = {
+const config = {
     host: "127.0.0.1",
     port: "3000",
     user: "qeesung",
@@ -11,16 +10,16 @@ var config = {
 
 describe("users", function () {
 
-    var rocketChatClient = null;
+    let rocketChatClient = null;
     before(function (done) {
         rocketChatClient = new RocketChatClient("http",
             config.host,
             config.port,
             config.user,
             config.password,
-            done)
+            done);
     });
-    var userToAdd = {
+    let userToAdd = {
         "name": "name", 
         "email": "email@example.com", 
         "password": "anypassyouwant", 
@@ -32,7 +31,7 @@ describe("users", function () {
         "roles":["user"]
     };
 
-    var userId;
+    let userId = null;
     before(function () {
         userToAdd.name = userToAdd.name + Date.now();
         userToAdd.username = userToAdd.username + Date.now();
@@ -72,7 +71,7 @@ describe("users", function () {
     });
 
     describe("update user", function () {
-        var newUsername = "new name";
+        let newUsername = "new name";
         it("updated username should equal to "+newUsername, function (done) {
             rocketChatClient.users.update(userId, {
                 "name": newUsername
@@ -92,18 +91,18 @@ describe("users", function () {
                 should(result.success).be.true();
                 done();
             });
-        })
+        });
     });
 
     describe("set user avatar", function () {
-        var avatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y";
+        let avatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y";
         it("should set the user avatar successfully", function (done) {
             rocketChatClient.users.setAvatar(userId, avatarUrl, function (err, result) {
                 should(err).be.null();
                 should(result.success).be.true();
                 done();
             });
-        })
+        });
     });
 
     describe("deleting user", function () {
