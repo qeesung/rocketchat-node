@@ -132,13 +132,17 @@ describe("channels", function () {
 
         afterEach(function () {
             return co(function *() {
-                // remove added user
-                let removeUserResult = yield rocketChatClient.users.delete(addedUserId);
-                removeUserResult.success.should.be.ok();
-
                 // remove added channel
-                let removeChannelResult = yield rocketChatClient.channels.close(addedRoomId);
-                removeChannelResult.success.should.be.ok();
+                if(addedRoomId != null) {
+                    let removeChannelResult = yield rocketChatClient.channels.close(addedRoomId);
+                    removeChannelResult.success.should.be.ok();
+                }
+
+                // remove added user
+                if( addedUserId != null) {
+                    let removeUserResult = yield rocketChatClient.users.delete(addedUserId);
+                    removeUserResult.success.should.be.ok();
+                }
 
                 addedUserId = null;
                 addedRoomId = null;
@@ -189,6 +193,40 @@ describe("channels", function () {
                 let invitedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
                 invitedResult.success.should.equal(true);
                 invitedResult.channel.usernames.should.containEql(userToAdd.username);
+            });
+        });
+
+        it("Removes a user from the channel. the user should not in the username list", () => {
+            return co(function *() {
+                // invite user into the room
+                let invitedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
+                invitedResult.success.should.equal(true);
+                invitedResult.channel.usernames.should.containEql(userToAdd.username);
+
+                // kick the user out
+                let kickedResult = yield rocketChatClient.channels.kick(addedRoomId, addedUserId);
+                kickedResult.success.should.equal(true);
+                kickedResult.channel.usernames.should.not.containEql(userToAdd.username);
+            });
+        });
+
+        it("Causes the callee to be removed from the channel. the callee should not in the username list", () => {
+            return co(function *() {
+                // qeesung is the only owner of the channel, so need to set new owner before leaving the room
+                // add user into the room
+                let addedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
+                addedResult.success.should.equal(true);
+
+                // add the user as owner
+                let addOwnerResult = yield rocketChatClient.channels.addOwner(addedRoomId, addedUserId);
+                addOwnerResult.success.should.equal(true);
+
+                let leaveResult = yield rocketChatClient.channels.leave(addedRoomId);
+                leaveResult.success.should.equal(true);
+                leaveResult.channel.usernames.should.not.containEql(config.user);
+
+                addedUserId = null;
+                addedRoomId = null;
             });
         });
     });
