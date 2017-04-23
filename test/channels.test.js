@@ -244,4 +244,42 @@ describe("channels", function () {
 
 
     });
+
+    describe("config and get properties from channel", () => {
+        let addedRoomId = null;
+
+        beforeEach(() => {
+            userToAdd.name = userToAdd.name + Date.now();
+            userToAdd.username = userToAdd.username + Date.now();
+            userToAdd.email = "email" + Date.now() + "@example.com";
+
+            return co(function *() {
+                let addedChannel = yield rocketChatClient.channels.create("channel-name-"+Date.now());
+                addedRoomId = addedChannel.channel._id;
+            });
+        });
+
+        afterEach(() => {
+            return co(function *() {
+                if(addedRoomId != null)
+                    yield rocketChatClient.channels.close(addedRoomId);
+            });
+        });
+
+        it("Archives a channel. result should be successful", () => {
+            return co(function *() {
+                let archiveResult = yield rocketChatClient.channels.archive(addedRoomId);
+                archiveResult.success.should.equal(true);
+                addedRoomId = null; // The added room have already archived
+            });
+        });
+
+        it("Removes the channel from the user’s list of channels. result should be successful", () => {
+            return co(function *() {
+                let closeResult = yield rocketChatClient.channels.close(addedRoomId);
+                closeResult.success.should.equal(true);
+                addedRoomId = null; // The channel already closed to the sender
+            });
+        });
+    });
 });
