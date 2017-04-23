@@ -287,5 +287,50 @@ describe("channels", function () {
                 openResult.success.should.equal(true);
             });
         });
+
+        it("Retrieves the messages from a channel. the latest message should be 'hello world'", () => {
+            return co(function *() {
+                let textMessage = "hello world at "+Date.now();
+                // send message
+                let postMessageResult = yield rocketChatClient.chat.postMessage({roomId: addedRoomId, text: textMessage});
+                postMessageResult.success.should.equal(true);
+
+                // get the messages from channel
+                let history = yield rocketChatClient.channels.history({roomId: addedRoomId});
+                history.messages.should.matchEach((value) => {
+                    value.msg.should.match(/^hello world at/);
+                });
+            });
+        });
+
+        it("Cleans up a channel, removing messages from the provided time range. the messages should be empty", () => {
+            return co(function *() {
+                // send 10 messages
+                let postMessageTasks = [...Array(10)].map((_, i) => {
+                    let messageText = `hello world#${i} at`+Date.now();
+                    return rocketChatClient.chat.postMessage({
+                        roomId: addedRoomId,
+                        text: messageText
+                    });
+                });
+                yield postMessageTasks;
+
+                // get the messages from the channel
+                let history = yield rocketChatClient.channels.history({roomId: addedRoomId});
+                history.messages.should.matchEach((value) => {
+                    value.msg.should.match(/^hello world/);
+                });
+
+                // clean the messages
+                let lastDate = new Date();
+                lastDate.setDate(lastDate.getDate() - 1);
+                let cleanResult = yield rocketChatClient.channels.cleanHistory(addedRoomId, Date.now(), lastDate);
+                cleanResult.success.should.equal(true);
+
+                // get the messages from the channel
+                history = yield rocketChatClient.channels.history({roomId: addedRoomId});
+                history.messages.length.should.equal(0);
+            });
+        });
     });
 });
