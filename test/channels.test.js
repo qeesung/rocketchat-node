@@ -339,5 +339,13 @@ describe("channels", function () {
                 integrations.success.should.equal(true);
             });
         });
+
+        it("Retrieves the information about the channel. the result should be successful", () => {
+            return co(function *() {
+                let channelInfo = yield rocketChatClient.channels.info(addedRoomId);
+                channelInfo.success.should.equal(true);
+                channelInfo.channel.should.not.be.null();
+            });
+        });
     });
 });
