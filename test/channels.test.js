@@ -183,5 +183,13 @@ describe("channels", function () {
             });
         });
 
+        it("Adds a user to the channel. new added username should in the username list", () => {
+            return co(function *() {
+                // invite user into the room
+                let invitedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
+                invitedResult.success.should.equal(true);
+                invitedResult.channel.usernames.should.containEql(userToAdd.username);
+            });
+        });
     });
 });
