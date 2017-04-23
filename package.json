@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/qeesung/rocketchat-node.git#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
+    "co": "^4.6.0",
     "ddp.js": "^2.2.0",
     "https-proxy-agent": "^1.0.0",
     "request": "^2.72.0",
