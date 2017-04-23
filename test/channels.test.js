@@ -107,7 +107,7 @@ describe("channels", function () {
         })
     });
 
-    describe("Adds all of the users of the Rocket.Chat server to the channel.",  () => {
+    describe("add user to the channel",  () => {
 
         let addedUserId = null;
         let addedRoomId = null;
@@ -116,9 +116,7 @@ describe("channels", function () {
             userToAdd.name = userToAdd.name + Date.now();
             userToAdd.username = userToAdd.username + Date.now();
             userToAdd.email = "email" + Date.now() + "@example.com";
-        });
 
-        it(`${userToAdd.username} should in the channel`, ()=>{
             return co(function *() {
                 // create temp user
                 let addedUser = yield rocketChatClient.users.create(userToAdd);
@@ -129,22 +127,51 @@ describe("channels", function () {
                 let addedChannel = yield rocketChatClient.channels.create("channel-name-"+Date.now());
                 addedRoomId = addedChannel.channel._id;
                 should(addedRoomId).be.ok();
+            }).catch((err)=>{
+                console.log(err.stack);
+            })
+        });
 
+        afterEach(function () {
+           return co(function *() {
+               // remove added user
+               let removeUserResult = yield rocketChatClient.users.delete(addedUserId);
+               removeUserResult.success.should.be.ok();
+
+               // remove added channel
+               let removeChannelResult = yield rocketChatClient.channels.close(addedRoomId);
+               removeChannelResult.success.should.be.ok();
+
+               addedUserId = null;
+               addedUserId = null;
+           }).catch((err)=>{
+               console.log(err.stack);
+           })
+        });
+
+        it(`Adds all of the users of the Rocket.Chat server to the channel. test username should in the "username" list`, ()=>{
+            return co(function *() {
                 // add all user into the added channel
                 let addedResult = yield rocketChatClient.channels.addAll(addedRoomId);
                 addedResult.channel.usernames.should.containEql(userToAdd.username);
-
-                // remove added user
-                let removeUserResult = yield rocketChatClient.users.delete(addedUserId);
-                removeUserResult.success.should.be.ok();
-
-                // remove added channel
-                let removeChannelResult = yield rocketChatClient.channels.close(addedRoomId);
-                removeChannelResult.success.should.be.ok();
-
             }).catch((err) => {
                 should(err).be.null();
             })
-        })
+        });
+
+        it("Gives the role of moderator for a user in the currrent channel. result should be successful", ()=>{
+            return co(function *() {
+                // add user into the room
+                let addedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
+                addedResult.success.should.equal(true);
+
+                // and set the user as moderator
+                let setModeratorResult = yield rocketChatClient.channels.addModerator(addedRoomId, addedUserId);
+                setModeratorResult.success.should.equal(true);
+            }).catch((err) => {
+                should(err).be.null();
+            });
+        });
+
     });
-})
+});
