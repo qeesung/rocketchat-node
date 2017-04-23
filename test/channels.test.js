@@ -161,7 +161,9 @@ describe("channels", function () {
             });
         });
 
-        it("Gives the role of moderator for a user in the currrent channel. result should be successful", () => {
+        it("Gives the role of moderator for a user in the currrent channel," +
+            " then Removes the role of moderator from a user in the currrent channel. " +
+            "result should be successful", () => {
             return co(function *() {
                 // add user into the room
                 let addedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
@@ -170,12 +172,18 @@ describe("channels", function () {
                 // and set the user as moderator
                 let setModeratorResult = yield rocketChatClient.channels.addModerator(addedRoomId, addedUserId);
                 setModeratorResult.success.should.equal(true);
+
+                // then remove role
+                let removeMederatorResult = yield rocketChatClient.channels.removeModerator(addedRoomId, addedUserId);
+                removeMederatorResult.success.should.equal(true);
             }).catch((err) => {
                 should(err).be.null();
             });
         });
 
-        it("Gives the role of owner for a user in the current channel. result should be successful", () => {
+        it("Gives the role of owner for a user in the current channel, " +
+            "removes the role of owner from a user in the current channel. " +
+            "result should be successful", () => {
             return co(function *() {
                 // add user into the room
                 let addedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
@@ -184,6 +192,9 @@ describe("channels", function () {
                 // add the user as owner
                 let addOwnerResult = yield rocketChatClient.channels.addOwner(addedRoomId, addedUserId);
                 addOwnerResult.success.should.equal(true);
+
+                let removeOwnerResult = yield rocketChatClient.channels.removeOwner(addedRoomId, addedUserId);
+                removeOwnerResult.success.should.equal(true);
             });
         });
 
@@ -225,9 +236,12 @@ describe("channels", function () {
                 leaveResult.success.should.equal(true);
                 leaveResult.channel.usernames.should.not.containEql(config.user);
 
+                // qeesung have already leave the room, can not remove the user and room
                 addedUserId = null;
                 addedRoomId = null;
             });
         });
+
+
     });
 });
