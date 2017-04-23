@@ -381,5 +381,22 @@ describe("channels", function () {
                 setedChannel.description.should.equal(description);
             });
         });
+
+        it("Sets the code required to join the channel. the result should be successful", () => {
+            return co(function *() {
+                let newJoinCode = "my-join-code";
+                let changedJoinedCodeChannel = yield rocketChatClient.channels.setJoinCode(addedRoomId, newJoinCode);
+                changedJoinedCodeChannel.success.should.equal(true);
+            });
+        });
+
+        it("Sets the description for the channel. the result should be successful", () => {
+            let newPurpose = "Testing out everything";
+            return co(function *() {
+                let updatedChannel = yield rocketChatClient.channels.setPurpose(addedRoomId, newPurpose);
+                updatedChannel.success.should.equal(true);
+                updatedChannel.purpose.should.equal(newPurpose);
+            });
+        });
     });
 });
