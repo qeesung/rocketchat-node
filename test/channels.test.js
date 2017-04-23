@@ -1,6 +1,7 @@
 var RocketChatClient = require('../lib/rocketChat').RocketChatClient
 var should = require("should");
 var async = require("async");
+const co = require("co");
 
 var config = {
     host: "127.0.0.1",
@@ -20,6 +21,18 @@ describe("channels", function () {
             config.password,
             done)
     });
+
+    var userToAdd = {
+        "name": "test-channel-user",
+        "email": "email@example.com",
+        "password": "anypassyouwant",
+        "username": "uniqueusername",
+        "sendWelcomeEmail": false,
+        "joinDefaultChannels": false,
+        "verified":false,
+        "requirePasswordChange":false,
+        "roles":["user"]
+    };
 
     describe("creating channels", function () {
         var creationResult = null;
@@ -94,4 +107,44 @@ describe("channels", function () {
         })
     });
 
+    describe("Adds all of the users of the Rocket.Chat server to the channel.",  () => {
+
+        let addedUserId = null;
+        let addedRoomId = null;
+
+        beforeEach(function () {
+            userToAdd.name = userToAdd.name + Date.now();
+            userToAdd.username = userToAdd.username + Date.now();
+            userToAdd.email = "email" + Date.now() + "@example.com";
+        });
+
+        it(`${userToAdd.username} should in the channel`, ()=>{
+            return co(function *() {
+                // create temp user
+                let addedUser = yield rocketChatClient.users.create(userToAdd);
+                addedUserId = addedUser.user._id;
+                should(addedUserId).not.be.null();
+
+                // create test channel
+                let addedChannel = yield rocketChatClient.channels.create("channel-name-"+Date.now());
+                addedRoomId = addedChannel.channel._id;
+                should(addedRoomId).be.ok();
+
+                // add all user into the added channel
+                let addedResult = yield rocketChatClient.channels.addAll(addedRoomId);
+                addedResult.channel.usernames.should.containEql(userToAdd.username);
+
+                // remove added user
+                let removeUserResult = yield rocketChatClient.users.delete(addedUserId);
+                removeUserResult.success.should.be.ok();
+
+                // remove added channel
+                let removeChannelResult = yield rocketChatClient.channels.close(addedRoomId);
+                removeChannelResult.success.should.be.ok();
+
+            }).catch((err) => {
+                should(err).be.null();
+            })
+        })
+    });
 })
