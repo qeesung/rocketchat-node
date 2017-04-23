@@ -363,5 +363,13 @@ describe("channels", function () {
                 });
             });
         });
+
+        it("Changes the name of the channel. the name should equal to new-name", () => {
+            return co(function *() {
+                let renamedChannel = yield rocketChatClient.channels.rename(addedRoomId, "new-name");
+                renamedChannel.success.should.equal(true);
+                renamedChannel.channel.name.should.equal("new-name");
+            });
+        });
     });
 });
