@@ -274,11 +274,15 @@ describe("channels", function () {
             });
         });
 
-        it("Removes the channel from the user’s list of channels. result should be successful", () => {
+        it("Removes the channel from the user’s list of channels " +
+            "then adds the channel back to the user’s list of channels." +
+            " result should be successful", () => {
             return co(function *() {
                 let closeResult = yield rocketChatClient.channels.close(addedRoomId);
                 closeResult.success.should.equal(true);
-                addedRoomId = null; // The channel already closed to the sender
+
+                let openResult = yield rocketChatClient.channels.open(addedRoomId);
+                openResult.success.should.equal(true);
             });
         });
     });
