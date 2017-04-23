@@ -398,5 +398,13 @@ describe("channels", function () {
                 updatedChannel.purpose.should.equal(newPurpose);
             });
         });
+
+        it("Sets whether the channel is read only or not. the channel ro should be true", () => {
+            return co(function *() {
+                let readonlyChannel = yield rocketChatClient.channels.setReadOnly(addedRoomId, true);
+                readonlyChannel.success.should.equal(true);
+                readonlyChannel.channel.ro.should.equal(true);
+            });
+        });
     });
 });
