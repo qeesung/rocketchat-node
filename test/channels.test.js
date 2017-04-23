@@ -266,11 +266,13 @@ describe("channels", function () {
             });
         });
 
-        it("Archives a channel. result should be successful", () => {
+        it("Archives a channel, then unarchives a channel. result should be successful", () => {
             return co(function *() {
                 let archiveResult = yield rocketChatClient.channels.archive(addedRoomId);
                 archiveResult.success.should.equal(true);
-                addedRoomId = null; // The added room have already archived
+
+                let unarchiveResult = yield rocketChatClient.channels.unarchive(addedRoomId);
+                unarchiveResult.success.should.equal(true);
             });
         });
 
