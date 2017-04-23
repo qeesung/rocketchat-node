@@ -347,5 +347,21 @@ describe("channels", function () {
                 channelInfo.channel.should.not.be.null();
             });
         });
+
+        it("List all channels and list all channels joined", () => {
+            return co(function *() {
+                let joinedChannelList = yield rocketChatClient.channels.listJoined({});
+                joinedChannelList.success.should.equal(true);
+                joinedChannelList.channels.should.matchAny((channel) => {
+                    channel._id.should.match(addedRoomId);
+                });
+
+                let serverChannelList = yield rocketChatClient.channels.list({});
+                serverChannelList.success.should.equal(true);
+                serverChannelList.channels.should.matchAny((channel) => {
+                    channel._id.should.match(addedRoomId);
+                });
+            });
+        });
     });
 });
