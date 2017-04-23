@@ -173,5 +173,17 @@ describe("channels", function () {
             });
         });
 
+        it("Gives the role of owner for a user in the currrent channel. result should be successful", ()=>{
+            return co(function *() {
+                // add user into the room
+                let addedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
+                addedResult.success.should.equal(true);
+
+                // add the user as owner
+                let addOwnerResult = yield rocketChatClient.channels.addOwner(addedRoomId, addedUserId);
+                addOwnerResult.success.should.equal(true);
+            });
+        });
+
     });
 });
