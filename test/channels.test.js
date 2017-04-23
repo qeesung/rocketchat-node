@@ -365,10 +365,20 @@ describe("channels", function () {
         });
 
         it("Changes the name of the channel. the name should equal to new-name", () => {
+            let newName = "new-name-"+Date.now();
             return co(function *() {
-                let renamedChannel = yield rocketChatClient.channels.rename(addedRoomId, "new-name");
+                let renamedChannel = yield rocketChatClient.channels.rename(addedRoomId, newName);
                 renamedChannel.success.should.equal(true);
-                renamedChannel.channel.name.should.equal("new-name");
+                renamedChannel.channel.name.should.equal(newName);
+            });
+        });
+
+        it("Sets the description for the channel. the result should be successful", () => {
+            return co(function *() {
+                let description = "hello world";
+                let setedChannel = yield rocketChatClient.channels.setDescription(addedRoomId, description);
+                setedChannel.success.should.equal(true);
+                setedChannel.description.should.equal(description);
             });
         });
     });
