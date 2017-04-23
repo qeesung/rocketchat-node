@@ -29,9 +29,9 @@ describe("channels", function () {
         "username": "uniqueusername",
         "sendWelcomeEmail": false,
         "joinDefaultChannels": false,
-        "verified":false,
-        "requirePasswordChange":false,
-        "roles":["user"]
+        "verified": false,
+        "requirePasswordChange": false,
+        "roles": ["user"]
     };
 
     describe("creating channels", function () {
@@ -40,7 +40,7 @@ describe("channels", function () {
         it("should be successful", function (done) {
             this.timeout(10000);
             var creates = [];
-            for(var i=0;i<10;i++) {
+            for (var i = 0; i < 10; i++) {
                 creates.push(function (callback) {
                     rocketChatClient.channels.create("channel-name-" + Date.now(), function (err, body) {
                         should(err).be.null();
@@ -49,7 +49,7 @@ describe("channels", function () {
                     })
                 });
             }
-            async.series(creates, function() {
+            async.series(creates, function () {
                 done();
             });
         });
@@ -64,7 +64,7 @@ describe("channels", function () {
                 })
             })
             it("should be pageable", function (done) {
-                rocketChatClient.channels.list({ offset : 1, count : 5 }, function (err, result) {
+                rocketChatClient.channels.list({offset: 1, count: 5}, function (err, result) {
                     should(err).be.null();
                     should(result.success).be.true();
                     should(result.channels.length).be.equal(5);
@@ -72,7 +72,7 @@ describe("channels", function () {
                 })
             })
             it("should be queryable", function (done) {
-                rocketChatClient.channels.list({ query : { "name": { "$regex": "thisreallydoesnotexist" } } }, function (err, result) {
+                rocketChatClient.channels.list({query: {"name": {"$regex": "thisreallydoesnotexist"}}}, function (err, result) {
                     should(err).be.null();
                     should(result.success).be.true();
                     should(result.channels.length).be.equal(0);
@@ -80,7 +80,7 @@ describe("channels", function () {
                 })
             })
             it("should be fieldable", function (done) {
-                rocketChatClient.channels.list({ fields : { "name": 1 } }, function (err, result) {
+                rocketChatClient.channels.list({fields: {"name": 1}}, function (err, result) {
                     should(err).be.null();
                     should(result.success).be.true();
                     should(result.channels.length).be.greaterThan(0);
@@ -90,12 +90,12 @@ describe("channels", function () {
                 })
             })
             it("should be sortable", function (done) {
-                rocketChatClient.channels.list({ sort : { "_updatedAt": 1 } }, function (err, result) {
+                rocketChatClient.channels.list({sort: {"_updatedAt": 1}}, function (err, result) {
                     should(err).be.null();
                     should(result.success).be.true();
                     should(result.channels.length).be.greaterThan(0);
                     let firstResult = result.channels[0];
-                    rocketChatClient.channels.list({ sort : { "_updatedAt": -1 } }, function (err, result) {
+                    rocketChatClient.channels.list({sort: {"_updatedAt": -1}}, function (err, result) {
                         should(err).be.null();
                         should(result.success).be.true();
                         should(result.channels.length).be.greaterThan(0);
@@ -107,7 +107,7 @@ describe("channels", function () {
         })
     });
 
-    describe("add user to the channel",  () => {
+    describe("add user to the channel", () => {
 
         let addedUserId = null;
         let addedRoomId = null;
@@ -124,32 +124,32 @@ describe("channels", function () {
                 should(addedUserId).not.be.null();
 
                 // create test channel
-                let addedChannel = yield rocketChatClient.channels.create("channel-name-"+Date.now());
+                let addedChannel = yield rocketChatClient.channels.create("channel-name-" + Date.now());
                 addedRoomId = addedChannel.channel._id;
                 should(addedRoomId).be.ok();
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err.stack);
             })
         });
 
         afterEach(function () {
-           return co(function *() {
-               // remove added user
-               let removeUserResult = yield rocketChatClient.users.delete(addedUserId);
-               removeUserResult.success.should.be.ok();
+            return co(function *() {
+                // remove added user
+                let removeUserResult = yield rocketChatClient.users.delete(addedUserId);
+                removeUserResult.success.should.be.ok();
 
-               // remove added channel
-               let removeChannelResult = yield rocketChatClient.channels.close(addedRoomId);
-               removeChannelResult.success.should.be.ok();
+                // remove added channel
+                let removeChannelResult = yield rocketChatClient.channels.close(addedRoomId);
+                removeChannelResult.success.should.be.ok();
 
-               addedUserId = null;
-               addedUserId = null;
-           }).catch((err)=>{
-               console.log(err.stack);
-           })
+                addedUserId = null;
+                addedUserId = null;
+            }).catch((err) => {
+                console.log(err.stack);
+            })
         });
 
-        it(`Adds all of the users of the Rocket.Chat server to the channel. test username should in the "username" list`, ()=>{
+        it(`Adds all of the users of the Rocket.Chat server to the channel. test username should in the "username" list`, () => {
             return co(function *() {
                 // add all user into the added channel
                 let addedResult = yield rocketChatClient.channels.addAll(addedRoomId);
@@ -159,7 +159,7 @@ describe("channels", function () {
             })
         });
 
-        it("Gives the role of moderator for a user in the currrent channel. result should be successful", ()=>{
+        it("Gives the role of moderator for a user in the currrent channel. result should be successful", () => {
             return co(function *() {
                 // add user into the room
                 let addedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
@@ -173,7 +173,7 @@ describe("channels", function () {
             });
         });
 
-        it("Gives the role of owner for a user in the currrent channel. result should be successful", ()=>{
+        it("Gives the role of owner for a user in the current channel. result should be successful", () => {
             return co(function *() {
                 // add user into the room
                 let addedResult = yield rocketChatClient.channels.invite(addedRoomId, addedUserId);
