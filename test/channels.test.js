@@ -332,5 +332,12 @@ describe("channels", function () {
                 history.messages.length.should.equal(0);
             });
         });
+
+        it("Retrieves the integrations which the channel has, the result should be successful", () => {
+            return co(function *() {
+                let integrations = yield rocketChatClient.channels.getIntegrations(addedRoomId);
+                integrations.success.should.equal(true);
+            });
+        });
     });
 });
