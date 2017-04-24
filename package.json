@@ -2,7 +2,7 @@
   "name": "rocketchat",
   "version": "0.1.1",
   "description": "Rocket chat node api",
-  "main": "./lib/rocket-chat.js",
+  "main": "./index.js",
   "scripts": {
     "test": "mocha",
     "test-and-coverage": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --colors test/"
