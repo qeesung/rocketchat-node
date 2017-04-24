@@ -601,6 +601,125 @@ this.rocketChatClient.users.update(userId, updateData, function (err, body) {});
 
 ### <a id="Channels"></a>Channels
 
+#### <a id="Channels.addAll"></a>AddAll
+
+Adds all of the users of the Rocket.Chat server to the channel.
+
+```js
+this.rocketChatClient.channels.addAll(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/addall)](https://rocket.chat/docs/developer-guides/rest-api/channels/addall)
+
+```json
+{
+   "channel": {
+      "_id": "ByehQjC44FwMeiLbX",
+      "name": "channelname",
+      "t": "c",
+      "usernames": [
+         "example",
+         "rocket.cat"
+      ],
+      "msgs": 0,
+      "u": {
+         "_id": "aobEdbYhXfu5hkeqG",
+         "username": "example"
+      },
+      "ts": "2016-05-30T13:42:25.304Z"
+   },
+   "success": true
+}
+```
+
+#### <a id="Channels.addModerator"></a>addModerator
+
+Gives the role of moderator for a user in the current channel.
+
+```js
+this.rocketChatClient.channels.addModerator(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/addmoderator)](https://rocket.chat/docs/developer-guides/rest-api/channels/addmoderator)
+
+```json
+{
+   "success": true
+}
+```
+
+#### <a id="Channels.addOwner"></a>addOwner
+
+Gives the role of owner for a user in the current channel.
+
+```js
+this.rocketChatClient.channels.addOwner(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/addowner)](https://rocket.chat/docs/developer-guides/rest-api/channels/addowner)
+
+```json
+{
+   "success": true
+}
+```
+
+  - archive
+
+#### <a id="Channels.archive"></a>archive
+
+Archives a channel.
+
+```js
+this.rocketChatClient.channels.archive(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/archive)](https://rocket.chat/docs/developer-guides/rest-api/channels/archive)
+
+```json
+{
+   "success": true
+}
+```
+
+  - cleanHistory
+
+#### <a id="Channels.cleanHistory"></a>cleanHistory
+
+Cleans up a channel, removing messages from the provided time range.
+
+```js
+this.rocketChatClient.channels.cleanHistory(roomId, roomId, latest, oldest, function (err, body) {});
+// inclusive default value is false, if you want to change that pass the parameter
+this.rocketChatClient.channels.cleanHistory(roomId, roomId, latest, oldest, inclusive, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/cleanhistory)](https://rocket.chat/docs/developer-guides/rest-api/channels/cleanhistory)
+
+```json
+{
+   "success"
+}
+```
+
+  - close
+
+#### <a id="Channels.close"></a>close
+
+Removes the channel from the user’s list of channels.
+
+```js
+this.rocketChatClient.channels.close(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/close)](https://rocket.chat/docs/developer-guides/rest-api/channels/close)
+
+```json
+{
+   "success"
+}
+```
+
 #### <a id="Channels.create"></a>create
 
 Creates a new public channel.
