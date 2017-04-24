@@ -8,6 +8,18 @@ A node.js module, which provides an object oriented wrapper for the RocketChat R
 RocketChat official website address can be found [here](https://rocket.chat/)  .
 RocketChat REST API document can be found [here](https://rocket.chat/docs/developer-guides/rest-api/).
 
+## getting started
+
+```bash
+npm install rocketchat
+```
+
+```js
+var RocketChatApi = require('rocketchat').RocketChatApi;
+// OR
+var RocketChatClient = require('rocketchat').RocketChatClient;
+```
+
 This Lib library package the following functions:
 
 ## old api
@@ -170,11 +182,15 @@ $ npm install
 ### <a id="create-client"></a>Create the rocket-chat client
 
 ```
+// rocketchat api wrapper
 var RocketChatApi = require('rocketchat').RocketChatApi;
 // alpha-api versions
 var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password);
 // v1-api versions
 var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, "v1");
+
+// direct access to new api
+var RocketChatClient = require('rocketchat').RocketChatClient;
 ```
 
 ### Obtaining the running rocket-chat version
