@@ -750,6 +750,215 @@ this.rocketChatClient.channels.create(roomName, function (err, body) {});
 }
 ```
 
+#### <a id="Channels.getIntegrations"></a>getIntegrations
+
+Retrieves the integrations which the channel has, requires the permission manage-integrations.
+
+```js
+this.rocketChatClient.channels.getIntegrations(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)](https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)
+
+```json
+{
+    "integrations": [{
+        "_id": "WMQDChpnYTRmFre9h",
+        "enabled": true,
+        "username": "rocket.cat",
+        "alias": "Guggy",
+        "avatar": "http://res.guggy.com/logo_128.png",
+        "name": "Guggy",
+        "triggerWords": [
+            "!guggy",
+            "guggy",
+            "gif+"
+        ],
+        "urls": [
+            "http://text2gif.guggy.com/guggify"
+        ],
+        "token": "8DFS89DMKLWEN",
+        "script": "/* Some script */",
+        "scriptEnabled": true,
+        "impersonateUser": false,
+        "scriptCompiled": "/* lot of script */",
+        "scriptError": null,
+        "type": "webhook-outgoing",
+        "userId": "rocket.cat",
+        "channel": [],
+        "_createdAt": "2017-01-05T17:06:05.660Z",
+        "_createdBy": {
+            "username": "graywolf336",
+            "_id": "R4jgcQaQhvvK6K3iY"
+        },
+        "_updatedAt": "2017-01-05T17:06:05.660Z"
+    }],
+    "success": true
+}
+```
+
+#### <a id="Channels.history"></a>history
+
+Retrieves the messages from a channel.
+
+```js
+this.rocketChatClient.channels.history(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/history)](https://rocket.chat/docs/developer-guides/rest-api/channels/history)
+
+```json
+{
+  "messages": [
+    {
+      "_id": "AkzpHAvZpdnuchw2a",
+      "rid": "ByehQjC44FwMeiLbX",
+      "msg": "hi",
+      "ts": "2016-12-09T12:50:51.555Z",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "_updatedAt": "2016-12-09T12:50:51.562Z"
+    },
+    {
+      "_id": "vkLMxcctR4MuTxreF",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-08T15:41:37.730Z",
+      "msg": "testing2",
+      "u": {
+        "_id": "bRtgdhzM6PD9F8pSx",
+        "username": "testing2"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-08T16:03:25.235Z"
+    },
+    {
+      "_id": "bfRW658nEyEBg75rc",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-07T15:47:49.099Z",
+      "msg": "testing",
+      "u": {
+        "_id": "nSYqWzZ4GsKTX4dyK",
+        "username": "testing1"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-07T15:47:49.099Z"
+    },
+    {
+      "_id": "pbuFiGadhRZTKouhB",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-06T17:57:38.635Z",
+      "msg": "testing",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-06T17:57:38.635Z"
+    }
+  ],
+  "success": true
+}
+```
+
+#### <a id="Channels.info"></a>info
+
+Retrieves the information about the channel.
+
+```js
+this.rocketChatClient.channels.info(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/info)](https://rocket.chat/docs/developer-guides/rest-api/channels/info)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "ts": "2016-11-30T21:23:04.737Z",
+    "t": "c",
+    "name": "testing",
+    "usernames": [
+      "testing",
+      "testing1",
+      "testing2"
+    ],
+    "msgs": 1,
+    "default": true,
+    "_updatedAt": "2016-12-09T12:50:51.575Z",
+    "lm": "2016-12-09T12:50:51.555Z"
+  },
+  "success": true
+}
+```
+
+
+#### <a id="Channels.invite"></a>invite
+
+Adds a user to the channel.
+
+```js
+this.rocketChatClient.channels.invite(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/invite)](https://rocket.chat/docs/developer-guides/rest-api/channels/invite)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "ts": "2016-11-30T21:23:04.737Z",
+    "t": "c",
+    "name": "testing",
+    "usernames": [
+      "testing",
+      "testing1"
+    ],
+    "msgs": 1,
+    "_updatedAt": "2016-12-09T12:50:51.575Z",
+    "lm": "2016-12-09T12:50:51.555Z"
+  },
+  "success": true
+}
+```
+
+#### <a id="Channels.kick"></a>kick
+
+Kicks a user from the channel.
+
+```js
+this.rocketChatClient.channels.kick(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/kick)](https://rocket.chat/docs/developer-guides/rest-api/channels/kick)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "name": "invite-me",
+    "t": "c",
+    "usernames": [
+      "testing1"
+    ],
+    "msgs": 0,
+    "u": {
+      "_id": "aobEdbYhXfu5hkeqG",
+      "username": "testing1"
+    },
+    "ts": "2016-12-09T15:08:58.042Z",
+    "ro": false,
+    "sysMes": true,
+    "_updatedAt": "2016-12-09T15:22:40.656Z"
+  },
+  "success": true
+}
+```
+
 #### <a id="Channels.leave"></a>leave
 
 Causes the callee to be removed from the channel.
