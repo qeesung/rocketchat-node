@@ -992,6 +992,42 @@ this.rocketChatClient.channels.leave(roomId, function (err, body) {});
 }
 ```
 
+#### <a id="Channels.list.joined"></a>list.joined
+
+Lists all of the channels the calling user has joined.
+
+```js
+// pass a query object to limit the results
+this.rocketChatClient.channels.listJoined({}, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined)](https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined)
+
+```json
+{
+    "channels": [
+        {
+            "_id": "ByehQjC44FwMeiLbX",
+            "name": "invite-me",
+            "t": "c",
+            "usernames": [
+                "testing1"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "aobEdbYhXfu5hkeqG",
+                "username": "testing1"
+            },
+            "ts": "2016-12-09T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        }
+    ],
+    "success": true
+}
+```
+
 #### <a id="Channels.list"></a>list
 
 Lists all of the channels on the server, this method supports the Offset and Count Query Parameters.
@@ -1053,6 +1089,192 @@ this.rocketChatClient.channels.list({ fields : { "name": 1 } }, function (err, b
             "_updatedAt": "2016-12-09T15:22:40.656Z"
         }
     ],
+    "success": true
+}
+```
+
+#### <a id="Channels.open"></a>open
+
+Adds the channel back to the user’s list of channels.
+
+```js
+this.rocketChatClient.channels.open(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/open)](https://rocket.chat/docs/developer-guides/rest-api/channels/open)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Channels.removeModerator"></a>removeModerator
+
+Removes the role of moderator from a user in the currrent channel.
+
+```js
+this.rocketChatClient.channels.removeModerator(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/removemoderator)](https://rocket.chat/docs/developer-guides/rest-api/channels/removemoderator)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Channels.removeOwner"></a>removeOwner
+
+Removes the role of owner from a user in the currrent channel.
+
+```js
+this.rocketChatClient.channels.removeOwner(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/removeowner)](https://rocket.chat/docs/developer-guides/rest-api/channels/removeowner)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Channels.rename"></a>rename
+
+Changes the name of the channel.
+
+```js
+this.rocketChatClient.channels.rename(roomId, newName, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/rename)](https://rocket.chat/docs/developer-guides/rest-api/channels/rename)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "name": "new-name",
+    "t": "c",
+    "usernames": [
+      "testing1"
+    ],
+    "msgs": 4,
+    "u": {
+      "_id": "aobEdbYhXfu5hkeqG",
+      "username": "testing1"
+    },
+    "ts": "2016-12-09T15:08:58.042Z",
+    "ro": false,
+    "sysMes": true,
+    "_updatedAt": "2016-12-09T15:57:44.686Z"
+  },
+  "success": true
+}
+```
+
+#### <a id="Channels.setDescription"></a>setDescription
+
+Sets the description for the channel.
+
+```js
+this.rocketChatClient.channels.setDescription(roomId, description, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setdescription)](https://rocket.chat/docs/developer-guides/rest-api/channels/setdescription)
+
+```json
+{
+  "description": "Testing out everything.",
+  "success": true
+}
+```
+
+#### <a id="Channels.setJoinCode"></a>setJoinCode
+
+Sets the code required to join the channel.
+
+```js
+this.rocketChatClient.channels.setJoinCode(roomId, joinCode, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setjoincode)](https://rocket.chat/docs/developer-guides/rest-api/channels/setjoincode)
+
+```json
+{
+    "channel": {
+        "_id": "ByehQjC44FwMeiLbX",
+        "name": "testing0",
+        "t": "c",
+        "msgs": 0,
+        "u": {
+            "_id": "aiPqNoGkjpNDiRx6d",
+            "username": "goose160"
+        },
+        "ts": "2017-01-05T18:02:50.754Z",
+        "ro": false,
+        "sysMes": true,
+        "_updatedAt": "2017-01-05T18:41:48.840Z",
+        "usernames": [
+            "goose160",
+            "graywolf336"
+        ],
+        "joinCodeRequired": true
+    },
+    "success": true
+}
+```
+
+#### <a id="Channels.setPurpose"></a>setPurpose
+
+Sets the purpose/description for the channel.
+
+```js
+this.rocketChatClient.channels.setPurpose(roomId, purpose, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setpurpose)](https://rocket.chat/docs/developer-guides/rest-api/channels/setpurpose)
+
+```json
+{
+  "purpose": "Testing out everything.",
+  "success": true
+}
+```
+
+#### <a id="Channels.setReadOnly"></a>setReadOnly
+
+Sets whether the channel is read only or not.
+
+```js
+this.rocketChatClient.channels.setReadOnly(roomId, readonly, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setreadonly)](https://rocket.chat/docs/developer-guides/rest-api/channels/setreadonly)
+
+```json
+{
+    "channel": {
+        "_id": "ByehQjC44FwMeiLbX",
+        "name": "testing0",
+        "t": "c",
+        "msgs": 0,
+        "u": {
+            "_id": "aiPqNoGkjpNDiRx6d",
+            "username": "goose160"
+        },
+        "ts": "2017-01-05T18:02:50.754Z",
+        "ro": true,
+        "sysMes": true,
+        "_updatedAt": "2017-01-05T19:02:24.429Z",
+        "usernames": [
+            "goose160",
+            "graywolf336"
+        ],
+        "joinCodeRequired": true,
+        "muted": []
+    },
     "success": true
 }
 ```
