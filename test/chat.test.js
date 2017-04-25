@@ -31,7 +31,7 @@ describe("chat", function () {
     describe("remove", function () {
         it("should be able to remove a posted message", function () {
             return co(function* () {
-                let message = yield this.rocketChatClient.chat.postMessage({ roomId, text: "any message" });
+                let message = yield rocketChatClient.chat.postMessage({ roomId, text: "any message" });
                 let msgId = message.message._id;
                 let result = yield rocketChatClient.chat.remove({ roomId, msgId });
                 should(result).not.be.null();
@@ -44,7 +44,7 @@ describe("chat", function () {
         it("should be able to update a posted message", function () {
             const updatedText = "updated";
             return co(function* () {
-                let message = yield this.rocketChatClient.chat.postMessage({ roomId, text: "any message" });
+                let message = yield rocketChatClient.chat.postMessage({ roomId, text: "any message" });
                 let msgId = message.message._id;
                 let result = yield rocketChatClient.chat.update({ roomId, msgId, text: updatedText });
                 should(result).not.be.null();
