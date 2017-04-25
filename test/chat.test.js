@@ -33,7 +33,7 @@ describe("chat", function () {
             return co(function* () {
                 let message = yield rocketChatClient.chat.postMessage({ roomId, text: "any message" });
                 let msgId = message.message._id;
-                let result = yield rocketChatClient.chat.remove({ roomId, msgId });
+                let result = yield rocketChatClient.chat.delete({ roomId, msgId });
                 should(result).not.be.null();
                 should(result.success).be.true();
             }).catch((err) => {
