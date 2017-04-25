@@ -41,32 +41,32 @@ This Lib library package the following functions:
   - [setAvatar](#Users.setAvatar)
   - [update](#Users.update)
 - [Channels](#Channels)
-  - addAll
-  - addModerator
-  - addOwner
-  - archive
-  - cleanHistory
-  - close
+  - [addAll](#Channels.addAll)
+  - [addModerator](#Channels.addModerator)
+  - [addOwner](#Channels.addOwner)
+  - [archive](#Channels.archive)
+  - [cleanHistory](#Channels.cleanHistory)
+  - [close](#Channels.close)
   - [create](#Channels.create)
-  - getIntegrations
-  - history
-  - info
-  - invite
-  - kick
+  - [getIntegrations](#Channels.getIntegrations)
+  - [history](#Channels.history)
+  - [info](#Channels.info)
+  - [invite](#Channels.invite)
+  - [kick](#Channels.kick)
   - [leave](#Channels.leave)
-  - list.joined
+  - [list.joined](#Channels.list.joined)
   - [list](#Channels.list)
-  - open
-  - removeModerator
-  - removeOwner
-  - rename
-  - setDescription
-  - setJoinCode
-  - setPurpose
-  - setReadOnly
+  - [open](#Channels.open)
+  - [removeModerator](#Channels.removeModerator)
+  - [removeOwner](#Channels.removeOwner)
+  - [rename](#Channels.rename)
+  - [setDescription](#Channels.setDescription)
+  - [setJoinCode](#Channels.setJoinCode)
+  - [setPurpose](#Channels.setPurpose)
+  - [setReadOnly](#Channels.setReadOnly)
   - [setTopic](#Channels.setTopic)
   - setType
-  - unarchive
+  - [unarchive](#Channels.unarchive)
 - Groups
   - addAll
   - addModerator
@@ -1292,6 +1292,23 @@ this.rocketChatClient.channels.setTopic(roomId, topic, function (err, body) {});
 ```json
 {
   "topic": "Testing out everything.",
+  "success": true
+}
+```
+
+
+#### <a id="Channels.unarchive"></a>unarchive
+
+Unarchives a channel.
+
+```js
+this.rocketChatClient.channels.unarchive(roomId, topic, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/unarchive)](https://rocket.chat/docs/developer-guides/rest-api/channels/unarchive)
+
+```json
+{
   "success": true
 }
 ```
