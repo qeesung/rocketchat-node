@@ -3,6 +3,7 @@
 [![Join the chat at https://gitter.im/rocketchat-node/Lobby](https://badges.gitter.im/rocketchat-node/Lobby.svg)](https://gitter.im/rocketchat-node/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/qeesung/rocketchat-node.svg?branch=master)](https://travis-ci.org/qeesung/rocketchat-node)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/53be1acc1c9a452db33e528393a51c03)](https://www.codacy.com/app/qeesung/rocketchat-node?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=qeesung/rocketchat-node&amp;utm_campaign=Badge_Grade)
+[![dependencies Status](https://david-dm.org/qeesung/rocketchat-node/status.svg)](https://david-dm.org/qeesung/rocketchat-node)
 
 A node.js module, which provides an object oriented wrapper for the RocketChat REST API.
 
