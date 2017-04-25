@@ -24,7 +24,7 @@ var RocketChatClient = require('rocketchat').RocketChatClient;
 
 This Lib library package the following functions:
 
-## old api
+## RocketChatApi
 
 - [create client](#create-client)
 - [login](#login)
@@ -36,9 +36,7 @@ This Lib library package the following functions:
 - [get all unread messages in a room](#unread-messages)
 - [sending a message](#send-messages)
 
-## [new api (implemented have links)](#newapi)
-
-**Note:** The new api cannot be used directly yet
+## [RocketChatClient](#newapi)
 
 - [Miscellaneous](#Miscellaneous)
   - [info](#Miscellaneous.info)
@@ -55,32 +53,32 @@ This Lib library package the following functions:
   - [setAvatar](#Users.setAvatar)
   - [update](#Users.update)
 - [Channels](#Channels)
-  - addAll
-  - addModerator
-  - addOwner
-  - archive
-  - cleanHistory
-  - close
+  - [addAll](#Channels.addAll)
+  - [addModerator](#Channels.addModerator)
+  - [addOwner](#Channels.addOwner)
+  - [archive](#Channels.archive)
+  - [cleanHistory](#Channels.cleanHistory)
+  - [close](#Channels.close)
   - [create](#Channels.create)
-  - getIntegrations
-  - history
-  - info
-  - invite
-  - kick
+  - [getIntegrations](#Channels.getIntegrations)
+  - [history](#Channels.history)
+  - [info](#Channels.info)
+  - [invite](#Channels.invite)
+  - [kick](#Channels.kick)
   - [leave](#Channels.leave)
-  - list.joined
+  - [list.joined](#Channels.list.joined)
   - [list](#Channels.list)
-  - open
-  - removeModerator
-  - removeOwner
-  - rename
-  - setDescription
-  - setJoinCode
-  - setPurpose
-  - setReadOnly
+  - [open](#Channels.open)
+  - [removeModerator](#Channels.removeModerator)
+  - [removeOwner](#Channels.removeOwner)
+  - [rename](#Channels.rename)
+  - [setDescription](#Channels.setDescription)
+  - [setJoinCode](#Channels.setJoinCode)
+  - [setPurpose](#Channels.setPurpose)
+  - [setReadOnly](#Channels.setReadOnly)
   - [setTopic](#Channels.setTopic)
   - setType
-  - unarchive
+  - [unarchive](#Channels.unarchive)
 - Groups
   - addAll
   - addModerator
@@ -619,6 +617,125 @@ this.rocketChatClient.users.update(userId, updateData, function (err, body) {});
 
 ### <a id="Channels"></a>Channels
 
+#### <a id="Channels.addAll"></a>AddAll
+
+Adds all of the users of the Rocket.Chat server to the channel.
+
+```js
+this.rocketChatClient.channels.addAll(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/addall)](https://rocket.chat/docs/developer-guides/rest-api/channels/addall)
+
+```json
+{
+   "channel": {
+      "_id": "ByehQjC44FwMeiLbX",
+      "name": "channelname",
+      "t": "c",
+      "usernames": [
+         "example",
+         "rocket.cat"
+      ],
+      "msgs": 0,
+      "u": {
+         "_id": "aobEdbYhXfu5hkeqG",
+         "username": "example"
+      },
+      "ts": "2016-05-30T13:42:25.304Z"
+   },
+   "success": true
+}
+```
+
+#### <a id="Channels.addModerator"></a>addModerator
+
+Gives the role of moderator for a user in the current channel.
+
+```js
+this.rocketChatClient.channels.addModerator(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/addmoderator)](https://rocket.chat/docs/developer-guides/rest-api/channels/addmoderator)
+
+```json
+{
+   "success": true
+}
+```
+
+#### <a id="Channels.addOwner"></a>addOwner
+
+Gives the role of owner for a user in the current channel.
+
+```js
+this.rocketChatClient.channels.addOwner(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/addowner)](https://rocket.chat/docs/developer-guides/rest-api/channels/addowner)
+
+```json
+{
+   "success": true
+}
+```
+
+  - archive
+
+#### <a id="Channels.archive"></a>archive
+
+Archives a channel.
+
+```js
+this.rocketChatClient.channels.archive(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/archive)](https://rocket.chat/docs/developer-guides/rest-api/channels/archive)
+
+```json
+{
+   "success": true
+}
+```
+
+  - cleanHistory
+
+#### <a id="Channels.cleanHistory"></a>cleanHistory
+
+Cleans up a channel, removing messages from the provided time range.
+
+```js
+this.rocketChatClient.channels.cleanHistory(roomId, roomId, latest, oldest, function (err, body) {});
+// inclusive default value is false, if you want to change that pass the parameter
+this.rocketChatClient.channels.cleanHistory(roomId, roomId, latest, oldest, inclusive, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/cleanhistory)](https://rocket.chat/docs/developer-guides/rest-api/channels/cleanhistory)
+
+```json
+{
+   "success"
+}
+```
+
+  - close
+
+#### <a id="Channels.close"></a>close
+
+Removes the channel from the user’s list of channels.
+
+```js
+this.rocketChatClient.channels.close(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/close)](https://rocket.chat/docs/developer-guides/rest-api/channels/close)
+
+```json
+{
+   "success"
+}
+```
+
 #### <a id="Channels.create"></a>create
 
 Creates a new public channel.
@@ -646,6 +763,215 @@ this.rocketChatClient.channels.create(roomName, function (err, body) {});
       "ts": "2016-05-30T13:42:25.304Z"
    },
    "success": true
+}
+```
+
+#### <a id="Channels.getIntegrations"></a>getIntegrations
+
+Retrieves the integrations which the channel has, requires the permission manage-integrations.
+
+```js
+this.rocketChatClient.channels.getIntegrations(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)](https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)
+
+```json
+{
+    "integrations": [{
+        "_id": "WMQDChpnYTRmFre9h",
+        "enabled": true,
+        "username": "rocket.cat",
+        "alias": "Guggy",
+        "avatar": "http://res.guggy.com/logo_128.png",
+        "name": "Guggy",
+        "triggerWords": [
+            "!guggy",
+            "guggy",
+            "gif+"
+        ],
+        "urls": [
+            "http://text2gif.guggy.com/guggify"
+        ],
+        "token": "8DFS89DMKLWEN",
+        "script": "/* Some script */",
+        "scriptEnabled": true,
+        "impersonateUser": false,
+        "scriptCompiled": "/* lot of script */",
+        "scriptError": null,
+        "type": "webhook-outgoing",
+        "userId": "rocket.cat",
+        "channel": [],
+        "_createdAt": "2017-01-05T17:06:05.660Z",
+        "_createdBy": {
+            "username": "graywolf336",
+            "_id": "R4jgcQaQhvvK6K3iY"
+        },
+        "_updatedAt": "2017-01-05T17:06:05.660Z"
+    }],
+    "success": true
+}
+```
+
+#### <a id="Channels.history"></a>history
+
+Retrieves the messages from a channel.
+
+```js
+this.rocketChatClient.channels.history(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/history)](https://rocket.chat/docs/developer-guides/rest-api/channels/history)
+
+```json
+{
+  "messages": [
+    {
+      "_id": "AkzpHAvZpdnuchw2a",
+      "rid": "ByehQjC44FwMeiLbX",
+      "msg": "hi",
+      "ts": "2016-12-09T12:50:51.555Z",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "_updatedAt": "2016-12-09T12:50:51.562Z"
+    },
+    {
+      "_id": "vkLMxcctR4MuTxreF",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-08T15:41:37.730Z",
+      "msg": "testing2",
+      "u": {
+        "_id": "bRtgdhzM6PD9F8pSx",
+        "username": "testing2"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-08T16:03:25.235Z"
+    },
+    {
+      "_id": "bfRW658nEyEBg75rc",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-07T15:47:49.099Z",
+      "msg": "testing",
+      "u": {
+        "_id": "nSYqWzZ4GsKTX4dyK",
+        "username": "testing1"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-07T15:47:49.099Z"
+    },
+    {
+      "_id": "pbuFiGadhRZTKouhB",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-06T17:57:38.635Z",
+      "msg": "testing",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-06T17:57:38.635Z"
+    }
+  ],
+  "success": true
+}
+```
+
+#### <a id="Channels.info"></a>info
+
+Retrieves the information about the channel.
+
+```js
+this.rocketChatClient.channels.info(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/info)](https://rocket.chat/docs/developer-guides/rest-api/channels/info)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "ts": "2016-11-30T21:23:04.737Z",
+    "t": "c",
+    "name": "testing",
+    "usernames": [
+      "testing",
+      "testing1",
+      "testing2"
+    ],
+    "msgs": 1,
+    "default": true,
+    "_updatedAt": "2016-12-09T12:50:51.575Z",
+    "lm": "2016-12-09T12:50:51.555Z"
+  },
+  "success": true
+}
+```
+
+
+#### <a id="Channels.invite"></a>invite
+
+Adds a user to the channel.
+
+```js
+this.rocketChatClient.channels.invite(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/invite)](https://rocket.chat/docs/developer-guides/rest-api/channels/invite)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "ts": "2016-11-30T21:23:04.737Z",
+    "t": "c",
+    "name": "testing",
+    "usernames": [
+      "testing",
+      "testing1"
+    ],
+    "msgs": 1,
+    "_updatedAt": "2016-12-09T12:50:51.575Z",
+    "lm": "2016-12-09T12:50:51.555Z"
+  },
+  "success": true
+}
+```
+
+#### <a id="Channels.kick"></a>kick
+
+Kicks a user from the channel.
+
+```js
+this.rocketChatClient.channels.kick(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/kick)](https://rocket.chat/docs/developer-guides/rest-api/channels/kick)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "name": "invite-me",
+    "t": "c",
+    "usernames": [
+      "testing1"
+    ],
+    "msgs": 0,
+    "u": {
+      "_id": "aobEdbYhXfu5hkeqG",
+      "username": "testing1"
+    },
+    "ts": "2016-12-09T15:08:58.042Z",
+    "ro": false,
+    "sysMes": true,
+    "_updatedAt": "2016-12-09T15:22:40.656Z"
+  },
+  "success": true
 }
 ```
 
@@ -679,6 +1005,42 @@ this.rocketChatClient.channels.leave(roomId, function (err, body) {});
     "_updatedAt": "2016-12-09T15:22:40.656Z"
   },
   "success": true
+}
+```
+
+#### <a id="Channels.list.joined"></a>list.joined
+
+Lists all of the channels the calling user has joined.
+
+```js
+// pass a query object to limit the results
+this.rocketChatClient.channels.listJoined({}, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined)](https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined)
+
+```json
+{
+    "channels": [
+        {
+            "_id": "ByehQjC44FwMeiLbX",
+            "name": "invite-me",
+            "t": "c",
+            "usernames": [
+                "testing1"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "aobEdbYhXfu5hkeqG",
+                "username": "testing1"
+            },
+            "ts": "2016-12-09T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        }
+    ],
+    "success": true
 }
 ```
 
@@ -747,6 +1109,192 @@ this.rocketChatClient.channels.list({ fields : { "name": 1 } }, function (err, b
 }
 ```
 
+#### <a id="Channels.open"></a>open
+
+Adds the channel back to the user’s list of channels.
+
+```js
+this.rocketChatClient.channels.open(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/open)](https://rocket.chat/docs/developer-guides/rest-api/channels/open)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Channels.removeModerator"></a>removeModerator
+
+Removes the role of moderator from a user in the currrent channel.
+
+```js
+this.rocketChatClient.channels.removeModerator(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/removemoderator)](https://rocket.chat/docs/developer-guides/rest-api/channels/removemoderator)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Channels.removeOwner"></a>removeOwner
+
+Removes the role of owner from a user in the currrent channel.
+
+```js
+this.rocketChatClient.channels.removeOwner(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/removeowner)](https://rocket.chat/docs/developer-guides/rest-api/channels/removeowner)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Channels.rename"></a>rename
+
+Changes the name of the channel.
+
+```js
+this.rocketChatClient.channels.rename(roomId, newName, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/rename)](https://rocket.chat/docs/developer-guides/rest-api/channels/rename)
+
+```json
+{
+  "channel": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "name": "new-name",
+    "t": "c",
+    "usernames": [
+      "testing1"
+    ],
+    "msgs": 4,
+    "u": {
+      "_id": "aobEdbYhXfu5hkeqG",
+      "username": "testing1"
+    },
+    "ts": "2016-12-09T15:08:58.042Z",
+    "ro": false,
+    "sysMes": true,
+    "_updatedAt": "2016-12-09T15:57:44.686Z"
+  },
+  "success": true
+}
+```
+
+#### <a id="Channels.setDescription"></a>setDescription
+
+Sets the description for the channel.
+
+```js
+this.rocketChatClient.channels.setDescription(roomId, description, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setdescription)](https://rocket.chat/docs/developer-guides/rest-api/channels/setdescription)
+
+```json
+{
+  "description": "Testing out everything.",
+  "success": true
+}
+```
+
+#### <a id="Channels.setJoinCode"></a>setJoinCode
+
+Sets the code required to join the channel.
+
+```js
+this.rocketChatClient.channels.setJoinCode(roomId, joinCode, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setjoincode)](https://rocket.chat/docs/developer-guides/rest-api/channels/setjoincode)
+
+```json
+{
+    "channel": {
+        "_id": "ByehQjC44FwMeiLbX",
+        "name": "testing0",
+        "t": "c",
+        "msgs": 0,
+        "u": {
+            "_id": "aiPqNoGkjpNDiRx6d",
+            "username": "goose160"
+        },
+        "ts": "2017-01-05T18:02:50.754Z",
+        "ro": false,
+        "sysMes": true,
+        "_updatedAt": "2017-01-05T18:41:48.840Z",
+        "usernames": [
+            "goose160",
+            "graywolf336"
+        ],
+        "joinCodeRequired": true
+    },
+    "success": true
+}
+```
+
+#### <a id="Channels.setPurpose"></a>setPurpose
+
+Sets the purpose/description for the channel.
+
+```js
+this.rocketChatClient.channels.setPurpose(roomId, purpose, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setpurpose)](https://rocket.chat/docs/developer-guides/rest-api/channels/setpurpose)
+
+```json
+{
+  "purpose": "Testing out everything.",
+  "success": true
+}
+```
+
+#### <a id="Channels.setReadOnly"></a>setReadOnly
+
+Sets whether the channel is read only or not.
+
+```js
+this.rocketChatClient.channels.setReadOnly(roomId, readonly, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/setreadonly)](https://rocket.chat/docs/developer-guides/rest-api/channels/setreadonly)
+
+```json
+{
+    "channel": {
+        "_id": "ByehQjC44FwMeiLbX",
+        "name": "testing0",
+        "t": "c",
+        "msgs": 0,
+        "u": {
+            "_id": "aiPqNoGkjpNDiRx6d",
+            "username": "goose160"
+        },
+        "ts": "2017-01-05T18:02:50.754Z",
+        "ro": true,
+        "sysMes": true,
+        "_updatedAt": "2017-01-05T19:02:24.429Z",
+        "usernames": [
+            "goose160",
+            "graywolf336"
+        ],
+        "joinCodeRequired": true,
+        "muted": []
+    },
+    "success": true
+}
+```
+
 #### <a id="Channels.setTopic"></a>setTopic
 
 Sets the topic for the channel.
@@ -760,6 +1308,23 @@ this.rocketChatClient.channels.setTopic(roomId, topic, function (err, body) {});
 ```json
 {
   "topic": "Testing out everything.",
+  "success": true
+}
+```
+
+
+#### <a id="Channels.unarchive"></a>unarchive
+
+Unarchives a channel.
+
+```js
+this.rocketChatClient.channels.unarchive(roomId, topic, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/channels/unarchive)](https://rocket.chat/docs/developer-guides/rest-api/channels/unarchive)
+
+```json
+{
   "success": true
 }
 ```
