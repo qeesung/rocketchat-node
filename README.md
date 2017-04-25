@@ -112,9 +112,9 @@ This Lib library package the following functions:
   - open
   - setTopic
 - [Chat](#Chat)
-  - delete
+  - [delete](#Chat.delete)
   - [postMessage](#Chat.postMessage)
-  - update
+  - [update](#Chat.update)
 - Settings
   - get
   - update
@@ -764,6 +764,23 @@ this.rocketChatClient.channels.setTopic(roomId, topic, function (err, body) {});
 
 #### <a id="Chat"></a>Chat
 
+
+#### <a id="Chat.delete"></a>delete
+
+```js
+this.rocketChatClient.chat.delete({ roomId, msgId }, callback);
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/chat/delete)](https://rocket.chat/docs/developer-guides/rest-api/chat/delete)
+
+```json
+{
+  "_id": "7aDSXtjMA3KPLxLjt",
+  "ts": 1481741940895,
+  "success": true
+}
+```
+
 #### <a id="Chat.postMessage"></a>postMessage
 
 Post a chat message
@@ -795,6 +812,36 @@ The passed object is equivalent to the [payload](https://rocket.chat/docs/develo
     "_id": "jC9chsFddTvsbFQG7"
   },
   "success": true
+}
+```
+
+#### <a id="Chat.update"></a>update
+
+```js
+this.rocketChatClient.chat.update({ roomId, msgId, text: updatedText }, callback);
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/chat/update)](https://rocket.chat/docs/developer-guides/rest-api/chat/update)
+
+```json
+{
+    "message": {
+        "_id": "qGdhTGDnhMLJPQYY8",
+        "rid": "GENERAL",
+        "msg": "gif+ testing update",
+        "ts": "2017-01-05T17:06:14.403Z",
+        "u": {
+            "_id": "R4jgcQaQhvvK6K3iY",
+            "username": "graywolf336"
+        },
+        "_updatedAt": "2017-01-05T19:42:20.433Z",
+        "editedAt": "2017-01-05T19:42:20.431Z",
+        "editedBy": {
+            "_id": "R4jgcQaQhvvK6K3iY",
+            "username": "graywolf336"
+        }
+    },
+    "success": true
 }
 ```
 
