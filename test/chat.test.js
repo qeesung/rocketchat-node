@@ -1,6 +1,5 @@
 const RocketChatClient = require("../lib/rocketChat").RocketChatClient;
 const should = require("should");
-const async = require("async");
 const co = require("co");
 
 const config = {
@@ -25,11 +24,11 @@ describe("chat", function () {
                     done();
                 }).catch((err) => {
                     should(err).be.null();
-                })
+                });
             });
     });
 
-    describe("remove", function (done) {
+    describe("remove", function () {
         it("should be able to remove a posted message", function () {
             return co(function* () {
                 let message = yield this.rocketChatClient.chat.postMessage({ roomId, text: "any message" });
@@ -42,7 +41,7 @@ describe("chat", function () {
             });
         });
 
-        it("should be able to update a posted message", function (done) {
+        it("should be able to update a posted message", function () {
             const updatedText = "updated";
             return co(function* () {
                 let message = yield this.rocketChatClient.chat.postMessage({ roomId, text: "any message" });
