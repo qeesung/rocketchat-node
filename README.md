@@ -10,7 +10,7 @@ RocketChat REST API document can be found [here](https://rocket.chat/docs/develo
 
 This Lib library package the following functions:
 
-## old api
+## RocketChatApi
 
 - [create client](#create-client)
 - [login](#login)
@@ -22,9 +22,7 @@ This Lib library package the following functions:
 - [get all unread messages in a room](#unread-messages)
 - [sending a message](#send-messages)
 
-## [new api (implemented have links)](#newapi)
-
-**Note:** The new api cannot be used directly yet
+## [RocketChatClient](#newapi)
 
 - [Miscellaneous](#Miscellaneous)
   - [info](#Miscellaneous.info)
