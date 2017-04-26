@@ -1,3 +1,4 @@
+#!/bin/bash
 docker run --name db -d mongo:3.0 --smallfiles
 docker run -p 3000:3000 --env ROOT_URL=http://127.0.0.1 --env ADMIN_PASS=123456 --env ADMIN_USERNAME=qeesung --name rocketchat --link db -d rocket.chat:0.54
 
