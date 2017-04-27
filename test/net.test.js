@@ -1,4 +1,4 @@
-var net = require('../lib/net');
+var net = require("../lib/net");
 var should = require("should");
 
 var config = {
@@ -51,7 +51,7 @@ describe("RestClient", function () {
                 (restClient.getHeader(headerKey) === undefined).should.be.true();
                 done();
             });
-        })
+        });
     });
 
     describe("Integration", function () {
@@ -63,4 +63,4 @@ describe("RestClient", function () {
             });
         });
     });
-})
+});
