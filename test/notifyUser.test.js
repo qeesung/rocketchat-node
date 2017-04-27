@@ -1,6 +1,5 @@
 var RocketChatClient = require("../lib/rocketChat").RocketChatClient;
 var should = require("should");
-var async = require("async");
 
 var config = {
     host: "127.0.0.1",
@@ -27,7 +26,7 @@ describe("notifyUser", function () {
             userId = body.userId;
             client.users.create(userToAdd, function() {});
             setTimeout(() => {
-                secondClient = new RocketChatClient("http", config.host, config.port, userToAdd.username, userToAdd.password, (err, body) => {
+                secondClient = new RocketChatClient("http", config.host, config.port, userToAdd.username, userToAdd.password, () => {
                     done();
                 });
             }, 500);
