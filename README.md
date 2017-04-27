@@ -768,10 +768,12 @@ this.rocketChatClient.channels.create(roomName, function (err, body) {});
 
 #### <a id="Channels.getIntegrations"></a>getIntegrations
 
-Retrieves the integrations which the channel has, requires the permission manage-integrations.
+Retrieves the integrations which the channel has, requires the permission manage-integrations. 
+And supports the [Offset and Count Query Parameters](https://rocket.chat/docs/developer-guides/rest-api/offset-and-count-info).
 
 ```js
-this.rocketChatClient.channels.getIntegrations(roomId, function (err, body) {});
+this.rocketChatClient.channels.getIntegrations(roomId, {/** query options */},function (err, body) {});
+this.rocketChatClient.channels.getIntegrations(roomId, {0, 5}, function (err, body) {});
 ```
 
 [Result (https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)](https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)
@@ -816,9 +818,11 @@ this.rocketChatClient.channels.getIntegrations(roomId, function (err, body) {});
 #### <a id="Channels.history"></a>history
 
 Retrieves the messages from a channel.
+And supports the [Offset and Count Query Parameters](https://rocket.chat/docs/developer-guides/rest-api/offset-and-count-info).
 
 ```js
-this.rocketChatClient.channels.history(roomId, function (err, body) {});
+this.rocketChatClient.channels.history(roomId, {/** query option here*/}, function (err, body) {});
+this.rocketChatClient.channels.history(roomId, {0, 5}, function (err, body) {});
 ```
 
 [Result (https://rocket.chat/docs/developer-guides/rest-api/channels/history)](https://rocket.chat/docs/developer-guides/rest-api/channels/history)
