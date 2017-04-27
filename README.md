@@ -115,9 +115,9 @@ This Lib library package the following functions:
   - [delete](#Chat.delete)
   - [postMessage](#Chat.postMessage)
   - [update](#Chat.update)
-- Settings
-  - get
-  - update
+- [Settings](#Setting)
+  - [get](#Settings.get)
+  - [update](#Settings.update)
 - Integration
   - create
   - list
@@ -1411,6 +1411,41 @@ this.rocketChatClient.chat.update({ roomId, msgId, text: updatedText }, callback
     "success": true
 }
 ```
+
+### <a id="Settings"></a>Settings
+
+#### <a id="Settings.get"></a>get
+Gets the setting for the provided _id.
+
+```js
+this.rocketChatClient.settings.get(_id, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/settings/get)](https://rocket.chat/docs/developer-guides/rest-api/settings/get)
+
+```json
+{
+  "_id": "Livechat_enabled",
+  "value": false,
+  "success": true
+}
+```
+
+#### <a id="Settings.update"></a>update
+Updates the setting for the provided _id.
+
+```js
+this.rocketChatClient.settings.update(id, value, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/settings/update)](https://rocket.chat/docs/developer-guides/rest-api/settings/update)
+
+```json
+{
+  "success": true
+}
+```
+
 
 #### <a id="Realtime"></a>Realtime
 
