@@ -11,7 +11,6 @@ const config = {
 
 describe("integration", function () {
     let rocketChatClient = null;
-    let roomId = null;
     before(function (done) {
         rocketChatClient = new RocketChatClient("http",
             config.host,
@@ -22,8 +21,9 @@ describe("integration", function () {
     });
 
     describe("create - list - remove", function () {
-        integrationId = null;
-        testIntegration = { 
+        let integrationId = null;
+
+        let testIntegration = { 
             "type": "webhook-outgoing", 
             "name": "Testing via REST API", 
             "enabled": false, 
