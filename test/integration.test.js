@@ -27,9 +27,10 @@ describe("integration", function () {
             "type": "webhook-outgoing", 
             "name": "Testing via REST API", 
             "enabled": false, 
-            "username": "integration-test", 
-            "urls": [], 
-            "scriptEnabled": false 
+            "username": config.user, 
+            "urls": ["http://some-url.example.com"], 
+            "scriptEnabled": false,
+            channel : "all_public_channels"
         };
 
         it("should be able to create a new integration", () => {
