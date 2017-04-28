@@ -30,7 +30,8 @@ describe("integration", function () {
             "username": config.user, 
             "urls": ["http://some-url.example.com"], 
             "scriptEnabled": false,
-            channel : "all_public_channels"
+            "channel" : "all_public_channels",
+            "event" : "sendMessage" 
         };
 
         it("should be able to create a new integration", () => {
@@ -58,9 +59,7 @@ describe("integration", function () {
                 should(result.success).be.true();
                 should(result.integrations).not.be.null();
                 should(result.integrations).not.be.empty();
-                should(result.integrations.some(_ => _._id === integrationId)).to.be.true();
-            }).catch((err) => {
-                should(err).be.null();
+                should(result.integrations.some(_ => _._id === integrationId)).be.true();
             });
         });
 
@@ -74,9 +73,7 @@ describe("integration", function () {
                 should(result.success).be.true();
                 should(result.integration).not.be.null();
                 should(result.integration._id).not.be.null();
-                should(result.integration._id).not.be.equal(integrationId);
-            }).catch((err) => {
-                should(err).be.null();
+                should(result.integration._id).be.equal(integrationId);
             });
         });
     });

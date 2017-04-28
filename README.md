@@ -1418,6 +1418,9 @@ this.rocketChatClient.chat.update({ roomId, msgId, text: updatedText }, callback
 
 Creates an integration, if the callee has the permission.
 
+- event: [see here](https://github.com/RocketChat/Rocket.Chat/blob/develop/packages/rocketchat-integrations/lib/rocketchat.js)
+- channel: The channel, group, or @username. Can also be all_public_channels, all_private_groups, or all_direct_messages. Comma separated for more than one.
+
 ```js
 this.rocketChatClient.integration.create({
             "type": "webhook-outgoing",
@@ -1426,7 +1429,8 @@ this.rocketChatClient.integration.create({
             "username": "username",
             "urls": ["http://some-url.example.com"],
             "scriptEnabled": false,
-            channel : "all_public_channels"
+            "channel" : "all_public_channels",
+            "event" :  "sendMessage"
         }, callback);
 ```
 
@@ -1533,10 +1537,10 @@ this.rocketChatClient.integration.list({}, callback);
 Removes an integration from the server.
 
 ```js
-this.rocketChatClient.integration.remove({ 
-      type, 
-      integrationId 
-  }, callback);
+this.rocketChatClient.integration.remove({
+  type,
+  integrationId
+}, callback);
 ```
 
 [Result (https://rocket.chat/docs/developer-guides/rest-api/integration/remove)](https://rocket.chat/docs/developer-guides/rest-api/integration/remove)
