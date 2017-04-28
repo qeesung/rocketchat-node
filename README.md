@@ -118,10 +118,10 @@ This Lib library package the following functions:
 - [Settings](#Setting)
   - [get](#Settings.get)
   - [update](#Settings.update)
-- Integration
-  - create
-  - list
-  - remove
+- [Integration](#Integration)
+  - [create](#Integration.create)
+  - [list](#Integration.list)
+  - [remove](#Integration.remove)
 - Livechat
 - [Realtime](#Realtime)
   - [API](#RealtimeAPI)
@@ -1416,6 +1416,7 @@ this.rocketChatClient.chat.update({ roomId, msgId, text: updatedText }, callback
 }
 ```
 
+
 ### <a id="Settings"></a>Settings
 
 #### <a id="Settings.get"></a>get
@@ -1448,8 +1449,165 @@ this.rocketChatClient.settings.update(id, value, callback);
 {
   "success": true
 }
+'''
+
+### Integration<a id="Integration"></a>
+
+#### <a id="Integration.create"></a>create
+
+Creates an integration, if the callee has the permission.
+
+- event: [see here](https://github.com/RocketChat/Rocket.Chat/blob/develop/packages/rocketchat-integrations/lib/rocketchat.js)
+- channel: The channel, group, or @username. Can also be all_public_channels, all_private_groups, or all_direct_messages. Comma separated for more than one.
+
+```js
+this.rocketChatClient.integration.create({
+            "type": "webhook-outgoing",
+            "name": "Testing via REST API",
+            "enabled": false,
+            "username": "username",
+            "urls": ["http://some-url.example.com"],
+            "scriptEnabled": false,
+            "channel" : "all_public_channels",
+            "event" :  "sendMessage"
+        }, callback);
 ```
 
+[Result (https://rocket.chat/docs/developer-guides/rest-api/integration/create)](https://rocket.chat/docs/developer-guides/rest-api/integration/create)
+
+```json
+{
+    "integration": {
+        "type": "webhook-outgoing",
+        "name": "Testing via REST API",
+        "enabled": false,
+        "username": "rocket.cat",
+        "urls": [
+            "http://text2gif.guggy.com/guggify"
+        ],
+        "scriptEnabled": false,
+        "userId": "rocket.cat",
+        "channel": [],
+        "_createdAt": "2017-01-06T13:23:46.018Z",
+        "_createdBy": {
+            "username": "graywolf336",
+            "_id": "aobEdbYhXfu5hkeqG"
+        },
+        "_updatedAt": "2017-01-06T13:23:46.018Z",
+        "_id": "3aazpZ2WzoBP8msi9"
+    },
+    "success": true
+}
+```
+
+#### <a id="Integration.list"></a>list
+
+Lists all of the integrations on the server, this method supports the Offset and Count Query Parameters.
+
+```js
+this.rocketChatClient.integration.list({}, callback);
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/integration/list)](https://rocket.chat/docs/developer-guides/rest-api/integration/list)
+
+```json
+{
+    "integrations": [
+        {
+            "_id": "WMQDChpnYTRmFre9h",
+            "enabled": true,
+            "username": "rocket.cat",
+            "alias": "Guggy",
+            "avatar": "https://image.crisp.im/avatar/website/17651a90-e082-43f6-b308-957cea6e323c/128",
+            "name": "Guggy",
+            "triggerWords": [
+                "!guggy",
+                "guggy",
+                "gif+"
+            ],
+            "urls": [
+                "http://text2gif.guggy.com/guggify"
+            ],
+            "token": "aobEdbYhXfu5hkeqG",
+            "script": ...,
+            "scriptEnabled": true,
+            "impersonateUser": false,
+            "scriptCompiled": ...,
+            "scriptError": null,
+            "type": "webhook-outgoing",
+            "userId": "rocket.cat",
+            "channel": [],
+            "_createdAt": "2017-01-05T17:06:05.660Z",
+            "_createdBy": {
+                "username": "graywolf336",
+                "_id": "R4jgcQaQhvvK6K3iY"
+            },
+            "_updatedAt": "2017-01-05T17:06:05.660Z"
+        },
+        {
+            "_id": "3aazpZ2WzoBP8msi9",
+            "type": "webhook-outgoing",
+            "name": "Testing via REST API",
+            "enabled": false,
+            "username": "rocket.cat",
+            "urls": [
+                "http://text2gif.guggy.com/guggify"
+            ],
+            "scriptEnabled": false,
+            "userId": "rocket.cat",
+            "channel": [],
+            "_createdAt": "2017-01-06T13:23:46.018Z",
+            "_createdBy": {
+                "username": "graywolf336",
+                "_id": "R4jgcQaQhvvK6K3iY"
+            },
+            "_updatedAt": "2017-01-06T13:23:46.018Z"
+        }
+    ],
+    "offset": 0,
+    "items": 2,
+    "total": 2,
+    "success": true
+}
+```
+
+#### <a id="Integration.remove"></a>remove
+
+Removes an integration from the server.
+
+```js
+this.rocketChatClient.integration.remove({
+  type,
+  integrationId
+}, callback);
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/integration/remove)](https://rocket.chat/docs/developer-guides/rest-api/integration/remove)
+
+```json
+{
+    "integration": {
+        "_id": "oNLthAt9RwMw39N2B",
+        "type": "webhook-outgoing",
+        "name": "Testing via REST API",
+        "enabled": false,
+        "username": "rocket.cat",
+        "urls": [
+            "http://text2gif.guggy.com/guggify"
+        ],
+        "scriptEnabled": false,
+        "userId": "rocket.cat",
+        "channel": [],
+        "_createdAt": "2017-01-06T13:42:14.143Z",
+        "_createdBy": {
+            "username": "graywolf336",
+            "_id": "R4jgcQaQhvvK6K3iY"
+        },
+        "_updatedAt": "2017-01-06T13:42:14.144Z"
+    },
+    "success": true
+}
+```
 
 #### <a id="Realtime"></a>Realtime
 
