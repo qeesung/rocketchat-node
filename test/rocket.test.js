@@ -6,7 +6,7 @@
  * description : test the rocketchat api base on mocha and shouldjs
  */
 
-var RocketChatApi = require('../lib/rocket-chat').RocketChatApi;
+var RocketChatApi = require("../lib/rocket-chat").RocketChatApi;
 var should = require("should");
 
 var config = {
@@ -18,7 +18,7 @@ var config = {
 
 describe("Test the rest api and rocketchat version version", function () {
     it("rest api version should not be below 0.1 and rocketchat should not be beblow 0.5", function (done) {
-        var rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, function (err, body) {
+        var rocketChatApi = new RocketChatApi("http", config.host, config.port, config.user, config.password, function (err) {
             if (err) throw err;
             rocketChatApi.version(function (err, body) {
                 should(err).be.null();
@@ -35,7 +35,7 @@ describe("Test the rest api and rocketchat version version", function () {
 describe("test login and logout", function () {
     var rocketChatApi = null;
     before(function () {
-        rocketChatApi = new RocketChatApi('http', config.host, config.port)
+        rocketChatApi = new RocketChatApi("http", config.host, config.port);
     });
 
     it("logout status should be success and the token should be null", function (done) {
@@ -57,15 +57,9 @@ describe("test login and logout", function () {
 
 describe("test create, join, leave rooms, and get list of public rooms", function () {
     var rocketChatApi = null;
-    var testConfig = {
-        host: config.host, // this is my personal rocketchat server hosted in my laptop
-        port: config.port,
-        user: config.user,
-        password: config.password
-    };
 
     beforeEach(function (done) {
-        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, done);
+        rocketChatApi = new RocketChatApi("http", config.host, config.port, config.user, config.password, done);
     });
 
     it("create a new room with a test user, find the room, join it, and set the topic", function (done) {
@@ -87,18 +81,18 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
                 });
 
                 // join the room
-                rocketChatApi.joinRoom(roomId, function (err, body) {
+                rocketChatApi.joinRoom(roomId, function (err) {
                     should(err).be.null();
 
                     // set the topic
-                    rocketChatApi.setTopic(roomId, "mytopic", function (err, body) {
+                    rocketChatApi.setTopic(roomId, "mytopic", function (err) {
                         should(err).be.null();
                         done();
                         /* cannot leave, only one user
                         rocketChatApi.leaveRoom(roomId, function (err, body) {
                             should(err).be.null();
                             done();;*/
-                    })
+                    });
                 });
             });
         });
@@ -113,7 +107,7 @@ describe("test create, join, leave rooms, and get list of public rooms", functio
 describe("test sending a message and get all messages in a room", function () {
     var rocketChatApi = null;
     beforeEach(function (done) {
-        rocketChatApi = new RocketChatApi('http', config.host, config.port, config.user, config.password, done);
+        rocketChatApi = new RocketChatApi("http", config.host, config.port, config.user, config.password, done);
     });
 
     it("sending a message", function (done) {
@@ -137,9 +131,9 @@ describe("test sending a message and get all messages in a room", function () {
         rocketChatApi.createRoom(roomName, function (err, body) {
             (!err).should.be.ok();
             var roomId = body.channel._id;
-            rocketChatApi.joinRoom(roomId, function (err, body) {
+            rocketChatApi.joinRoom(roomId, function (err) {
                 (!err).should.be.ok();
-                rocketChatApi.sendMsg(roomId, message, function (err, body) {
+                rocketChatApi.sendMsg(roomId, message, function (err) {
                     (!err).should.be.ok();
                     rocketChatApi.getUnreadMsg(roomId, function (err, body) {
                         (!err).should.be.ok();

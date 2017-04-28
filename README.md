@@ -115,9 +115,9 @@ This Lib library package the following functions:
   - [delete](#Chat.delete)
   - [postMessage](#Chat.postMessage)
   - [update](#Chat.update)
-- Settings
-  - get
-  - update
+- [Settings](#Setting)
+  - [get](#Settings.get)
+  - [update](#Settings.update)
 - [Integration](#Integration)
   - [create](#Integration.create)
   - [list](#Integration.list)
@@ -768,10 +768,12 @@ this.rocketChatClient.channels.create(roomName, function (err, body) {});
 
 #### <a id="Channels.getIntegrations"></a>getIntegrations
 
-Retrieves the integrations which the channel has, requires the permission manage-integrations.
+Retrieves the integrations which the channel has, requires the permission manage-integrations. 
+And supports the [Offset and Count Query Parameters](https://rocket.chat/docs/developer-guides/rest-api/offset-and-count-info).
 
 ```js
-this.rocketChatClient.channels.getIntegrations(roomId, function (err, body) {});
+this.rocketChatClient.channels.getIntegrations(roomId, {/** query options */},function (err, body) {});
+this.rocketChatClient.channels.getIntegrations(roomId, {0, 5}, function (err, body) {});
 ```
 
 [Result (https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)](https://rocket.chat/docs/developer-guides/rest-api/channels/getintegrations)
@@ -816,9 +818,11 @@ this.rocketChatClient.channels.getIntegrations(roomId, function (err, body) {});
 #### <a id="Channels.history"></a>history
 
 Retrieves the messages from a channel.
+And supports the [Offset and Count Query Parameters](https://rocket.chat/docs/developer-guides/rest-api/offset-and-count-info).
 
 ```js
-this.rocketChatClient.channels.history(roomId, function (err, body) {});
+this.rocketChatClient.channels.history(roomId, {/** query option here*/}, function (err, body) {});
+this.rocketChatClient.channels.history(roomId, {0, 5}, function (err, body) {});
 ```
 
 [Result (https://rocket.chat/docs/developer-guides/rest-api/channels/history)](https://rocket.chat/docs/developer-guides/rest-api/channels/history)
@@ -1412,6 +1416,41 @@ this.rocketChatClient.chat.update({ roomId, msgId, text: updatedText }, callback
 }
 ```
 
+
+### <a id="Settings"></a>Settings
+
+#### <a id="Settings.get"></a>get
+Gets the setting for the provided _id.
+
+```js
+this.rocketChatClient.settings.get(_id, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/settings/get)](https://rocket.chat/docs/developer-guides/rest-api/settings/get)
+
+```json
+{
+  "_id": "Livechat_enabled",
+  "value": false,
+  "success": true
+}
+```
+
+#### <a id="Settings.update"></a>update
+Updates the setting for the provided _id.
+
+```js
+this.rocketChatClient.settings.update(id, value, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/settings/update)](https://rocket.chat/docs/developer-guides/rest-api/settings/update)
+
+```json
+{
+  "success": true
+}
+'''
+
 ### Integration<a id="Integration"></a>
 
 #### <a id="Integration.create"></a>create
@@ -1569,7 +1608,6 @@ this.rocketChatClient.integration.remove({
     "success": true
 }
 ```
-
 
 #### <a id="Realtime"></a>Realtime
 
