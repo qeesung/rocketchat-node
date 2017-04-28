@@ -11,6 +11,13 @@ node_js:
 before_install:
   - ./test/setup-testenv.sh
 
+deploy:
+  provider: npm
+  email: 1245712564@qq.com
+  api_key: $NPM_TOKEN
+  on:
+    tags: true
+
 install:
   - npm install -g mocha
   - npm install
