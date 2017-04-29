@@ -96,5 +96,17 @@ describe("groups", () => {
                 addAllResult.group.usernames.should.matchAny(new RegExp(`^${userToAdd.username}.*`));
             });
         });
+
+        it("Gives the role of owner for a user in the current group. result should be success", () => {
+            return co(function *() {
+                // invite user
+                let inviteResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                inviteResult.success.should.equal(true);
+
+                // add the user as owner
+                let addOwnerResult = yield rocketChatClient.groups.addOwner(createGroupId, createdUserId);
+                addOwnerResult.success.should.equal(true);
+            });
+        });
     });
 });
