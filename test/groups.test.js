@@ -17,7 +17,7 @@ let userToAdd = {
     "name": "test-group-user",
     "email": "email@example.com",
     "password": "anypassyouwant",
-    "username": "uniqueusername",
+    "username": "uniqueusername-group",
     "sendWelcomeEmail": false,
     "joinDefaultChannels": false,
     "verified": false,
@@ -69,8 +69,31 @@ describe("groups", () => {
             userToAdd.email = "email" + Date.now() + "@example.com";
 
             return co(function *() {
-                let createdUser = yield rocketChatClient.user.create(userToAdd);
+                let createdUser = yield rocketChatClient.users.create(userToAdd);
                 createdUserId = createdUser.user._id;
+
+                let createdGroup = yield rocketChatClient.groups.create("test-group-"+Date.now());
+                createGroupId = createdGroup.group._id;
+            });
+        });
+
+        afterEach(() => {
+            return co(function *() {
+                if(createdUserId != null)
+                    yield rocketChatClient.users.delete(createdUserId);
+                if(createGroupId != null)
+                    yield rocketChatClient.groups.close(createGroupId);
+            });
+        });
+
+        // addAll only provide in 0.55 version
+        // but now rocket chat docker image version is 0.54
+        xit("Adds all of the users of the Rocket.Chat server to the group. " +
+            "result should be success, and username list should contain the created user", () => {
+            return co(function *() {
+                let addAllResult = yield rocketChatClient.groups.addAll(createGroupId);
+                addAllResult.success.should.equal(true);
+                addAllResult.group.usernames.should.matchAny(new RegExp(`^${userToAdd.username}.*`));
             });
         });
     });
