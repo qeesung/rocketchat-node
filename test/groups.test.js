@@ -67,7 +67,6 @@ describe("groups", () => {
             userToAdd.name = userToAdd.name + Date.now();
             userToAdd.username = userToAdd.username + Date.now();
             userToAdd.email = "email" + Date.now() + "@example.com";
-
             return co(function *() {
                 let createdUser = yield rocketChatClient.users.create(userToAdd);
                 createdUserId = createdUser.user._id;
@@ -83,6 +82,8 @@ describe("groups", () => {
                     yield rocketChatClient.users.delete(createdUserId);
                 if(createGroupId != null)
                     yield rocketChatClient.groups.close(createGroupId);
+                createGroupId = null;
+                createdUserId = null;
             });
         });
 
@@ -118,6 +119,15 @@ describe("groups", () => {
                 // add the user as owner
                 let addModeratorResult = yield rocketChatClient.groups.addModerator(createGroupId, createdUserId);
                 should(addModeratorResult.success).be.ok();
+            });
+        });
+
+        it("Archives a private group, only if you’re part of the group. result should be success", () => {
+            return co(function *() {
+                let archiveResult = yield rocketChatClient.groups.archive(createGroupId);
+                archiveResult.success.should.equal(true);
+
+                createGroupId = null;
             });
         });
     });
