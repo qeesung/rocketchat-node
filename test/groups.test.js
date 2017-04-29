@@ -2,7 +2,7 @@
  * Created by qeesung on 2017/4/29.
  */
 
-const RocketChatClient = require("../lib/rocketchat").RocketChatClient;
+const RocketChatClient = require("../lib/rocketChat").RocketChatClient;
 const should = require("should");
 const co = require("co");
 
