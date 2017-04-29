@@ -117,7 +117,7 @@ describe("groups", () => {
 
                 // add the user as owner
                 let addModeratorResult = yield rocketChatClient.groups.addModerator(createGroupId, createdUserId);
-                addModeratorResult.success.should.equal(true);
+                should(addModeratorResult.success).be.ok();
             });
         });
     });
