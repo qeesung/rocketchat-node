@@ -108,5 +108,17 @@ describe("groups", () => {
                 addOwnerResult.success.should.equal(true);
             });
         });
+
+        it("Gives the role of moderator for a user in the currrent group. result should be success", () => {
+            return co(function *() {
+                // invite user
+                let inviteResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                inviteResult.success.should.equal(true);
+
+                // add the user as owner
+                let addModeratorResult = yield rocketChatClient.groups.addModerator(createGroupId, createdUserId);
+                addModeratorResult.success.should.equal(true);
+            });
+        });
     });
 });
