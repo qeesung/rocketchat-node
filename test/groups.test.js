@@ -110,7 +110,7 @@ describe("groups", () => {
             });
         });
 
-        it("Gives the role of moderator for a user in the currrent group. result should be success", () => {
+        it("Gives the role of moderator for a user in the current group. result should be success", () => {
             return co(function *() {
                 // invite user
                 let inviteResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
@@ -119,6 +119,22 @@ describe("groups", () => {
                 // add the user as owner
                 let addModeratorResult = yield rocketChatClient.groups.addModerator(createGroupId, createdUserId);
                 should(addModeratorResult.success).be.ok();
+            });
+        });
+
+        it("Removes the role of moderator from a user in the current group. result should be success", () => {
+            return co(function *() {
+                // invite user
+                let inviteResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                inviteResult.success.should.equal(true);
+
+                // add the user as moderator
+                let addModeratorResult = yield rocketChatClient.groups.addModerator(createGroupId, createdUserId);
+                should(addModeratorResult.success).be.ok();
+
+                // remove moderator
+                let removeModeratorResult = yield rocketChatClient.groups.removeModerator(createGroupId, createdUserId);
+                removeModeratorResult.success.should.equal(true);
             });
         });
 
