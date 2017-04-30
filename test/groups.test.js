@@ -293,5 +293,25 @@ describe("groups", () => {
                 infoResult.group.should.be.ok();
             });
         });
+
+        it("Changes the name of the private group. result should be success, and group name should equal to new name", () => {
+            return co(function *() {
+                let newGroupName = "new-group-name-"+Date.now();
+
+                let renameResult = yield rocketChatClient.groups.rename(createGroupId, newGroupName);
+                renameResult.success.should.equal(true);
+                renameResult.group.name.should.equal(newGroupName);
+            });
+        });
+
+        it("Sets the description for the private group." +
+            " result should be success, and group description should equal to new description", () => {
+            let newDescription = "Hello World , Hello Group";
+            return co(function *() {
+                let setResult = yield rocketChatClient.groups.setDescription(createGroupId, newDescription);
+                setResult.success.should.equal(true);
+                setResult.description.should.equal(newDescription);
+            });
+        });
     });
 });
