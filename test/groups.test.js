@@ -175,6 +175,31 @@ describe("groups", () => {
                 (groupList.groups.length > 0).should.equal(true);
             });
         });
+
+        // ignore the test case , will throw a
+        // RequestError: No private group by the id of: s7A5xQR3uysq9GNG3
+        xit("Adds the private group back to the user’s list of private groups. result should be success", () => {
+            return co(function *() {
+                // invite new user to the group
+                let invitedResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                invitedResult.success.should.equal(true);
+
+                // set the new user as owner
+                let setOwnerResult = yield rocketChatClient.groups.addOwner(createGroupId, createdUserId);
+                setOwnerResult.success.should.equal(true);
+
+                // leave the room
+                let leaveResult = yield rocketChatClient.groups.leave(createGroupId);
+                leaveResult.success.should.equal(true);
+
+                // add the user into the group
+                let openResult = yield rocketChatClient.groups.open(createGroupId);
+                openResult.success.should.equal(true);
+
+                createGroupId = null;
+                createdUserId = null;
+            });
+        });
     });
 
     describe("config the get groups' properties", () => {
