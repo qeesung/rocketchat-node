@@ -174,5 +174,14 @@ describe("groups", () => {
                 });
             });
         });
+
+        it("Retrieves the information about the private group, " +
+            "result should be success and group property should be exist", () => {
+            return co(function *() {
+                let infoResult = yield rocketChatClient.groups.info(createGroupId);
+                infoResult.success.should.equal(true);
+                infoResult.group.should.be.ok();
+            });
+        });
     });
 });
