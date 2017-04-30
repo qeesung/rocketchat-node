@@ -165,6 +165,16 @@ describe("groups", () => {
                 createGroupId = null;
             });
         });
+
+        it("Lists all of the private groups the calling user has joined, " +
+            "result should be success and groups size should greater than 0", () => {
+            return co(function *() {
+                let groupList = yield rocketChatClient.groups.list();
+                groupList.success.should.equal(true);
+
+                (groupList.groups.length > 0).should.equal(true);
+            });
+        });
     });
 
     describe("config the get groups' properties", () => {
