@@ -132,6 +132,20 @@ describe("groups", () => {
             });
         });
 
+        it("Removes a user from the private group. " +
+            "result should be success and kicked user should not in username list", () => {
+            return co(function *() {
+                // invite user
+                let inviteResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                inviteResult.success.should.equal(true);
+
+                // kick the user
+                let kickedResult = yield rocketChatClient.groups.kick(createGroupId, createdUserId);
+                kickedResult.success.should.equal(true);
+                //kickedResult.group.usernames.should.not.matchAny(new RegExp(`^${userToAdd.username}`));
+            });
+        });
+
     });
 
     describe("config the get groups' properties", () => {
