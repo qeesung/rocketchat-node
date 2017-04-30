@@ -122,6 +122,16 @@ describe("groups", () => {
             });
         });
 
+        it("Adds a user to the private group. " +
+            "result should be success and invited user should in the username list", () => {
+            return co(function *() {
+                let inviteResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                inviteResult.success.should.equal(true);
+
+                inviteResult.group.usernames.should.matchAny(new RegExp(`^${userToAdd.username}`));
+            });
+        });
+
     });
 
     describe("config the get groups' properties", () => {
@@ -183,5 +193,7 @@ describe("groups", () => {
                 infoResult.group.should.be.ok();
             });
         });
+
+
     });
 });
