@@ -313,5 +313,14 @@ describe("groups", () => {
                 setResult.description.should.equal(newDescription);
             });
         });
+
+        it("Sets the purpose for the private group. result should be success and  purpose should equal to new purpose", () => {
+            let newPurpose = "hello world";
+            return co(function *() {
+                let setPurposeResult = yield rocketChatClient.groups.setPurpose(createGroupId, newPurpose);
+                setPurposeResult.success.should.equal(true);
+                setPurposeResult.purpose.should.equal(newPurpose);
+            });
+        });
     });
 });
