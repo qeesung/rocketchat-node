@@ -261,6 +261,18 @@ describe("groups", () => {
             });
         });
 
+        it("Unarchives a private group. result should be success", () => {
+            return co(function *() {
+                // archive first
+                let archiveResult = yield rocketChatClient.groups.archive(createGroupId);
+                archiveResult.success.should.equal(true);
+
+                // unarchive
+                let unarchiveResult = yield rocketChatClient.groups.unarchive(createGroupId);
+                unarchiveResult.success.should.equal(true);
+            });
+        });
+
         it("Retrieves the integrations which the group has, " +
             "result should be success, and should contain integrations array property", () => {
             return co(function *() {
