@@ -322,5 +322,13 @@ describe("groups", () => {
                 setPurposeResult.purpose.should.equal(newPurpose);
             });
         });
+
+        it("Sets whether the group is read only. result should be success", () => {
+            return co(function *() {
+                let setReadOnlyResult = yield rocketChatClient.groups.setReadOnly(createGroupId, true);
+                setReadOnlyResult.success.should.equal(true);
+                setReadOnlyResult.group.ro.should.equal(true);
+            });
+        });
     });
 });
