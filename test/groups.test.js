@@ -146,6 +146,25 @@ describe("groups", () => {
             });
         });
 
+        it("Causes the callee to be removed from the private group, qeesung should not in the username list", () => {
+            return co(function *() {
+                // invite new user to the group
+                let invitedResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                invitedResult.success.should.equal(true);
+
+                // set the new user as owner
+                let setOwnerResult = yield rocketChatClient.groups.addOwner(createGroupId, createdUserId);
+                setOwnerResult.success.should.equal(true);
+
+                // leave the room
+                let leaveResult = yield rocketChatClient.groups.leave(createGroupId);
+                leaveResult.success.should.equal(true);
+                //leaveResult.group.usernames.should.not.matchAny(/^qeesung/);
+
+                createdUserId = null;
+                createGroupId = null;
+            });
+        });
     });
 
     describe("config the get groups' properties", () => {
@@ -207,7 +226,5 @@ describe("groups", () => {
                 infoResult.group.should.be.ok();
             });
         });
-
-
     });
 });
