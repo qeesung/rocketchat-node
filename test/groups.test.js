@@ -81,7 +81,7 @@ describe("groups", () => {
                 if(createdUserId != null)
                     yield rocketChatClient.users.delete(createdUserId);
                 if(createGroupId != null)
-                    yield rocketChatClient.groups.close(createGroupId);
+                    yield rocketChatClient.groups.archive(createGroupId);
                 createGroupId = null;
                 createdUserId = null;
             });
@@ -119,6 +119,26 @@ describe("groups", () => {
                 // add the user as owner
                 let addModeratorResult = yield rocketChatClient.groups.addModerator(createGroupId, createdUserId);
                 should(addModeratorResult.success).be.ok();
+            });
+        });
+
+    });
+
+    describe("config the get groups' properties", () => {
+        let createGroupId = null;
+
+        beforeEach(() => {
+            return co(function *() {
+                let createdGroup = yield rocketChatClient.groups.create("test-group-"+Date.now());
+                createGroupId = createdGroup.group._id;
+            });
+        });
+
+        afterEach(() => {
+            return co(function *() {
+                if(createGroupId != null)
+                    yield rocketChatClient.groups.archive(createGroupId);
+                createGroupId = null;
             });
         });
 
