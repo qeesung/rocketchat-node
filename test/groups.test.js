@@ -159,5 +159,20 @@ describe("groups", () => {
                 integrationsResult.integrations.should.be.Array();
             });
         });
+
+        it("Retrieves the messages from a private group, the last message should be 'hello world'", () => {
+            return co(function *() {
+                let textMessage = "hello world at "+Date.now();
+                // send message
+                let postMessageResult = yield rocketChatClient.chat.postMessage({roomId: createGroupId, text: textMessage});
+                postMessageResult.success.should.equal(true);
+
+                // get the messages from channel
+                let history = yield rocketChatClient.groups.history({roomId: createGroupId});
+                history.messages.should.matchEach((value) => {
+                    value.msg.should.match(new RegExp(`^${textMessage}`));
+                });
+            });
+        });
     });
 });
