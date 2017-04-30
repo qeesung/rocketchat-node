@@ -110,6 +110,22 @@ describe("groups", () => {
             });
         });
 
+        it("Removes the role of owner from a user in the current Group. result should be success", () => {
+            return co(function *() {
+                // invite user
+                let inviteResult = yield rocketChatClient.groups.invite(createGroupId, createdUserId);
+                inviteResult.success.should.equal(true);
+
+                // add the user as owner
+                let addOwnerResult = yield rocketChatClient.groups.addOwner(createGroupId, createdUserId);
+                addOwnerResult.success.should.equal(true);
+
+                // remove the owner
+                let removeOwnerResult = yield rocketChatClient.groups.removeOwner(createGroupId, createdUserId);
+                removeOwnerResult.success.should.equal(true);
+            });
+        });
+
         it("Gives the role of moderator for a user in the current group. result should be success", () => {
             return co(function *() {
                 // invite user
