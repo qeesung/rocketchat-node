@@ -130,5 +130,14 @@ describe("groups", () => {
                 createGroupId = null;
             });
         });
+
+        it("Retrieves the integrations which the group has, " +
+            "result should be success, and should contain integrations array property", () => {
+            return co(function *() {
+                let integrationsResult = yield rocketChatClient.groups.getIntegrations(createGroupId);
+                integrationsResult.success.should.equal(true);
+                integrationsResult.integrations.should.be.Array();
+            });
+        });
     });
 });
