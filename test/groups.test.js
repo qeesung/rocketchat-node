@@ -330,5 +330,25 @@ describe("groups", () => {
                 setReadOnlyResult.group.ro.should.equal(true);
             });
         });
+
+        it("Sets the topic for the private group. result should be success, topic should equal to new topic", () => {
+            let newTopic = "hello world";
+            return co(function *() {
+                let setTopicResult = yield rocketChatClient.groups.setTopic(createGroupId, newTopic);
+                setTopicResult.success.should.equal(true);
+                setTopicResult.topic.should.equal(newTopic);
+            });
+        });
+
+        it("Sets the type of room to be private. result should be success and group type should be private", () => {
+            let newGroupType = "c";
+            return co(function *() {
+                let setTypeResult = yield rocketChatClient.groups.setType(createGroupId, newGroupType);
+                setTypeResult.success.should.equal(true);
+                setTypeResult.group.t.should.equal(newGroupType);
+
+                createGroupId = null;
+            });
+        });
     });
 });
