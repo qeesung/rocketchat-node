@@ -79,30 +79,30 @@ This Lib library package the following functions:
   - [setTopic](#Channels.setTopic)
   - setType
   - [unarchive](#Channels.unarchive)
-- Groups
-  - addAll
-  - addModerator
-  - addOwner
-  - archive
-  - close
-  - create
-  - getIntegrations
-  - history
-  - info
-  - invite
-  - kick
-  - leave
-  - list
-  - open
-  - removeModerator
-  - removeOwner
-  - rename
-  - setDescription
-  - setPurpose
-  - setReadOnly
-  - setTopic
-  - setType
-  - unarchive
+- [Groups](#Groups)
+  - [addAll](#Groups.addAll)
+  - [addModerator](#Groups.addModerator)
+  - [addOwner](#Groups.addOwner)
+  - [archive](#Groups.archive)
+  - [close](#Groups.close)
+  - [create](#Groups.create)
+  - [getIntegrations](#Groups.getIntegrations)
+  - [history](#Groups.history)
+  - [info](#Groups.info)
+  - [invite](#Groups.invite)
+  - [kick](#Groups.kick)
+  - [leave](#Groups.leave)
+  - [list](#Groups.list)
+  - [open](#Groups.open)
+  - [removeModerator](#Groups.removeModerator)
+  - [removeOwner](#Groups.removeOwner)
+  - [rename](#Groups.rename)
+  - [setDescription](#Groups.setDescription)
+  - [setPurpose](#Groups.setPurpose)
+  - [setReadOnly](#Groups.setReadOnly)
+  - [setTopic](#Groups.setTopic)
+  - [setType](#Groups.setType)
+  - [unarchive](#Groups.unarchive)
 - [Im](#Im) 
   **note:** im interfaces is not tested
   - [close](#Im.close)
@@ -119,10 +119,10 @@ This Lib library package the following functions:
 - [Settings](#Setting)
   - [get](#Settings.get)
   - [update](#Settings.update)
-- Integration
-  - create
-  - list
-  - remove
+- [Integration](#Integration)
+  - [create](#Integration.create)
+  - [list](#Integration.list)
+  - [remove](#Integration.remove)
 - Livechat
 - [Realtime](#Realtime)
   - [API](#RealtimeAPI)
@@ -1334,6 +1334,634 @@ this.rocketChatClient.channels.unarchive(roomId, topic, function (err, body) {})
 }
 ```
 
+### <a id="Groups"></a>Groups
+
+#### <a id="Groups.addAll"></a>AddAll
+
+Adds all of the users of the Rocket.Chat server to the group.
+
+```js
+this.rocketChatClient.groups.addAll(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/addall)](https://rocket.chat/docs/developer-guides/rest-api/groups/addall)
+
+```json
+{
+   "group": {
+      "_id": "ByehQjC44FwMeiLbX",
+      "name": "groupname",
+      "t": "c",
+      "usernames": [
+         "example",
+         "rocket.cat"
+      ],
+      "msgs": 0,
+      "u": {
+         "_id": "aobEdbYhXfu5hkeqG",
+         "username": "example"
+      },
+      "ts": "2016-05-30T13:42:25.304Z"
+   },
+   "success": true
+}
+```
+
+#### <a id="Groups.addModerator"></a>addModerator
+
+Gives the role of moderator for a user in the current group.
+
+```js
+this.rocketChatClient.groups.addModerator(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/addmoderator)](https://rocket.chat/docs/developer-guides/rest-api/groups/addmoderator)
+
+```json
+{
+   "success": true
+}
+```
+
+#### <a id="Groups.addOwner"></a>addOwner
+
+Gives the role of owner for a user in the current group.
+
+```js
+this.rocketChatClient.groups.addOwner(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/addowner)](https://rocket.chat/docs/developer-guides/rest-api/groups/addowner)
+
+```json
+{
+   "success": true
+}
+```
+
+  - archive
+
+#### <a id="Groups.archive"></a>archive
+
+Archives a private group, only if you’re part of the group.
+
+```js
+this.rocketChatClient.groups.archive(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/archive)](https://rocket.chat/docs/developer-guides/rest-api/groups/archive)
+
+```json
+{
+   "success": true
+}
+```
+
+  - close
+
+#### <a id="Groups.close"></a>close
+
+Removes the group from the user’s list of groups.
+
+```js
+this.rocketChatClient.groups.close(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/close)](https://rocket.chat/docs/developer-guides/rest-api/groups/close)
+
+```json
+{
+   "success" : true
+}
+```
+
+#### <a id="Groups.create"></a>create
+
+Creates a new private group, optionally including specified users. The group creator is always included.
+
+```js
+this.rocketChatClient.groups.create(roomName, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/create)](https://rocket.chat/docs/developer-guides/rest-api/groups/create)
+
+```json
+{
+   "group": {
+      "_id": "ByehQjC44FwMeiLbX",
+      "name": "groupname",
+      "t": "c",
+      "usernames": [
+         "example"
+      ],
+      "msgs": 0,
+      "u": {
+         "_id": "aobEdbYhXfu5hkeqG",
+         "username": "example"
+      },
+      "ts": "2016-05-30T13:42:25.304Z"
+   },
+   "success": true
+}
+```
+
+#### <a id="Groups.getIntegrations"></a>getIntegrations
+
+Retrieves the integrations which the group has, requires the permission manage-integrations. 
+And supports the [Offset and Count Query Parameters](https://rocket.chat/docs/developer-guides/rest-api/offset-and-count-info).
+
+```js
+this.rocketChatClient.groups.getIntegrations(roomId, {/** query options */},function (err, body) {});
+this.rocketChatClient.groups.getIntegrations(roomId, {0, 5}, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/getintegrations)](https://rocket.chat/docs/developer-guides/rest-api/groups/getintegrations)
+
+```json
+{
+    "integrations": [{
+        "_id": "WMQDChpnYTRmFre9h",
+        "enabled": true,
+        "username": "rocket.cat",
+        "alias": "Guggy",
+        "avatar": "http://res.guggy.com/logo_128.png",
+        "name": "Guggy",
+        "triggerWords": [
+            "!guggy",
+            "guggy",
+            "gif+"
+        ],
+        "urls": [
+            "http://text2gif.guggy.com/guggify"
+        ],
+        "token": "8DFS89DMKLWEN",
+        "script": "/* Some script */",
+        "scriptEnabled": true,
+        "impersonateUser": false,
+        "scriptCompiled": "/* lot of script */",
+        "scriptError": null,
+        "type": "webhook-outgoing",
+        "userId": "rocket.cat",
+        "group": [],
+        "_createdAt": "2017-01-05T17:06:05.660Z",
+        "_createdBy": {
+            "username": "graywolf336",
+            "_id": "R4jgcQaQhvvK6K3iY"
+        },
+        "_updatedAt": "2017-01-05T17:06:05.660Z"
+    }],
+    "success": true
+}
+```
+
+#### <a id="Groups.history"></a>history
+
+Retrieves the messages from a private group, only if you’re part of the group.
+And supports the [Offset and Count Query Parameters](https://rocket.chat/docs/developer-guides/rest-api/offset-and-count-info).
+
+```js
+this.rocketChatClient.groups.history(roomId, {/** query option here*/}, function (err, body) {});
+this.rocketChatClient.groups.history(roomId, {0, 5}, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/history)](https://rocket.chat/docs/developer-guides/rest-api/groups/history)
+
+```json
+{
+  "messages": [
+    {
+      "_id": "AkzpHAvZpdnuchw2a",
+      "rid": "ByehQjC44FwMeiLbX",
+      "msg": "hi",
+      "ts": "2016-12-09T12:50:51.555Z",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "_updatedAt": "2016-12-09T12:50:51.562Z"
+    },
+    {
+      "_id": "vkLMxcctR4MuTxreF",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-08T15:41:37.730Z",
+      "msg": "testing2",
+      "u": {
+        "_id": "bRtgdhzM6PD9F8pSx",
+        "username": "testing2"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-08T16:03:25.235Z"
+    },
+    {
+      "_id": "bfRW658nEyEBg75rc",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-07T15:47:49.099Z",
+      "msg": "testing",
+      "u": {
+        "_id": "nSYqWzZ4GsKTX4dyK",
+        "username": "testing1"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-07T15:47:49.099Z"
+    },
+    {
+      "_id": "pbuFiGadhRZTKouhB",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-06T17:57:38.635Z",
+      "msg": "testing",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-06T17:57:38.635Z"
+    }
+  ],
+  "success": true
+}
+```
+
+#### <a id="Groups.info"></a>info
+
+Retrieves the information about the private group, only if you’re part of the group.
+
+```js
+this.rocketChatClient.groups.info(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/info)](https://rocket.chat/docs/developer-guides/rest-api/groups/info)
+
+```json
+{
+  "group": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "ts": "2016-11-30T21:23:04.737Z",
+    "t": "c",
+    "name": "testing",
+    "usernames": [
+      "testing",
+      "testing1",
+      "testing2"
+    ],
+    "msgs": 1,
+    "default": true,
+    "_updatedAt": "2016-12-09T12:50:51.575Z",
+    "lm": "2016-12-09T12:50:51.555Z"
+  },
+  "success": true
+}
+```
+
+
+#### <a id="Groups.invite"></a>invite
+
+Adds a user to the private group.
+
+```js
+this.rocketChatClient.groups.invite(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/invite)](https://rocket.chat/docs/developer-guides/rest-api/groups/invite)
+
+```json
+{
+  "group": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "ts": "2016-11-30T21:23:04.737Z",
+    "t": "c",
+    "name": "testing",
+    "usernames": [
+      "testing",
+      "testing1"
+    ],
+    "msgs": 1,
+    "_updatedAt": "2016-12-09T12:50:51.575Z",
+    "lm": "2016-12-09T12:50:51.555Z"
+  },
+  "success": true
+}
+```
+
+#### <a id="Groups.kick"></a>kick
+
+Removes a user from the private group.
+
+```js
+this.rocketChatClient.groups.kick(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/kick)](https://rocket.chat/docs/developer-guides/rest-api/groups/kick)
+
+```json
+{
+  "group": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "name": "invite-me",
+    "t": "c",
+    "usernames": [
+      "testing1"
+    ],
+    "msgs": 0,
+    "u": {
+      "_id": "aobEdbYhXfu5hkeqG",
+      "username": "testing1"
+    },
+    "ts": "2016-12-09T15:08:58.042Z",
+    "ro": false,
+    "sysMes": true,
+    "_updatedAt": "2016-12-09T15:22:40.656Z"
+  },
+  "success": true
+}
+```
+
+#### <a id="Groups.leave"></a>leave
+
+Causes the callee to be removed from the private group, if they’re part of it and are not the last owner.
+
+```js
+this.rocketChatClient.groups.leave(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/leave)](https://rocket.chat/docs/developer-guides/rest-api/groups/leave)
+
+```json
+{
+  "group": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "name": "invite-me",
+    "t": "c",
+    "usernames": [
+      "testing2"
+    ],
+    "msgs": 0,
+    "u": {
+      "_id": "aobEdbYhXfu5hkeqG",
+      "username": "testing1"
+    },
+    "ts": "2016-12-09T15:08:58.042Z",
+    "ro": false,
+    "sysMes": true,
+    "_updatedAt": "2016-12-09T15:22:40.656Z"
+  },
+  "success": true
+}
+```
+
+
+#### <a id="Groups.list"></a>list
+
+Lists all of the private groups the calling user has joined, this method supports the Offset and Count Query Parameters.
+
+```js
+// get the first items
+this.rocketChatClient.groups.list({}, function (err, body) {});
+// get by offset and count
+// first 5 items
+this.rocketChatClient.groups.list({0, 5}, function (err, body) {});
+// third page
+this.rocketChatClient.groups.list({10, 5}, function (err, body) {});
+// find an item using mongo query syntax
+this.rocketChatClient.groups.list({ query : { "name": { "$regex": "thisreallydoesnotexist" } } }, function (err, body) {});
+// sort using mongo sort syntax
+this.rocketChatClient.groups.list({ sort : { "_updatedAt": 1 } }, function (err, body) {});
+// fielding using mongo field syntax
+this.rocketChatClient.groups.list({ fields : { "name": 1 } }, function (err, body) {});
+
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/list)](https://rocket.chat/docs/developer-guides/rest-api/groups/list)
+
+```json
+{
+    "groups": [
+        {
+            "_id": "ByehQjC44FwMeiLbX",
+            "name": "test-test",
+            "t": "c",
+            "usernames": [
+                "testing1"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "aobEdbYhXfu5hkeqG",
+                "username": "testing1"
+            },
+            "ts": "2016-12-09T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        },
+        {
+            "_id": "t7qapfhZjANMRAi5w",
+            "name": "testing",
+            "t": "c",
+            "usernames": [
+                "testing2"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "y65tAmHs93aDChMWu",
+                "username": "testing2"
+            },
+            "ts": "2016-12-01T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        }
+    ],
+    "success": true
+}
+```
+
+#### <a id="Groups.open"></a>open
+
+Adds the private group back to the user’s list of private groups.
+
+```js
+this.rocketChatClient.groups.open(roomId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/open)](https://rocket.chat/docs/developer-guides/rest-api/groups/open)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Groups.removeModerator"></a>removeModerator
+
+Removes the role of moderator from a user in the currrent group.
+
+```js
+this.rocketChatClient.groups.removeModerator(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/removemoderator)](https://rocket.chat/docs/developer-guides/rest-api/groups/removemoderator)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Groups.removeOwner"></a>removeOwner
+
+Removes the role of owner from a user in the current group.
+
+```js
+this.rocketChatClient.groups.removeOwner(roomId, userId, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/removeowner)](https://rocket.chat/docs/developer-guides/rest-api/groups/removeowner)
+
+```json
+{
+  "success": true
+}
+```
+
+#### <a id="Groups.rename"></a>rename
+
+Changes the name of the private group.
+
+```js
+this.rocketChatClient.groups.rename(roomId, newName, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/rename)](https://rocket.chat/docs/developer-guides/rest-api/groups/rename)
+
+```json
+{
+  "group": {
+    "_id": "ByehQjC44FwMeiLbX",
+    "name": "new-name",
+    "t": "c",
+    "usernames": [
+      "testing1"
+    ],
+    "msgs": 4,
+    "u": {
+      "_id": "aobEdbYhXfu5hkeqG",
+      "username": "testing1"
+    },
+    "ts": "2016-12-09T15:08:58.042Z",
+    "ro": false,
+    "sysMes": true,
+    "_updatedAt": "2016-12-09T15:57:44.686Z"
+  },
+  "success": true
+}
+```
+
+#### <a id="Groups.setDescription"></a>setDescription
+
+Sets the description for the private group.
+
+```js
+this.rocketChatClient.groups.setDescription(roomId, description, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/setdescription)](https://rocket.chat/docs/developer-guides/rest-api/groups/setdescription)
+
+```json
+{
+  "description": "Testing out everything.",
+  "success": true
+}
+```
+
+#### <a id="Groups.setPurpose"></a>setPurpose
+
+Sets the purpose/description for the private group.
+
+```js
+this.rocketChatClient.groups.setPurpose(roomId, purpose, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/setpurpose)](https://rocket.chat/docs/developer-guides/rest-api/groups/setpurpose)
+
+```json
+{
+  "purpose": "Testing out everything.",
+  "success": true
+}
+```
+
+#### <a id="Groups.setReadOnly"></a>setReadOnly
+
+Sets whether the group is read only or not.
+
+```js
+this.rocketChatClient.groups.setReadOnly(roomId, readonly, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/setreadonly)](https://rocket.chat/docs/developer-guides/rest-api/groups/setreadonly)
+
+```json
+{
+    "group": {
+        "_id": "ByehQjC44FwMeiLbX",
+        "name": "testing0",
+        "t": "c",
+        "msgs": 0,
+        "u": {
+            "_id": "aiPqNoGkjpNDiRx6d",
+            "username": "goose160"
+        },
+        "ts": "2017-01-05T18:02:50.754Z",
+        "ro": true,
+        "sysMes": true,
+        "_updatedAt": "2017-01-05T19:02:24.429Z",
+        "usernames": [
+            "goose160",
+            "graywolf336"
+        ],
+        "joinCodeRequired": true,
+        "muted": []
+    },
+    "success": true
+}
+```
+
+#### <a id="Groups.setTopic"></a>setTopic
+
+Sets the topic for the private group.
+
+```js
+this.rocketChatClient.groups.setTopic(roomId, topic, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/settopic)](https://rocket.chat/docs/developer-guides/rest-api/groups/settopic)
+
+```json
+{
+  "topic": "Testing out everything.",
+  "success": true
+}
+```
+
+
+#### <a id="Groups.unarchive"></a>unarchive
+
+Unarchives a private group.
+
+```js
+this.rocketChatClient.groups.unarchive(roomId, topic, function (err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/groups/unarchive)](https://rocket.chat/docs/developer-guides/rest-api/groups/unarchive)
+
+```json
+{
+  "success": true
+}
+```
+
 #### <a id="Chat"></a>Chat
 
 
@@ -1417,6 +2045,7 @@ this.rocketChatClient.chat.update({ roomId, msgId, text: updatedText }, callback
 }
 ```
 
+
 ### <a id="Settings"></a>Settings
 
 #### <a id="Settings.get"></a>get
@@ -1449,8 +2078,165 @@ this.rocketChatClient.settings.update(id, value, callback);
 {
   "success": true
 }
+'''
+
+### Integration<a id="Integration"></a>
+
+#### <a id="Integration.create"></a>create
+
+Creates an integration, if the callee has the permission.
+
+- event: [see here](https://github.com/RocketChat/Rocket.Chat/blob/develop/packages/rocketchat-integrations/lib/rocketchat.js)
+- channel: The channel, group, or @username. Can also be all_public_channels, all_private_groups, or all_direct_messages. Comma separated for more than one.
+
+```js
+this.rocketChatClient.integration.create({
+            "type": "webhook-outgoing",
+            "name": "Testing via REST API",
+            "enabled": false,
+            "username": "username",
+            "urls": ["http://some-url.example.com"],
+            "scriptEnabled": false,
+            "channel" : "all_public_channels",
+            "event" :  "sendMessage"
+        }, callback);
 ```
 
+[Result (https://rocket.chat/docs/developer-guides/rest-api/integration/create)](https://rocket.chat/docs/developer-guides/rest-api/integration/create)
+
+```json
+{
+    "integration": {
+        "type": "webhook-outgoing",
+        "name": "Testing via REST API",
+        "enabled": false,
+        "username": "rocket.cat",
+        "urls": [
+            "http://text2gif.guggy.com/guggify"
+        ],
+        "scriptEnabled": false,
+        "userId": "rocket.cat",
+        "channel": [],
+        "_createdAt": "2017-01-06T13:23:46.018Z",
+        "_createdBy": {
+            "username": "graywolf336",
+            "_id": "aobEdbYhXfu5hkeqG"
+        },
+        "_updatedAt": "2017-01-06T13:23:46.018Z",
+        "_id": "3aazpZ2WzoBP8msi9"
+    },
+    "success": true
+}
+```
+
+#### <a id="Integration.list"></a>list
+
+Lists all of the integrations on the server, this method supports the Offset and Count Query Parameters.
+
+```js
+this.rocketChatClient.integration.list({}, callback);
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/integration/list)](https://rocket.chat/docs/developer-guides/rest-api/integration/list)
+
+```json
+{
+    "integrations": [
+        {
+            "_id": "WMQDChpnYTRmFre9h",
+            "enabled": true,
+            "username": "rocket.cat",
+            "alias": "Guggy",
+            "avatar": "https://image.crisp.im/avatar/website/17651a90-e082-43f6-b308-957cea6e323c/128",
+            "name": "Guggy",
+            "triggerWords": [
+                "!guggy",
+                "guggy",
+                "gif+"
+            ],
+            "urls": [
+                "http://text2gif.guggy.com/guggify"
+            ],
+            "token": "aobEdbYhXfu5hkeqG",
+            "script": ...,
+            "scriptEnabled": true,
+            "impersonateUser": false,
+            "scriptCompiled": ...,
+            "scriptError": null,
+            "type": "webhook-outgoing",
+            "userId": "rocket.cat",
+            "channel": [],
+            "_createdAt": "2017-01-05T17:06:05.660Z",
+            "_createdBy": {
+                "username": "graywolf336",
+                "_id": "R4jgcQaQhvvK6K3iY"
+            },
+            "_updatedAt": "2017-01-05T17:06:05.660Z"
+        },
+        {
+            "_id": "3aazpZ2WzoBP8msi9",
+            "type": "webhook-outgoing",
+            "name": "Testing via REST API",
+            "enabled": false,
+            "username": "rocket.cat",
+            "urls": [
+                "http://text2gif.guggy.com/guggify"
+            ],
+            "scriptEnabled": false,
+            "userId": "rocket.cat",
+            "channel": [],
+            "_createdAt": "2017-01-06T13:23:46.018Z",
+            "_createdBy": {
+                "username": "graywolf336",
+                "_id": "R4jgcQaQhvvK6K3iY"
+            },
+            "_updatedAt": "2017-01-06T13:23:46.018Z"
+        }
+    ],
+    "offset": 0,
+    "items": 2,
+    "total": 2,
+    "success": true
+}
+```
+
+#### <a id="Integration.remove"></a>remove
+
+Removes an integration from the server.
+
+```js
+this.rocketChatClient.integration.remove({
+  type,
+  integrationId
+}, callback);
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/integration/remove)](https://rocket.chat/docs/developer-guides/rest-api/integration/remove)
+
+```json
+{
+    "integration": {
+        "_id": "oNLthAt9RwMw39N2B",
+        "type": "webhook-outgoing",
+        "name": "Testing via REST API",
+        "enabled": false,
+        "username": "rocket.cat",
+        "urls": [
+            "http://text2gif.guggy.com/guggify"
+        ],
+        "scriptEnabled": false,
+        "userId": "rocket.cat",
+        "channel": [],
+        "_createdAt": "2017-01-06T13:42:14.143Z",
+        "_createdBy": {
+            "username": "graywolf336",
+            "_id": "R4jgcQaQhvvK6K3iY"
+        },
+        "_updatedAt": "2017-01-06T13:42:14.144Z"
+    },
+    "success": true
+}
+```
 
 #### <a id="Realtime"></a>Realtime
 
