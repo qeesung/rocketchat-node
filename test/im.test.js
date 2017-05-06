@@ -51,8 +51,10 @@ describe("im private message", () => {
         }, 1000);
     });
 
-    it("Adds the direct message back to the user’s list of direct messages.", () => {
+    it("Closes an im and adds the direct message back to the user’s list of direct messages.", () => {
         return co(function* () {
+            let closeResult = yield rocketChatClient.im.close(roomId);
+            should(closeResult.success).be.ok();
             let openResult = yield rocketChatClient.im.open(roomId);
             should(openResult.success).be.ok();
         });
