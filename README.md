@@ -103,14 +103,15 @@ This Lib library package the following functions:
   - setTopic
   - setType
   - unarchive
-- Im
-  - close
-  - history
-  - list.everyone
-  - list
-  - messages.others
-  - open
-  - setTopic
+- [Im](#Im) 
+  **note:** im interfaces is not tested
+  - [close](#Im.close)
+  - [history](#Im.history)
+  - [list.everyone](#Im.everyone)
+  - [list](#Im.list)
+  - [messages.others](#Im.others)
+  - [open](#Im.open)
+  - [setTopic](#Im.setTopic)
 - [Chat](#Chat)
   - [delete](#Chat.delete)
   - [postMessage](#Chat.postMessage)
