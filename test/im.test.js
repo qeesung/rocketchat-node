@@ -4,7 +4,6 @@
 
 const RocketChatClient = require("../lib/rocketChat").RocketChatClient;
 const should = require("should");
-const async = require("async");
 const co = require("co");
 
 const config = {
@@ -28,15 +27,15 @@ describe("im", () => {
     let roomId = null;
     beforeEach(() => {
         return co(function *() {
-           let createResult = yield rocketChatClient.groups.create("im-test-group-"+Date.now(), ["rocket.cat"]);
-           roomId = createResult.group._id;
+            let createResult = yield rocketChatClient.groups.create("im-test-group-"+Date.now(), ["rocket.cat"]);
+            roomId = createResult.group._id;
         });
     });
 
     xit("Adds the direct message back to the user’s list of direct messages.", () => {
         return co(function *(){
             let openResult = yield rocketChatClient.im.open(roomId);
-            openResult.success.should.be.ok();
+            should(openResult.success).be.ok();
         });
     });
 
@@ -48,4 +47,4 @@ describe("im", () => {
             setTopicResult.topic.should.equal(topic);
         });
     });
-})
+});
