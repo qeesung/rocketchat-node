@@ -103,14 +103,15 @@ This Lib library package the following functions:
   - [setTopic](#Groups.setTopic)
   - [setType](#Groups.setType)
   - [unarchive](#Groups.unarchive)
-- Im
-  - close
-  - history
-  - list.everyone
-  - list
-  - messages.others
-  - open
-  - setTopic
+- [Im](#Im) 
+  **note:** im interfaces is not tested
+  - [close](#Im.close)
+  - [history](#Im.history)
+  - [list.everyone](#Im.everyone)
+  - [list](#Im.list)
+  - [messages.others](#Im.others)
+  - [open](#Im.open)
+  - [setTopic](#Im.setTopic)
 - [Chat](#Chat)
   - [delete](#Chat.delete)
   - [postMessage](#Chat.postMessage)
@@ -1961,7 +1962,296 @@ this.rocketChatClient.groups.unarchive(roomId, topic, function (err, body) {});
 }
 ```
 
-#### <a id="Chat"></a>Chat
+### <a id="Im"></a>Im
+
+#### <a id="Im.close"></a>close
+Removes the direct message from the user’s list of direct messages.
+
+```js
+this.rocketChatClient.im.close(roomId, function(err, body) {});
+```
+
+[Result (https://rocket.chat/docs/developer-guides/rest-api/im/close)](https://rocket.chat/docs/developer-guides/rest-api/im/close)
+
+```json
+{
+   "success": true
+}
+```
+
+#### <a id="Im.history"></a>history
+Retrieves the messages from a direct message.
+
+```js
+this.rocketchatClient.im.history(historyOpts, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/im/history)](https://rocket.chat/docs/developer-guides/rest-api/im/history)
+
+```json
+{
+  "messages": [
+    {
+      "_id": "AkzpHAvZpdnuchw2a",
+      "rid": "ByehQjC44FwMeiLbX",
+      "msg": "hi",
+      "ts": "2016-12-09T12:50:51.555Z",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "_updatedAt": "2016-12-09T12:50:51.562Z"
+    },
+    {
+      "_id": "vkLMxcctR4MuTxreF",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-08T15:41:37.730Z",
+      "msg": "testing2",
+      "u": {
+        "_id": "bRtgdhzM6PD9F8pSx",
+        "username": "testing2"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-08T16:03:25.235Z"
+    },
+    {
+      "_id": "bfRW658nEyEBg75rc",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-07T15:47:49.099Z",
+      "msg": "testing",
+      "u": {
+        "_id": "nSYqWzZ4GsKTX4dyK",
+        "username": "testing1"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-07T15:47:49.099Z"
+    },
+    {
+      "_id": "pbuFiGadhRZTKouhB",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-06T17:57:38.635Z",
+      "msg": "testing",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-06T17:57:38.635Z"
+    }
+  ],
+  "success": true
+}
+```
+
+#### <a id="Im.messagesOthers"></a> messages.others
+
+Retrieves the messages from any direct message in the server, this method supports the Offset and Count Query Parameters.
+
+```js
+this.rocketChatClient.im.messagesOthers(roomId, callback);
+```
+[Result(https://rocket.chat/docs/developer-guides/rest-api/im/messages-others)](https://rocket.chat/docs/developer-guides/rest-api/im/messages-others)
+
+```json
+{
+  "messages": [
+    {
+      "_id": "AkzpHAvZpdnuchw2a",
+      "rid": "ByehQjC44FwMeiLbX",
+      "msg": "hi",
+      "ts": "2016-12-09T12:50:51.555Z",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "_updatedAt": "2016-12-09T12:50:51.562Z"
+    },
+    {
+      "_id": "vkLMxcctR4MuTxreF",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-08T15:41:37.730Z",
+      "msg": "testing2",
+      "u": {
+        "_id": "bRtgdhzM6PD9F8pSx",
+        "username": "testing2"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-08T16:03:25.235Z"
+    },
+    {
+      "_id": "bfRW658nEyEBg75rc",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-07T15:47:49.099Z",
+      "msg": "testing",
+      "u": {
+        "_id": "nSYqWzZ4GsKTX4dyK",
+        "username": "testing1"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-07T15:47:49.099Z"
+    },
+    {
+      "_id": "pbuFiGadhRZTKouhB",
+      "t": "uj",
+      "rid": "ByehQjC44FwMeiLbX",
+      "ts": "2016-12-06T17:57:38.635Z",
+      "msg": "testing",
+      "u": {
+        "_id": "y65tAmHs93aDChMWu",
+        "username": "testing"
+      },
+      "groupable": false,
+      "_updatedAt": "2016-12-06T17:57:38.635Z"
+    }
+  ],
+  "success": true
+}
+```
+
+#### <a id="#Im.listEveryone"></a> listEveryone
+
+Lists all of the direct messages in the server, requires the permission view-room-administration permission and this method supports the Offset and Count Query Parameters.
+
+```js
+this.rocketChatClient.im.listEveryone({ offset = 0, count = 0, sort = undefined, fields = undefined, query = undefined}, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/im/list-everyone)](https://rocket.chat/docs/developer-guides/rest-api/im/list-everyone)
+
+```json
+{
+    "ims": [
+        {
+            "_id": "ByehQjC44FwMeiLbX",
+            "name": "test-test",
+            "t": "p",
+            "usernames": [
+                "testing1"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "aobEdbYhXfu5hkeqG",
+                "username": "testing1"
+            },
+            "ts": "2016-12-09T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        },
+        {
+            "_id": "t7qapfhZjANMRAi5w",
+            "name": "testing",
+            "t": "p",
+            "usernames": [
+                "testing2"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "y65tAmHs93aDChMWu",
+                "username": "testing2"
+            },
+            "ts": "2016-12-01T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        }
+    ],
+    "success": true
+}
+```
+
+#### <a id=>"Im.list"</a> list
+
+Lists all of the direct messages the calling user has joined, this method supports the Offset and Count Query Parameters.
+
+```js
+this.rocketChatClient.im.list({ offset = 0, count = 0, sort = undefined, fields = undefined, query = undefined}, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/im/list)]([Result(https://rocket.chat/docs/developer-guides/rest-api/im/list)]())
+
+```json
+{
+    "ims": [
+        {
+            "_id": "ByehQjC44FwMeiLbX",
+            "name": "test-test",
+            "t": "p",
+            "usernames": [
+                "testing1"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "aobEdbYhXfu5hkeqG",
+                "username": "testing1"
+            },
+            "ts": "2016-12-09T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        },
+        {
+            "_id": "t7qapfhZjANMRAi5w",
+            "name": "testing",
+            "t": "p",
+            "usernames": [
+                "testing2"
+            ],
+            "msgs": 0,
+            "u": {
+                "_id": "y65tAmHs93aDChMWu",
+                "username": "testing2"
+            },
+            "ts": "2016-12-01T15:08:58.042Z",
+            "ro": false,
+            "sysMes": true,
+            "_updatedAt": "2016-12-09T15:22:40.656Z"
+        }
+    ],
+    "success": true
+}
+```
+
+#### <a id="Im.open"></a>open
+
+Adds the direct message back to the user’s list of direct messages.
+
+```js
+this.rocketChatClient.im.open(roomId, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/im/open)](https://rocket.chat/docs/developer-guides/rest-api/im/open)
+
+```json
+{
+   "success": true
+}
+```
+
+
+#### <a id="Im.setTopic"></a>setTopic
+
+Sets the topic for the direct message.
+
+```js
+this.rocketChatClient.im.setTopic(roomId, newTopic, callback);
+```
+
+[Result(https://rocket.chat/docs/developer-guides/rest-api/im/settopic)](https://rocket.chat/docs/developer-guides/rest-api/im/settopic)
+
+```json
+{
+  "topic": "Testing out everything.",
+  "success": true
+}
+```
+
+### <a id="Chat"></a>Chat
 
 
 #### <a id="Chat.delete"></a>delete
