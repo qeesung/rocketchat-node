@@ -46,7 +46,7 @@ describe("notifyUser", function () {
 
         before(function (done) {
             roomName = "notify-user-" + Date.now();
-            secondClient.authentication.login(userToAdd.username, userToAdd.password, (err, body) => {
+            secondClient.authentication.login(userToAdd.username, userToAdd.password, () => {
                 client.channels.create(roomName, function (err, body) {
                     should(err).be.null();
                     should(body.success).be.true();
