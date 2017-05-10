@@ -35,10 +35,11 @@ describe("notifyUser", function () {
 
     describe("of a subscription change", function () {
         xit("should notify user when user with an active private chat logs in", function (done) {
-            secondClient.authentication.login(userToAdd.username, userToAdd.password, (err, body) => {
+            secondClient.authentication.login(userToAdd.username, userToAdd.password, () => {
+                done();
             });
         });
-    })
+    });
 
     describe("of a new message", function () {
         let roomId, roomName;
@@ -72,7 +73,7 @@ describe("notifyUser", function () {
         });
 
         it("should notify the user when a room's status has changed", function (done) {
-            let message = `hello world!`;
+            let message = "hello world!";
             this.timeout(5000);
 
             client.notify.user.onRoomChanged(roomId, function (err, body) {
