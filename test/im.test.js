@@ -68,4 +68,16 @@ describe("im private message", () => {
             setTopicResult.topic.should.equal(topic);
         });
     });
+
+    it("Retrieves the messages from a direct message. the message should contain the 'start im chat'", () =>{
+        let message = "start im chat";
+        return co(function *() {
+            let historyResult = yield rocketChatClient.im.history({roomId});
+            historyResult.success.should.equal(true);
+            historyResult.messages.length.should.be.aboveOrEqual(1);
+            historyResult.messages.should.matchAny(msgItem => {
+                msgItem.msg.should.equal(message);
+            });
+        });
+    });
 });
