@@ -13,7 +13,7 @@ const config = {
     password: "123456"
 };
 
-describe("im", () => {
+describe("im private message", () => {
     let rocketChatClient = null;
     before(function (done) {
         rocketChatClient = new RocketChatClient("http",
@@ -24,24 +24,45 @@ describe("im", () => {
             done);
     });
 
+    let imTestUser = {
+        "name": "name",
+        "email": "email@example.com",
+        "password": "anypassyouwant",
+        "username": "uniqueusername",
+        "sendWelcomeEmail": false,
+        "joinDefaultChannels": false,
+        "verified": false,
+        "requirePasswordChange": false,
+        "roles": ["user"]
+    };
+    imTestUser.name = imTestUser.name + Date.now();
+    imTestUser.username = imTestUser.username + Date.now();
+    imTestUser.email = "email" + Date.now() + "@example.com";
     let roomId = null;
-    beforeEach(() => {
-        return co(function *() {
-            let createResult = yield rocketChatClient.groups.create("im-test-group-"+Date.now(), ["rocket.cat"]);
-            roomId = createResult.group._id;
-        });
+    before(function (done) {
+        this.timeout(50000);
+        rocketChatClient.users.create(imTestUser);
+        setTimeout(() => {
+            rocketChatClient.chat.postMessage({ channel: `@${imTestUser.username}`, text: "start im chat" }, (err, msg) => {
+                should(msg.success).be.true();
+                roomId = msg.message.rid;
+                done();
+            });
+        }, 1000);
     });
 
-    xit("Adds the direct message back to the user’s list of direct messages.", () => {
-        return co(function *(){
+    it("Closes an im and adds the direct message back to the user’s list of direct messages.", () => {
+        return co(function* () {
+            let closeResult = yield rocketChatClient.im.close(roomId);
+            should(closeResult.success).be.ok();
             let openResult = yield rocketChatClient.im.open(roomId);
             should(openResult.success).be.ok();
         });
     });
 
-    xit("Sets the topic for the direct message.", () => {
+    it("Sets the topic for the direct message.", () => {
         let topic = "Hello world";
-        return co(function *() {
+        return co(function* () {
             let setTopicResult = yield rocketChatClient.im.setTopic(roomId, topic);
             setTopicResult.success.should.equal(true);
             setTopicResult.topic.should.equal(topic);
