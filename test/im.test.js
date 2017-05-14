@@ -90,4 +90,14 @@ describe("im private message", () => {
             });
         });
     });
+
+    it("Lists all of the direct messages the calling user has joined, created im room should in the list", () => {
+        return co(function *() {
+            let listResult = yield rocketChatClient.im.list();
+            listResult.success.should.equal(true);
+            listResult.ims.should.matchAny(im => {
+                im._id.should.equal(roomId);
+            });
+        });
+    });
 });
