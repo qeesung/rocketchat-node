@@ -80,4 +80,14 @@ describe("im private message", () => {
             });
         });
     });
+
+    it("Lists all of the direct messages in the server, created im room should in the list", () => {
+        return co(function *() {
+            let listEveryoneResult = yield rocketChatClient.im.listEveryone();
+            listEveryoneResult.success.should.equal(true);
+            listEveryoneResult.ims.should.matchAny(im => {
+                im._id.should.equal(roomId);
+            });
+        });
+    });
 });
