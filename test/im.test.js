@@ -100,4 +100,15 @@ describe("im private message", () => {
             });
         });
     });
+
+    xit("Retrieves the messages from any direct message in the server," +
+      " the 'start im chat' should in the message list", () => {
+        return co(function *() {
+            let messagesResult = yield rocketChatClient.im.messagesOthers(roomId);
+            messagesResult.success.should.equal(true);
+            messagesResult.messages.should.matchAny(message => {
+                message.msg.should.equal("start im chat");
+            });
+        });
+    });
 });
