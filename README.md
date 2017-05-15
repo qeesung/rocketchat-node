@@ -104,7 +104,6 @@ This Lib library package the following functions:
   - [setType](#Groups.setType)
   - [unarchive](#Groups.unarchive)
 - [Im](#Im) 
-  **note:** im interfaces is not tested
   - [close](#Im.close)
   - [history](#Im.history)
   - [list.everyone](#Im.everyone)
