@@ -76,7 +76,7 @@ describe("notifyUser", function () {
             let message = "hello world!";
             this.timeout(5000);
 
-            client.notify.user.onRoomChanged(roomId, function (err, body) {
+            client.notify.room.onChanged(roomId, function (err, body) {
                 should(err).be.null();
                 should(body).not.be.null();
                 should(body.msg).be.equal("changed");
