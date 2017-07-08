@@ -57,7 +57,19 @@ describe("users", function () {
 
     describe("get user information", function () {
         it("should retrieve user information for a userId", function (done) {
-            rocketChatClient.users.info(userId, function (err, result) {
+            rocketChatClient.users.info({userId}, function (err, result) {
+                should(err).be.null();
+                should(result).not.be.null();
+                should(result.success).be.true();
+                should(result.user.username).be.equal(userToAdd.username);
+                should(result.user.name).be.equal(userToAdd.name);
+                should(result.user.active).be.true();
+                done();
+            });
+        });
+
+        it("should retrieve user information by username", function (done) {
+            rocketChatClient.users.info({username: userToAdd.username}, function (err, result) {
                 should(err).be.null();
                 should(result).not.be.null();
                 should(result.success).be.true();
