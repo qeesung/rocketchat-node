@@ -517,7 +517,9 @@ this.rocketChatClient.users.getPresence(userId, function (err, body) {});
 #### <a id="Users.info"></a>info
 
 ```js
-this.rocketChatClient.users.info(userId, function (err, body) {});
+this.rocketChatClient.users.info({userId: userId}, function (err, body) {});
+//or
+this.rocketChatClient.users.info({username: username}, function (err, body) {});
 ```
 
 [Result (https://rocket.chat/docs/developer-guides/rest-api/users/info)](https://rocket.chat/docs/developer-guides/rest-api/users/info)
