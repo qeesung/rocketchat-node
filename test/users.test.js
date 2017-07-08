@@ -77,7 +77,7 @@ describe("users", function () {
                 should(result.user.name).be.equal(userToAdd.name);
                 should(result.user.active).be.true();
                 done();
-          });
+            });
         });
 
     });
