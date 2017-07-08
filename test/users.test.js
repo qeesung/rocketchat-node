@@ -80,6 +80,13 @@ describe("users", function () {
             });
         });
 
+        it("should return an error when the user does not exist", function (done) {
+            rocketChatClient.users.info({username: "this user does not exist"}, function (err, result) {
+                should(err).not.be.null();
+                done();
+            });
+        });
+
     });
 
     describe("update user", function () {
