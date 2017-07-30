@@ -6,21 +6,18 @@ const RocketChatClient = require("../lib/rocketChat").RocketChatClient;
 const should = require("should");
 
 const config = {
-    host: "127.0.0.1", // this is my personal rocketchat server hosted in my laptop
+    protocol: "http",
+    host: "127.0.0.1",
     port: "3000",
-    user: "qeesung",
+    username: "qeesung",
     password: "123456"
 };
 
 describe("test login and the logout", function () {
     let rocketChatClient = null;
     beforeEach(function (done) {
-        rocketChatClient = new RocketChatClient("http",
-            config.host,
-            config.port,
-            config.user,
-            config.password,
-            done);
+        config.onConnected = done;
+        rocketChatClient = new RocketChatClient(config);
     });
     it("logout status should be success and the token should be null", function (done) {
         should(rocketChatClient.restClient.getHeader("X-Auth-Token")).not.be.null();
@@ -37,17 +34,13 @@ describe("test login and the logout", function () {
 describe("test 'me' interface to get user detail information", function () {
     let rocketChatClient = null;
     beforeEach(function (done) {
-        rocketChatClient = new RocketChatClient("http",
-            config.host,
-            config.port,
-            config.user,
-            config.password,
-            done);
+        config.onConnected = done;
+        rocketChatClient = new RocketChatClient(config);
     });
-    it("user name should equal to "+config.user, function (done) {
+    it("user name should equal to " + config.user, function (done) {
         rocketChatClient.authentication.me(function (err, body) {
             should(err).be.null();
-            should.equal(body.username, config.user);
+            should.equal(body.username, config.username);
             done();
         });
     });
