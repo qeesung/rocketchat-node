@@ -85,6 +85,7 @@ describe("groups", () => {
                     yield rocketChatClient.groups.archive(createGroupId);
                 createGroupId = null;
                 createdUserId = null;
+                createdGroupName = null;
             });
         });
 
