@@ -62,7 +62,7 @@ describe("groups", () => {
     describe("add user to the group", () => {
         let createdUserId = null;
         let createGroupId = null;
-        let createGroupName = null;
+        let createdGroupName = null;
 
         beforeEach(() => {
             userToAdd.name = userToAdd.name + Date.now();
@@ -310,7 +310,7 @@ describe("groups", () => {
         it("Retrieves the information about the private group by group name, " +
             "result should be success and group property should be exist", () => {
             return co(function *() {
-                let infoResult = yield rocketChatClient.groups.infoByName(createGroupName);
+                let infoResult = yield rocketChatClient.groups.infoByName(createdGroupName);
                 infoResult.success.should.equal(true);
                 infoResult.group.should.be.ok();
             });
