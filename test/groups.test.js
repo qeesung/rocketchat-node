@@ -240,8 +240,8 @@ describe("groups", () => {
 
         beforeEach(() => {
             return co(function *() {
-              createdGroupName = "test-group-" + Date.now();
-              let createdGroup = yield rocketChatClient.groups.create(createdGroupName);
+                createdGroupName = "test-group-" + Date.now();
+                let createdGroup = yield rocketChatClient.groups.create(createdGroupName);
                 createGroupId = createdGroup.group._id;
             });
         });
