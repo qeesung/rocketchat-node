@@ -62,7 +62,6 @@ describe("groups", () => {
     describe("add user to the group", () => {
         let createdUserId = null;
         let createGroupId = null;
-        let createdGroupName = null;
 
         beforeEach(() => {
             userToAdd.name = userToAdd.name + Date.now();
@@ -71,8 +70,8 @@ describe("groups", () => {
             return co(function *() {
                 let createdUser = yield rocketChatClient.users.create(userToAdd);
                 createdUserId = createdUser.user._id;
-                createdGroupName = "test-group-"+Date.now();
-                let createdGroup = yield rocketChatClient.groups.create(createdGroupName);
+
+                let createdGroup = yield rocketChatClient.groups.create("test-group-"+Date.now());
                 createGroupId = createdGroup.group._id;
             });
         });
@@ -85,7 +84,6 @@ describe("groups", () => {
                     yield rocketChatClient.groups.archive(createGroupId);
                 createGroupId = null;
                 createdUserId = null;
-                createdGroupName = null;
             });
         });
 
@@ -238,10 +236,12 @@ describe("groups", () => {
 
     describe("config the get groups' properties", () => {
         let createGroupId = null;
+        let createdGroupName = null;
 
         beforeEach(() => {
             return co(function *() {
-                let createdGroup = yield rocketChatClient.groups.create("test-group-"+Date.now());
+              createdGroupName = "test-group-" + Date.now();
+              let createdGroup = yield rocketChatClient.groups.create(createdGroupName);
                 createGroupId = createdGroup.group._id;
             });
         });
@@ -251,6 +251,7 @@ describe("groups", () => {
                 if(createGroupId != null)
                     yield rocketChatClient.groups.archive(createGroupId);
                 createGroupId = null;
+                createdGroupName = null;
             });
         });
 
