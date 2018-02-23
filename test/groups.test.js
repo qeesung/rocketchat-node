@@ -236,10 +236,12 @@ describe("groups", () => {
 
     describe("config the get groups' properties", () => {
         let createGroupId = null;
+        let createdGroupName = null;
 
         beforeEach(() => {
             return co(function *() {
-                let createdGroup = yield rocketChatClient.groups.create("test-group-"+Date.now());
+                createdGroupName = "test-group-" + Date.now();
+                let createdGroup = yield rocketChatClient.groups.create(createdGroupName);
                 createGroupId = createdGroup.group._id;
             });
         });
@@ -249,6 +251,7 @@ describe("groups", () => {
                 if(createGroupId != null)
                     yield rocketChatClient.groups.archive(createGroupId);
                 createGroupId = null;
+                createdGroupName = null;
             });
         });
 
@@ -297,10 +300,19 @@ describe("groups", () => {
             });
         });
 
-        it("Retrieves the information about the private group, " +
+        it("Retrieves the information about the private group by group id, " +
             "result should be success and group property should be exist", () => {
             return co(function *() {
                 let infoResult = yield rocketChatClient.groups.info(createGroupId);
+                infoResult.success.should.equal(true);
+                infoResult.group.should.be.ok();
+            });
+        });
+
+        it("Retrieves the information about the private group by group name, " +
+            "result should be success and group property should be exist", () => {
+            return co(function *() {
+                let infoResult = yield rocketChatClient.groups.infoByName(createdGroupName);
                 infoResult.success.should.equal(true);
                 infoResult.group.should.be.ok();
             });
