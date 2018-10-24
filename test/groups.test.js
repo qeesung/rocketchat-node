@@ -374,5 +374,17 @@ describe("groups", () => {
                 createGroupId = null;
             });
         });
+
+        it("Deletes the group", function (done) {
+            rocketChatClient.groups.delete(createGroupId, function (err, result) {
+                should(err).be.null();
+                should(result).not.be.null();
+                should(result.success).be.true();
+
+                createGroupId = null;
+
+                done();
+            });
+        });
     });
 });
