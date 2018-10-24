@@ -407,4 +407,15 @@ describe("channels", function () {
             });
         });
     });
+
+    describe("deleting channel", function () {
+        it("should delete the channel successfully", function (done) {
+            rocketChatClient.channels.delete(addedRoomId, function (err, result) {
+                should(err).be.null();
+                should(result).not.be.null();
+                should(result.success).be.true();
+                done();
+            });
+        });
+    });
 });
