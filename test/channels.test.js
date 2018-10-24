@@ -406,14 +406,15 @@ describe("channels", function () {
                 readonlyChannel.channel.ro.should.equal(true);
             });
         });
-    });
 
-    describe("deleting channel", function () {
-        it("should delete the channel successfully", function (done) {
+        it("Deletes the channel", function (done) {
             rocketChatClient.channels.delete(addedRoomId, function (err, result) {
                 should(err).be.null();
                 should(result).not.be.null();
                 should(result.success).be.true();
+
+                addedRoomId = null;
+
                 done();
             });
         });
