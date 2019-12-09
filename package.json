@@ -27,7 +27,7 @@
     "https-proxy-agent": "^1.0.0",
     "request": "^2.72.0",
     "url": "^0.11.0",
-    "ws": "^2.2.3"
+    "ws": "^7.2.0"
   },
   "devDependencies": {
     "async": "^1.5.2",
