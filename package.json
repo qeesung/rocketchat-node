@@ -24,7 +24,7 @@
     "bluebird": "^3.5.0",
     "co": "^4.6.0",
     "ddp.js": "^2.2.0",
-    "https-proxy-agent": "^1.0.0",
+    "https-proxy-agent": "^5.0.0",
     "request": "^2.72.0",
     "url": "^0.11.0",
     "ws": "^2.2.3"
